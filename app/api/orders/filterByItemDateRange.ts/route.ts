@@ -1,0 +1,42 @@
+import { NextResponse } from "next/server";
+import prisma from "../../../../lib/prisma";
+
+export async function POST(request: Request) {
+  const { itemId, startDate, endDate, storeId } = await request.json();
+
+  const orders = await prisma.order.findMany({
+    where: {
+      storeId: storeId,
+      createdAt: {
+        gte: new Date(startDate),
+        lte: new Date(endDate),
+      },
+      items: {
+        some: {
+          productId: itemId,
+        },
+      },
+    },
+    include: {
+      items: true,
+    },
+  });
+
+  const itemQuantities = orders.flatMap((order) =>
+    order.items.map((item) => ({
+      size: item.size,
+      quantity: item.quantity,
+    }))
+  );
+
+  const aggregatedQuantities = itemQuantities.reduce((acc, item) => {
+    if (acc[item.size]) {
+      acc[item.size] += item.quantity;
+    } else {
+      acc[item.size] = item.quantity;
+    }
+    return acc;
+  }, {} as Record<string, number>);
+
+  return NextResponse.json(aggregatedQuantities);
+}

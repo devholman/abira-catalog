@@ -1,0 +1,8 @@
+-- CreateEnum
+CREATE TYPE "Categories" AS ENUM ('TSHIRTS', 'HOODIES', 'DRIFITS');
+
+-- AlterTable
+ALTER TABLE "OrderItem" ADD COLUMN     "category" "Categories" NOT NULL DEFAULT 'TSHIRTS',
+ADD COLUMN     "color" TEXT NOT NULL DEFAULT 'black',
+ADD COLUMN     "price" DOUBLE PRECISION NOT NULL DEFAULT 20.00,
+ADD COLUMN     "title" TEXT NOT NULL DEFAULT 'Retro';

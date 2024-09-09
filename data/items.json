@@ -1,0 +1,17 @@
+[
+    {
+      "id": 1,
+      "title": "T-Shirt",
+      "price": 19.99,
+      "image": "/images/tshirt.jpg",
+      "sizes": ["S", "M", "L", "XL"]
+    },
+    {
+      "id": 2,
+      "title": "Hoodie",
+      "price": 39.99,
+      "image": "/images/hoodie.jpg",
+      "sizes": ["M", "L", "XL"]
+    }
+  ]
+  
