@@ -28,11 +28,12 @@ export async function POST(request: Request) {
     },
   });
 
-  const itemQuantities = orders.flatMap((order) =>
-    order.items.map((item) => ({
-      size: item.size,
-      quantity: item.quantity,
-    }))
+  const itemQuantities = orders.flatMap(
+    (order: Prisma.OrderGetPayload<{ include: { items: true } }>) =>
+      order.items.map((item) => ({
+        size: item.size,
+        quantity: item.quantity,
+      }))
   );
 
   const aggregatedQuantities = itemQuantities.reduce((acc, item) => {
