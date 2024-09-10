@@ -1,10 +1,16 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
+import { Prisma } from "@prisma/client";
 
 export async function POST(request: Request) {
   const { itemId, startDate, endDate, storeId } = await request.json();
 
-  const orders = await prisma.order.findMany({
+  // Define the type with the items relation
+  type OrderWithItems = Prisma.OrderGetPayload<{
+    include: { items: true };
+  }>;
+
+  const orders: OrderWithItems[] = await prisma.order.findMany({
     where: {
       storeId: storeId,
       createdAt: {

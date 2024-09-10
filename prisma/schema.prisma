@@ -35,7 +35,7 @@ model Customer {
 model Order {
   id         Int       @id @default(autoincrement())
   customerId Int
-  storeId    Int       @default(1)
+  storeId    Int
   totalPrice Float
   createdAt  DateTime  @default(now())
   items      OrderItem[]
