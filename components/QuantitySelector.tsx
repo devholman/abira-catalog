@@ -76,7 +76,9 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
               ? "text-gray-500"
               : "text-black"
           }`}
-          disabled={maxQuantity && quantity >= maxQuantity}
+          disabled={
+            !!(maxQuantity && maxQuantity > 0 && quantity >= maxQuantity)
+          }
         >
           +
         </button>

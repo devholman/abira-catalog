@@ -1,17 +1,6 @@
 // stores/storeConfigs.ts
-import { StoreItem, Categories } from "../../_types";
-export interface StoreConfig {
-  id: number;
-  name: string;
-  branding: {
-    logo: string;
-    primaryColor: string;
-    secondaryColor: string;
-  };
-  players: { name: string; number: number }[];
-  passcode: string;
-  items: StoreItem[];
-}
+import { Categories, StoreConfig } from "../../_types";
+
 const sizes = ["S", "M", "L", "XL"];
 const colors = ["Black", "Silver", "White"];
 

@@ -1,7 +1,7 @@
 "use client";
 import ItemCard from "../components/ItemCard";
 import items from "../data/items.json";
-import { Item } from "@/_types";
+import { Item, StoreItem } from "@/_types";
 import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
 
@@ -10,7 +10,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const handleToggle = (item: Item, selected: boolean) => {
+  const handleToggle = (item: StoreItem, selected: boolean) => {
     if (selected) {
       addToCart(item);
     } else {

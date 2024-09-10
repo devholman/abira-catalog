@@ -1,25 +1,22 @@
-import type { Metadata } from "next";
+// app/layout.tsx (Server-Side for Metadata)
+import React, { ReactNode } from "react";
+import ClientLayout from "./layout.client";
 import { Inter } from "next/font/google";
-import "./globals.css";
-import { CartProvider } from "../context/CartContext";
+import "./globals.css"; // Import Tailwind CSS
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "Abira Sports Catalog",
   description: "sports team catalog",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang='en'>
-      <CartProvider>
-        <body className={inter.className}>{children}</body>
-      </CartProvider>
+      <body className={inter.className}>
+        <ClientLayout>{children}</ClientLayout>
+      </body>
     </html>
   );
 }

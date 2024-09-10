@@ -16,12 +16,11 @@ import { StoreItem } from "../_types";
 
 interface ItemCardProps {
   item: StoreItem;
-  addToCart: (item: StoreItem) => void;
-  onUpdate: (id: number, details: Partial<StoreItem>) => void;
+  // onUpdate: (id: number, details: Partial<StoreItem>) => void;
 }
 
-export default function ItemCard({ item, addToCart }: ItemCardProps) {
-  const { cart } = useCart();
+export default function ItemCard({ item }: ItemCardProps) {
+  const { cart, addToCart } = useCart();
   const [selected, setSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);

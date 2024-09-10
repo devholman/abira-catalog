@@ -8,76 +8,93 @@ import React, {
   useEffect,
 } from "react";
 
-import { Item } from "../_types";
+import { StoreItem } from "../_types";
 
 import { toFixedNumber } from "../utils/numUtils";
-import { StoreConfig } from "@/app/catalog/catalogConfigs";
 
 interface CartContextType {
-  cart: Item[];
+  cart: StoreItem[];
   totalQuantity: Number;
   totalPrice: Number;
   storeId: Number;
-  storeDetails: StoreConfig;
-  addToCart: (item: Item) => void;
+  addToCart: (item: StoreItem) => void;
   removeFromCart: (id: number) => void;
   removeOrderItem: (id: number, orderId: string) => void;
   setStoreId: (id: number) => void;
-  setStoreDetails: (x: StoreConfig) => void;
   clearCart: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<Item[]>([]);
+  const [cart, setCart] = useState<StoreItem[]>(() => {
+    // Initialize cart from localStorage
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [storeId, setStoreId] = useState<number>(0);
-  const [storeDetails, setStoreDetails] = useState<StoreConfig>({});
 
+  useEffect(() => {
+    // Retrieve cart data from localStorage when the component mounts
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      console.log("got stored cart");
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
+
+  // Update cart quantity and total price when cart changes
   useEffect(() => {
     calculateQuantity(cart);
     calculateTotalPrice(cart);
+
+    // Persist cart to localStorage whenever it updates (but avoid overwriting with initial empty cart)
+    if (cart.length > 0) {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
   }, [cart]);
 
-  const calculateQuantity = (cart: Item[]) => {
-    let totalQuantity = 0;
-    cart?.map((item: Item) => {
+  const calculateQuantity = (cart: StoreItem[]): void => {
+    let _totalQuantity = 0;
+    cart?.map((item: StoreItem) => {
       const quant = item.orders.reduce((sum, order) => sum + order.quantity, 0);
 
-      totalQuantity += quant;
+      _totalQuantity += quant;
     });
-    setTotalQuantity(totalQuantity);
+    setTotalQuantity(_totalQuantity);
+    localStorage.setItem("totalQuantity", JSON.stringify(_totalQuantity));
   };
 
-  const calculateTotalPrice = (cart: Item[]) => {
+  const calculateTotalPrice = (cart: StoreItem[]): void => {
     let totalPrice = 0;
-    cart?.map((item: Item) => {
+    cart?.map((item: StoreItem) => {
       const price = item.orders.reduce(
         (sum, order) => sum + item.price * order.quantity,
         0
       );
       totalPrice += price;
     });
-    setTotalPrice(toFixedNumber(totalPrice, 2, 10));
+    let formattedPrice = toFixedNumber(totalPrice, 2, 10);
+    setTotalPrice(formattedPrice);
+    localStorage.setItem("totalPrice", JSON.stringify(formattedPrice));
   };
 
-  const addToCart = (item: Item) => {
+  const addToCart = (item: StoreItem) => {
     setCart((prevCart) => {
       const itemIndex = prevCart?.findIndex(
         (cartItem) => cartItem.id === item.id
       );
+
       if (itemIndex !== -1) {
         // If the item already exists, update it
         const updatedCart = prevCart?.map((cartItem, index) =>
           index === itemIndex ? { ...cartItem, ...item } : cartItem
         );
-        console.log("updated cart: ", updatedCart);
         return updatedCart;
       } else {
         // If the item does not exist, add it to the cart
-        console.log("new cart item: ", [...prevCart, item]);
         return [...prevCart, item];
       }
     });
@@ -128,13 +145,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalQuantity,
         totalPrice,
         storeId,
-        storeDetails,
         addToCart,
         removeFromCart,
         removeOrderItem,
         clearCart,
         setStoreId,
-        setStoreDetails,
       }}
     >
       {children}

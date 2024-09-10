@@ -1,3 +1,16 @@
+export interface StoreConfig {
+  id: number;
+  name: string;
+  branding: {
+    logo: string;
+    primaryColor: string;
+    secondaryColor: string;
+  };
+  players: { name: string; number: number }[];
+  passcode: string;
+  items: StoreItem[];
+}
+
 export interface Item {
   id: number;
   title: string;

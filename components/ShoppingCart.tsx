@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 
-import { Item } from "../_types";
+import { StoreItem } from "../_types";
 import Image from "next/image";
 import { getS3ImageUrl } from "@/utils/images";
 import Button from "./Button";
 
 interface ShoppingCartProps {
-  cartItems: Item[];
+  cartItems: StoreItem[];
   total: Number;
   totalQuantity: Number;
   onConfirm: () => void;
@@ -23,7 +23,9 @@ export default function ShoppingCart({
 }: ShoppingCartProps) {
   return (
     <div className='p-8 bg-slate-50'>
-      <h1 className='text-xl mb-6 text-black'>{totalQuantity} Items</h1>
+      <h1 className='text-xl mb-6 text-black'>
+        {totalQuantity.toString()} Items
+      </h1>
       {cartItems.length === 0 ? (
         <p className='text-black'>Your cart is empty.</p>
       ) : (

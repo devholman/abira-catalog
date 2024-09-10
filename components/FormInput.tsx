@@ -1,16 +1,25 @@
 import React from "react";
 import { Input } from "@headlessui/react";
 
+interface FormInputProps {
+  label: string;
+  error?: any;
+  errorText?: string;
+  register: any;
+  id: string;
+  placeholder: string;
+  type?: string;
+}
+
 const FormInput = ({
   label,
   register,
   error,
   errorText,
   id,
-  validations,
   placeholder,
   type = "text",
-}) => {
+}: FormInputProps) => {
   return (
     <div className='relative w-full my-4'>
       <label

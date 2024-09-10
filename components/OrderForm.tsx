@@ -4,6 +4,7 @@ import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useCart } from "../context/CartContext";
+import { useStoreConfig } from "../context/StoreConfigContext";
 import FormInput from "./FormInput";
 import Button from "./Button";
 import PlayerSelectDropdown from "./PlayerSelectDropdown";
@@ -27,9 +28,11 @@ const OrderForm = () => {
     formState: { errors },
   } = methods;
 
-  const { clearCart, cart, totalPrice, totalQuantity, storeId, storeDetails } =
-    useCart();
+  const { clearCart, cart, totalPrice, totalQuantity, storeId } = useCart();
 
+  const {
+    storeConfig: { players },
+  } = useStoreConfig();
   const router = useRouter();
 
   const onSubmit = async (data: OrderFormData) => {
@@ -138,7 +141,7 @@ const OrderForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 p-4'>
         <FormInput {...firstName} />
         <FormInput {...lastName} />
-        <PlayerSelectDropdown players={storeDetails.players || []} />
+        <PlayerSelectDropdown players={players} />
         <FormInput {...email} />
         <FormInput {...phoneNumber} />
         <Notes {...notes} />

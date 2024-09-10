@@ -1,28 +1,8 @@
-// export default function Confirmation({
-//   confirmationNumber,
-// }: {
-//   confirmationNumber: string;
-// }) {
-//   return (
-//     <div className='p-8'>
-//       <h1 className='text-2xl font-bold'>Order Confirmed!</h1>
-//       <p className='mt-4'>
-//         Your order has been placed. Please pay via Venmo to @your-venmo-id.
-//       </p>
-//       <p className='mt-4'>
-//         Please reference {confirmationNumber} in future communications.
-//       </p>
-//     </div>
-//   );
-// }
-
-// import React from 'react';
-// import { useRouter } from 'next/router'; // Assuming the order number is passed via query
-
-const Confirmation = ({ confirmationNumber }) => {
-  // const router = useRouter();
-  // const { orderNumber } = router.query; // Retrieve order number from the URL query params
-
+const Confirmation = ({
+  confirmationNumber,
+}: {
+  confirmationNumber: string;
+}) => {
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
       {/* Title Section */}
@@ -64,11 +44,6 @@ const Confirmation = ({ confirmationNumber }) => {
             rel='noopener noreferrer'
             className='bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md shadow-md inline-flex items-center'
           >
-            <img
-              src='/venmo-logo.svg' // Add Venmo logo in your public folder
-              alt='Venmo'
-              className='h-6 w-6 mr-2'
-            />
             Pay with Venmo
           </a>
         </div>

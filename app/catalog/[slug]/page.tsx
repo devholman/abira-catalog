@@ -1,24 +1,21 @@
 "use client";
 // pages/[store].tsx
-import { usePathname } from "next/navigation";
 import Cookies from "js-cookie";
 import React, { useEffect, useState } from "react";
-import { stores } from "../catalogConfigs";
 //components
 import Home from "../../../components/Home";
 import { Input } from "@headlessui/react";
+import { useStoreConfig } from "../../../context/StoreConfigContext";
 
 export default function StorePage() {
-  const pathnames = usePathname()
-    .split("/")
-    .filter((path) => path !== "");
-  const store = pathnames[pathnames.length - 1].trim();
-
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [inputPasscode, setInputPasscode] = useState("");
   const [isClient, setIsClient] = useState(false);
 
-  const storeConfig = stores[store as string];
+  // const storeConfig = stores[store as string];
+  const {
+    storeConfig: { name, passcode },
+  } = useStoreConfig();
 
   useEffect(() => {
     const isAuthed = Cookies.get("isAuthenticated");
@@ -28,11 +25,10 @@ export default function StorePage() {
     }
   });
 
-  if (!storeConfig) {
-    return <>Store not found</>;
-  }
-
-  const handleInputPasscode = (e) => {
+  const handleInputPasscode = (
+    e: React.KeyboardEvent<HTMLInputElement> &
+      React.ChangeEvent<HTMLInputElement>
+  ) => {
     e.preventDefault();
     setInputPasscode(e.target.value);
     if (e.key === "Enter") {
@@ -42,8 +38,8 @@ export default function StorePage() {
   };
 
   const handlePasscodeSubmit = () => {
-    if (inputPasscode === storeConfig.passcode) {
-      Cookies.set("isAuthenticated", true);
+    if (inputPasscode === passcode) {
+      Cookies.set("isAuthenticated", "true");
 
       setIsAuthorized(true);
     } else {
@@ -54,9 +50,7 @@ export default function StorePage() {
   if (!isAuthorized && isClient) {
     return (
       <section className='p-8'>
-        <h1 className='text-3xl font-bold mb-8'>
-          Enter Passcode for {storeConfig.name}
-        </h1>
+        <h1 className='text-3xl font-bold mb-8'>Enter Passcode for {name}</h1>
         <Input
           type='password'
           value={inputPasscode}
@@ -73,5 +67,5 @@ export default function StorePage() {
     );
   }
 
-  return <Home storeConfig={storeConfig} />;
+  return <Home />;
 }

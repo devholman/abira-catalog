@@ -1,7 +1,10 @@
 import React, { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
-const PlayerSelectDropdown = ({ players }) => {
+interface PlayerSelectDropdownProps {
+  players: { name: string; number: number }[];
+}
+const PlayerSelectDropdown = ({ players }: PlayerSelectDropdownProps) => {
   const {
     register,
     setValue,

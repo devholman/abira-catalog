@@ -12,8 +12,6 @@ export async function POST(req: Request) {
     // Destructure the customer information
     const { firstName, lastName, playerName, playerNumber, email, phone } =
       customer;
-    console.log("🚀 ~ POST ~ playerNumber:", playerNumber);
-    console.log("🚀 ~ POST ~ playerName:", playerName);
 
     // Create a new customer record
     const newCustomer = await prisma.customer.create({
@@ -22,7 +20,7 @@ export async function POST(req: Request) {
         firstName,
         lastName,
         playerName,
-        playerNumber,
+        playerNumber: parseInt(playerNumber),
         email,
         phone,
       },
