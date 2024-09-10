@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
-import { Prisma, OrderItem } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
 export async function POST(request: Request) {
   const { itemId, startDate, endDate, storeId } = await request.json();
@@ -29,7 +29,7 @@ export async function POST(request: Request) {
   });
 
   const itemQuantities = orders.flatMap((order) =>
-    order.items.map((item: OrderItem) => ({
+    order.items.map((item) => ({
       size: item.size,
       quantity: item.quantity,
     }))

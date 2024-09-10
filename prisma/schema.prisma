@@ -26,8 +26,8 @@ model Order {
   createdAt  DateTime    @default(now())
   notes      String?
   storeId    Int
-  customer   Customer    @relation(fields: [customerId], references: [id])
   items      OrderItem[]
+  customer   Customer    @relation(fields: [customerId], references: [id])
 }
 
 model OrderItem {
