@@ -1,4 +1,4 @@
-import { Item, StoreItem } from "@/_types";
+import { StoreItem } from "@/_types";
 import React from "react";
 import Image from "next/image";
 import SelectionTiles from "./SelectionTiles";

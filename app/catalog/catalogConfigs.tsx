@@ -56,7 +56,7 @@ export const stores: Record<string, StoreConfig> = {
       { name: "Jane Smith", number: 12 },
       { name: "Mike Johnson", number: 8 },
     ],
-    passcode: "s2",
+    passcode: "s2r",
     items: [
       {
         id: 2,

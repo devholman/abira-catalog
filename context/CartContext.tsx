@@ -40,7 +40,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     // Retrieve cart data from localStorage when the component mounts
     const storedCart = localStorage.getItem("cart");
     if (storedCart) {
-      console.log("got stored cart");
       setCart(JSON.parse(storedCart));
     }
   }, []);
@@ -50,8 +49,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     calculateQuantity(cart);
     calculateTotalPrice(cart);
 
-    // Persist cart to localStorage whenever it updates (but avoid overwriting with initial empty cart)
-    if (cart.length > 0) {
+    if (cart.length === 0) {
+      localStorage.removeItem("cart");
+    } else {
       localStorage.setItem("cart", JSON.stringify(cart));
     }
   }, [cart]);

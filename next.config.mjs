@@ -14,5 +14,6 @@ export default {
         pathname: "/**", // This allows all paths under the bucket
       },
     ],
+    domains: ["catalog-images1.s3.us-east-2.amazonaws.com"],
   },
 };

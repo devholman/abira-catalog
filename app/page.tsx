@@ -24,7 +24,9 @@ export default function Home() {
 
   return (
     <div className='p-8'>
-      <h1 className='text-3xl font-bold mb-8'>Apparel Store</h1>
+      <h1 className='text-2xl font-bold mb-8'>Abira Sports Team Catalogs</h1>
+      <p>Use the link provided to you to access your store</p>
+      <p>Additionally, you can reach out to us at</p>
       {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {items.map((item) => (
           <ItemCard key={item.id} item={item} onToggle={handleToggle} />
