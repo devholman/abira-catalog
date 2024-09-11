@@ -12,7 +12,8 @@
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "postinstall": "prisma generate",
-    "prisma:migrate": "prisma migrate deploy"
+    "prisma:migrate": "prisma migrate deploy",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
