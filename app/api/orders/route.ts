@@ -1,13 +1,12 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "@/lib/email";
-
+import confirmationTemplate from "./emailTemplate";
 export async function POST(req: Request) {
   try {
     const data = await req.json();
 
     const { customer, cart, totalPrice, notes, storeId } = data;
-    console.log("🚀 ~ POST ~ storeId:", storeId);
 
     // Destructure the customer information
     const { firstName, lastName, playerName, playerNumber, email, phone } =
@@ -59,12 +58,12 @@ export async function POST(req: Request) {
     //send emails
     const customerEmail = email; // Replace with the actual email field from the request
     const businessOwnerEmail = "abirasportsapparel@gmail.com";
-    const emailHtml = `
-            <h1>Order Confirmation</h1>
-            <p>Thank you for your order!</p>
-            <p>Your confirmation number is: <strong>${confirmationNumber}</strong></p>
-            <p>Order Details: ${JSON.stringify(cart)}</p>
-        `;
+    const emailHtml = confirmationTemplate(
+      "Order Confirmation",
+      confirmationNumber,
+      totalPrice,
+      cart
+    );
 
     // Send confirmation to customer
     await sendEmail(customerEmail, "Your Order Confirmation", emailHtml);
