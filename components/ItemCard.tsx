@@ -80,6 +80,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         onClick={toggleModal}
         priority
         quality={75} // Adjust quality for optimization
+        unoptimized
       />
       <ItemModal
         item={item}
