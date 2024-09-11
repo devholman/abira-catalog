@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { getS3ImageUrl } from "../utils/images";
+import logo from "../public/abiraLogo.svg";
 
 export default function Header() {
   const logoUrl = getS3ImageUrl("AbiraLogo.svg");
@@ -21,7 +22,7 @@ export default function Header() {
           rel='noopener noreferrer'
         >
           <Image
-            src={logoUrl}
+            src={logoUrl || logo}
             alt={"abira logo"}
             width={100}
             height={100}

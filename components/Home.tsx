@@ -5,8 +5,8 @@ import { useCart } from "../context/CartContext";
 import { useStoreConfig } from "../context/StoreConfigContext";
 import { useRouter } from "next/navigation";
 //components
-import { ShoppingCartIcon } from "@heroicons/react/20/solid";
 import ItemCard from "./ItemCard";
+import CartIcon from "@/images/CartIcon";
 
 export default function Home() {
   const { totalQuantity } = useCart();
@@ -35,7 +35,7 @@ export default function Home() {
           {name}
         </h1>
         <div className='flex items-center gap-2' onClick={handleViewCart}>
-          <ShoppingCartIcon className={"size-7"} />
+          <CartIcon className={"size-7"} />
           <span className='text-lg'>({totalQuantity.toString()})</span>
         </div>
       </div>
