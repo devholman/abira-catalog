@@ -27,6 +27,7 @@ export default function Header() {
             height={100}
             priority
             quality={75} // Adjust quality for optimization
+            unoptimized
           />
         </Link>
       </div>

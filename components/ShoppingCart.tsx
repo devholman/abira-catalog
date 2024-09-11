@@ -43,6 +43,7 @@ export default function ShoppingCart({
                     height={200}
                     priority
                     quality={75}
+                    unoptimized
                     className='w-24 h-24 object-cover rounded'
                   />
                   <div className='flex flex-col pl-4 gap-2 w-4/5'>
