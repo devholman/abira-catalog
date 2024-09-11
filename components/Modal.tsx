@@ -59,6 +59,7 @@ export default function ItemModal({
                 onClick={toggleModal}
                 priority
                 quality={75} // Adjust quality for optimization
+                unoptimized
               />
               {/* You can add buttons or auto-carousel functionality here */}
               <Accordion
