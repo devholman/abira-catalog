@@ -28,6 +28,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const [selectedColor, setSelectedColor] = useState("");
   const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
   const [isOpen, setIsOpen] = useState(false);
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
     setSelected(cart?.some((cartItem) => cartItem.id === item.id));
@@ -48,6 +49,15 @@ export default function ItemCard({ item }: ItemCardProps) {
   };
 
   const handleAddtoCart = () => {
+    if (!selectedSize) {
+      setError("Select a size to continue");
+      return;
+    }
+    if (!selectedColor) {
+      setError("Select a color to continue");
+      return;
+    }
+
     setSelected(!selected);
     item.orders = [
       ...item.orders,
@@ -93,6 +103,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         handleAddtoCart={handleAddtoCart}
         selectedSize={selectedSize}
         selectedColor={selectedColor}
+        errorMsg={error}
       />
       <div className='flex gap-11 items-end' onClick={toggleModal}>
         <div className='flex flex-col py-1 gap-1'>

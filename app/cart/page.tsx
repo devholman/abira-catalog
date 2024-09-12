@@ -9,11 +9,6 @@ export default function Cart() {
   const { cart, removeOrderItem, totalPrice, totalQuantity } = useCart();
   const router = useRouter();
 
-  // const handleConfirm = async () => {
-  //   await sendEmail(cart, total);
-  //   router.push("/confirmation");
-  //   clearCart();
-  // };
   const handleConfirm = async () => {
     router.push("/contactForm");
   };

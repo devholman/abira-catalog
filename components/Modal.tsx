@@ -1,5 +1,5 @@
 import { StoreItem } from "@/_types";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import SelectionTiles from "./SelectionTiles";
 import QuantitySelector from "./QuantitySelector";
@@ -17,6 +17,7 @@ interface ItemModalProps {
   selectedSize: string;
   selectedColor: string;
   imageUrl: string;
+  errorMsg: string;
 }
 
 export default function ItemModal({
@@ -25,18 +26,32 @@ export default function ItemModal({
   selectedSize,
   selectedColor,
   imageUrl,
+  errorMsg,
   toggleModal,
   handleSize,
   handleColor,
   handleQuantity,
   handleAddtoCart,
 }: ItemModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.documentElement.style.overflow = "hidden";
+      // @ts-ignore
+      document.body.scroll = "no";
+    }
+    return (): void => {
+      document.documentElement.style.overflow = "scroll";
+      // @ts-ignore
+      document.body.scroll = "no";
+    };
+  }, [isOpen]);
+
   return (
     <div>
       {/* Modal */}
       {isOpen && (
         <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
-          <div className='w-full max-w-lg p-4 bg-white rounded-t-lg'>
+          <div className='w-full max-w-lg p-4 bg-white rounded-t-lg lg:m-auto'>
             <div className='flex justify-between'>
               {/* Title and Price */}
               <h2 className='text-xl font-bold text-black mb-2'>
@@ -88,11 +103,10 @@ export default function ItemModal({
             />
 
             {/* Close Button at Bottom */}
-            <Button
-              handleClick={handleAddtoCart}
-              isDisabled={!selectedColor || !selectedSize}
-              text={"Add To Cart"}
-            ></Button>
+            <Button handleClick={handleAddtoCart} text={"Add To Cart"}></Button>
+            {errorMsg && (
+              <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
+            )}
           </div>
         </div>
       )}

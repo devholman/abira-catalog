@@ -137,21 +137,26 @@ const OrderForm = () => {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)} className='space-y-4 p-4'>
-        <FormInput {...firstName} />
-        <FormInput {...lastName} />
-        <PlayerSelectDropdown players={players} />
-        <FormInput {...email} />
-        <FormInput {...phoneNumber} />
-        <Notes {...notes} />
-        <Button
-          type='submit'
-          text={"Submit Order"}
-          isDisabled={cart.length === 0}
-        />
-      </form>
-    </FormProvider>
+    <div className='lg:flex lg:justify-center'>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className='space-y-4 lg:w-full lg:max-w-2xl p-8 lg:rounded-lg lg:shadow-md'
+        >
+          <FormInput {...firstName} />
+          <FormInput {...lastName} />
+          <PlayerSelectDropdown players={players} />
+          <FormInput {...email} />
+          <FormInput {...phoneNumber} />
+          <Notes {...notes} />
+          <Button
+            type='submit'
+            text={"Submit Order"}
+            isDisabled={cart.length === 0}
+          />
+        </form>
+      </FormProvider>
+    </div>
   );
 };
 export default OrderForm;
