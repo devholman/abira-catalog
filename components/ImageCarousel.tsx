@@ -62,7 +62,7 @@ const ImageCarousel: React.FC<ScrollableImageCarouselProps> = ({
     <div
       ref={carouselRef}
       className='flex w-auto h-24 overflow-x-auto snap-x gap-2 snap-mandatory scroll-smooth scrollbar-hide overscroll-none touch-pan-x'
-      style={{ touchAction: "pan-y" }}
+      // style={{ touchAction: "pan-y" }}
     >
       {images.map((image, index) => (
         <div key={index} className='flex-shrink-0 w-auto h-24 snap-center'>

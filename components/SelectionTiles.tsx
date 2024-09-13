@@ -18,7 +18,7 @@ const SelectionTiles = ({
         <span className='text-sm text-gray-800 strong'>{labelName}</span> -{" "}
         {value}
       </label>
-      <div className='flex justify-start gap-4 mb-4'>
+      <div className='flex justify-start gap-4 mb-4 flex-wrap'>
         {list.map((option, index) => (
           <button
             key={index}

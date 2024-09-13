@@ -60,7 +60,7 @@ export default function ItemModal({
       {isOpen && (
         <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
           <div
-            className='w-full max-w-lg px-4 py-6 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
+            className='w-full max-w-lg px-4 py-3 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
             style={{ maxHeight: "calc(100% - env(safe-area-inset-top))" }}
           >
             <div className='flex justify-between relative'>
@@ -75,7 +75,7 @@ export default function ItemModal({
               </button>
             </div>
             <div
-              className='py-6 overflow-y-auto'
+              className='py-3 overflow-y-auto overflow-x-hidden'
               style={{
                 maxHeight: "calc(100% - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
               }}
