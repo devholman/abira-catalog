@@ -41,6 +41,7 @@ export interface StoreItem {
   title: string;
   price: number;
   image: string;
+  images?: string[];
   sizes: string[];
   colors: string[];
   category: Categories;

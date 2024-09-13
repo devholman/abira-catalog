@@ -4,6 +4,7 @@ interface ButtonProps {
   handleClick?: () => void;
   isDisabled?: boolean;
   text: string;
+  classNames?: string;
   type?: "submit" | "reset" | "button" | undefined;
 }
 
@@ -12,11 +13,12 @@ const Button = ({
   isDisabled = false,
   text,
   type = "submit",
+  classNames,
 }: ButtonProps) => {
   return (
     <button
       type={type}
-      className='w-full py-2 mt-4 text-white bg-black rounded'
+      className={`w-full py-2 mt-4 text-white bg-black rounded ${classNames}`}
       onClick={handleClick}
       disabled={isDisabled}
     >

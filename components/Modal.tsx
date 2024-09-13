@@ -1,10 +1,14 @@
 import { StoreItem } from "@/_types";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import SelectionTiles from "./SelectionTiles";
 import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
+import ImageCarousel from "./ImageCarousel";
+
+//helpers
+import { getS3ImageUrl } from "../utils/images";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -33,6 +37,11 @@ export default function ItemModal({
   handleQuantity,
   handleAddtoCart,
 }: ItemModalProps) {
+  const [mainImage, setMainImage] = useState(imageUrl); // Set main image
+  const [images] = useState(
+    item.images?.map((image) => getS3ImageUrl(image)) || [imageUrl]
+  ); // Assume `item.images` holds additional images
+
   useEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
@@ -48,40 +57,39 @@ export default function ItemModal({
 
   return (
     <div>
-      {/* Modal */}
       {isOpen && (
-        <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
-          <div className='w-full max-w-lg p-4 bg-white rounded-t-lg lg:m-auto'>
+        <div className='fixed inset-0 z-50 flex mb-4 items-end justify-center bg-black bg-opacity-50'>
+          <div className='w-full max-w-lg p-4 pt-8 bg-white rounded-t-lg max-h-screen overflow-y-auto lg:m-auto'>
             <div className='flex justify-between'>
-              {/* Title and Price */}
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
               </h2>
-              {/* Close Button */}
               <button className='text-right text-black' onClick={toggleModal}>
-                &#x2715; {/* Close Icon */}
+                &#x2715;
               </button>
             </div>
             <p className='text-lg text-black mb-4'>${item.price}</p>
 
-            {/* Image Carousel */}
-            <div className='relative w-full h-64 mb-4'>
+            {/* Main Image Display */}
+            <div className='flex justify-center relative w-full h-52 mb-4'>
               <Image
-                src={imageUrl}
+                src={mainImage}
                 alt={item.title}
-                width={200}
-                height={200}
-                onClick={toggleModal}
+                width={500}
+                height={500}
+                className='w-full h-full object-cover max-w-fit rounded-lg'
                 priority
-                quality={75} // Adjust quality for optimization
+                quality={75}
                 unoptimized
               />
-              {/* You can add buttons or auto-carousel functionality here */}
-              <Accordion
-                title={"Description"}
-                content={"100% airlume ringspun cotton"}
-              />
             </div>
+            <ImageCarousel
+              images={images}
+              mainImage={mainImage}
+              setMainImage={setMainImage}
+            />
+
+            {/* Size, Color, Quantity Selectors */}
             <SelectionTiles
               handleClick={handleSize}
               list={item.sizes}
@@ -101,9 +109,17 @@ export default function ItemModal({
               onChange={handleQuantity}
               labelName={"Quantity"}
             />
+            <Accordion
+              title={"Description"}
+              content={"100% airlume ringspun cotton"}
+            />
 
-            {/* Close Button at Bottom */}
-            <Button handleClick={handleAddtoCart} text={"Add To Cart"}></Button>
+            {/* Add to Cart Button */}
+            <Button
+              handleClick={handleAddtoCart}
+              text={"Add To Cart"}
+              classNames='mb-2'
+            />
             {errorMsg && (
               <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
             )}
