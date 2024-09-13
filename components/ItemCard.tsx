@@ -16,7 +16,6 @@ import { StoreItem } from "../_types";
 
 interface ItemCardProps {
   item: StoreItem;
-  // onUpdate: (id: number, details: Partial<StoreItem>) => void;
 }
 
 export default function ItemCard({ item }: ItemCardProps) {
@@ -104,10 +103,13 @@ export default function ItemCard({ item }: ItemCardProps) {
         selectedSize={selectedSize}
         selectedColor={selectedColor}
         errorMsg={error}
+        close={() => {
+          setIsOpen(false);
+        }}
       />
-      <div className='flex gap-11 items-end' onClick={toggleModal}>
+      <div className='flex justify-between items-end' onClick={toggleModal}>
         <div className='flex flex-col py-1 gap-1'>
-          <h2 className='text-sm font-medium mt-2'>
+          <h2 className='text-xs font-medium mt-2'>
             {item.title.toUpperCase()}
           </h2>
           <p className='text-gray-600 font-normal text-sm'>

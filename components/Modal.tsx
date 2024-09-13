@@ -1,10 +1,14 @@
 import { StoreItem } from "@/_types";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import SelectionTiles from "./SelectionTiles";
 import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
+import ImageCarousel from "./ImageCarousel";
+
+//helpers
+import { getS3ImageUrl } from "../utils/images";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -18,6 +22,7 @@ interface ItemModalProps {
   selectedColor: string;
   imageUrl: string;
   errorMsg: string;
+  close: () => void;
 }
 
 export default function ItemModal({
@@ -32,7 +37,13 @@ export default function ItemModal({
   handleColor,
   handleQuantity,
   handleAddtoCart,
+  close,
 }: ItemModalProps) {
+  const [mainImage, setMainImage] = useState(imageUrl); // Set main image
+  const [images] = useState(
+    item.images?.map((image) => getS3ImageUrl(image)) || [imageUrl]
+  ); // Assume `item.images` holds additional images
+
   useEffect(() => {
     if (isOpen) {
       document.documentElement.style.overflow = "hidden";
@@ -48,65 +59,95 @@ export default function ItemModal({
 
   return (
     <div>
-      {/* Modal */}
       {isOpen && (
-        <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
-          <div className='w-full max-w-lg p-4 bg-white rounded-t-lg lg:m-auto'>
-            <div className='flex justify-between'>
-              {/* Title and Price */}
+        <div
+          className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'
+          onClick={() => {
+            // close modal when outside of modal is clicked
+            close();
+          }}
+        >
+          <div
+            className='w-full max-w-lg px-4 py-3 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
+            style={{ maxHeight: "calc(100% - env(safe-area-inset-top))" }}
+            onClick={(e) => {
+              // do not close modal if anything inside modal content is clicked
+              e.stopPropagation();
+            }}
+          >
+            <div className='flex justify-between gap-4 relative'>
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
               </h2>
-              {/* Close Button */}
-              <button className='text-right text-black' onClick={toggleModal}>
-                &#x2715; {/* Close Icon */}
+              <button
+                className='text-right text-black self-start'
+                onClick={toggleModal}
+              >
+                &#x2715;
               </button>
             </div>
-            <p className='text-lg text-black mb-4'>${item.price}</p>
+            <div
+              className='py-3 overflow-y-auto overflow-x-hidden'
+              style={{
+                maxHeight: "calc(100% - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
+              }}
+            >
+              <p className='text-lg text-black mb-4'>${item.price}</p>
 
-            {/* Image Carousel */}
-            <div className='relative w-full h-64 mb-4'>
-              <Image
-                src={imageUrl}
-                alt={item.title}
-                width={200}
-                height={200}
-                onClick={toggleModal}
-                priority
-                quality={75} // Adjust quality for optimization
-                unoptimized
+              {/* Main Image Display */}
+              <div className='flex justify-center relative w-full h-52 mb-4'>
+                <Image
+                  src={mainImage}
+                  alt={item.title}
+                  width={500}
+                  height={500}
+                  className='w-full h-full object-cover max-w-fit rounded-lg'
+                  priority
+                  quality={75}
+                  unoptimized
+                />
+              </div>
+              <ImageCarousel
+                images={images}
+                mainImage={mainImage}
+                setMainImage={setMainImage}
               />
-              {/* You can add buttons or auto-carousel functionality here */}
+
+              {/* Size, Color, Quantity Selectors */}
+              <SelectionTiles
+                handleClick={handleSize}
+                list={item.sizes}
+                value={selectedSize}
+                labelName={"Size"}
+              />
+              <SelectionTiles
+                handleClick={handleColor}
+                list={item.colors}
+                value={selectedColor}
+                labelName={"Color"}
+              />
+              <QuantitySelector
+                initialQuantity={1}
+                minQuantity={1}
+                maxQuantity={10}
+                onChange={handleQuantity}
+                labelName={"Quantity"}
+              />
               <Accordion
                 title={"Description"}
                 content={"100% airlume ringspun cotton"}
               />
-            </div>
-            <SelectionTiles
-              handleClick={handleSize}
-              list={item.sizes}
-              value={selectedSize}
-              labelName={"Size"}
-            />
-            <SelectionTiles
-              handleClick={handleColor}
-              list={item.colors}
-              value={selectedColor}
-              labelName={"Color"}
-            />
-            <QuantitySelector
-              initialQuantity={1}
-              minQuantity={1}
-              maxQuantity={10}
-              onChange={handleQuantity}
-              labelName={"Quantity"}
-            />
 
-            {/* Close Button at Bottom */}
-            <Button handleClick={handleAddtoCart} text={"Add To Cart"}></Button>
-            {errorMsg && (
-              <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
-            )}
+              {/* Add to Cart Button */}
+              <Button
+                handleClick={handleAddtoCart}
+                text={"Add To Cart"}
+                classNames='mb-2'
+              />
+              {errorMsg && (
+                <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
+              )}
+            </div>
           </div>
         </div>
       )}

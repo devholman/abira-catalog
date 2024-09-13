@@ -21,12 +21,7 @@ export default function Home() {
   };
 
   return (
-    <div className='p-8' style={{ backgroundColor: branding.primaryColor }}>
-      {/* <img
-        src={storeConfig.branding.logo}
-        alt={`${storeConfig.name} logo`}
-        className='mb-8'
-      /> */}
+    <div className='p-5' style={{ backgroundColor: branding.primaryColor }}>
       <div className='flex px-4 justify-between items-center mb-8'>
         <h1
           className='text-3xl font-bold'
