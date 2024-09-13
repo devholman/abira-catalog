@@ -60,8 +60,8 @@ export default function ItemModal({
       {isOpen && (
         <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
           <div
-            className='w-full max-w-lg px-4 py-8 bg-white rounded-t-lg h-[calc(100vh-40px)] lg:m-auto'
-            style={{ maxHeight: "calc(100vh - env(safe-area-inset-top))" }}
+            className='w-full max-w-lg px-4 py-6 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
+            style={{ maxHeight: "calc(100% - env(safe-area-inset-top))" }}
           >
             <div className='flex justify-between relative'>
               <h2 className='text-xl font-bold text-black mb-2'>
@@ -77,7 +77,7 @@ export default function ItemModal({
             <div
               className='py-6 overflow-y-auto'
               style={{
-                maxHeight: "calc(100vh - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
+                maxHeight: "calc(100% - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
               }}
             >
               <p className='text-lg text-black mb-4'>${item.price}</p>
