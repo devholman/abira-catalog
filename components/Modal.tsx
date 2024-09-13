@@ -59,70 +59,83 @@ export default function ItemModal({
     <div>
       {isOpen && (
         <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
-          <div className='w-full max-w-lg px-4 py-8 bg-white rounded-t-lg h-[calc(100vh-40px)] overflow-y-auto lg:m-auto'>
-            <div className='flex justify-between'>
+          <div
+            className='w-full max-w-lg px-4 py-8 bg-white rounded-t-lg h-[calc(100vh-40px)] lg:m-auto'
+            style={{ maxHeight: "calc(100vh - env(safe-area-inset-top))" }}
+          >
+            <div className='flex justify-between relative'>
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
               </h2>
-              <button className='text-right text-black' onClick={toggleModal}>
+              <button
+                className='text-right text-black absolute top-4 right-4'
+                onClick={toggleModal}
+              >
                 &#x2715;
               </button>
             </div>
-            <p className='text-lg text-black mb-4'>${item.price}</p>
+            <div
+              className='py-6 overflow-y-auto'
+              style={{
+                maxHeight: "calc(100vh - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
+              }}
+            >
+              <p className='text-lg text-black mb-4'>${item.price}</p>
 
-            {/* Main Image Display */}
-            <div className='flex justify-center relative w-full h-52 mb-4'>
-              <Image
-                src={mainImage}
-                alt={item.title}
-                width={500}
-                height={500}
-                className='w-full h-full object-cover max-w-fit rounded-lg'
-                priority
-                quality={75}
-                unoptimized
+              {/* Main Image Display */}
+              <div className='flex justify-center relative w-full h-52 mb-4'>
+                <Image
+                  src={mainImage}
+                  alt={item.title}
+                  width={500}
+                  height={500}
+                  className='w-full h-full object-cover max-w-fit rounded-lg'
+                  priority
+                  quality={75}
+                  unoptimized
+                />
+              </div>
+              <ImageCarousel
+                images={images}
+                mainImage={mainImage}
+                setMainImage={setMainImage}
               />
+
+              {/* Size, Color, Quantity Selectors */}
+              <SelectionTiles
+                handleClick={handleSize}
+                list={item.sizes}
+                value={selectedSize}
+                labelName={"Size"}
+              />
+              <SelectionTiles
+                handleClick={handleColor}
+                list={item.colors}
+                value={selectedColor}
+                labelName={"Color"}
+              />
+              <QuantitySelector
+                initialQuantity={1}
+                minQuantity={1}
+                maxQuantity={10}
+                onChange={handleQuantity}
+                labelName={"Quantity"}
+              />
+              <Accordion
+                title={"Description"}
+                content={"100% airlume ringspun cotton"}
+              />
+
+              {/* Add to Cart Button */}
+              <Button
+                handleClick={handleAddtoCart}
+                text={"Add To Cart"}
+                classNames='mb-2'
+              />
+              {errorMsg && (
+                <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
+              )}
             </div>
-            <ImageCarousel
-              images={images}
-              mainImage={mainImage}
-              setMainImage={setMainImage}
-            />
-
-            {/* Size, Color, Quantity Selectors */}
-            <SelectionTiles
-              handleClick={handleSize}
-              list={item.sizes}
-              value={selectedSize}
-              labelName={"Size"}
-            />
-            <SelectionTiles
-              handleClick={handleColor}
-              list={item.colors}
-              value={selectedColor}
-              labelName={"Color"}
-            />
-            <QuantitySelector
-              initialQuantity={1}
-              minQuantity={1}
-              maxQuantity={10}
-              onChange={handleQuantity}
-              labelName={"Quantity"}
-            />
-            <Accordion
-              title={"Description"}
-              content={"100% airlume ringspun cotton"}
-            />
-
-            {/* Add to Cart Button */}
-            <Button
-              handleClick={handleAddtoCart}
-              text={"Add To Cart"}
-              classNames='mb-2'
-            />
-            {errorMsg && (
-              <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
-            )}
           </div>
         </div>
       )}
