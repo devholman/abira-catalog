@@ -58,8 +58,8 @@ export default function ItemModal({
   return (
     <div>
       {isOpen && (
-        <div className='fixed inset-0 z-50 flex mb-4 items-end justify-center bg-black bg-opacity-50'>
-          <div className='w-full max-w-lg p-4 pt-8 bg-white rounded-t-lg max-h-screen overflow-y-auto lg:m-auto'>
+        <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
+          <div className='w-full max-w-lg px-4 py-8 bg-white rounded-t-lg h-[calc(100vh-40px)] overflow-y-auto lg:m-auto'>
             <div className='flex justify-between'>
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
