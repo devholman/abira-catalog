@@ -16,47 +16,47 @@ const ImageCarousel: React.FC<ScrollableImageCarouselProps> = ({
   const [isTouching, setIsTouching] = useState(false);
   const [touchStartX, setTouchStartX] = useState(0);
 
-  useEffect(() => {
-    const carousel = carouselRef.current;
+  // useEffect(() => {
+  //   const carousel = carouselRef.current;
 
-    const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
-      setIsTouching(true);
-      setTouchStartX(event.touches[0].clientX);
-    };
+  //   const handleTouchStart = (event: TouchEvent<HTMLDivElement>) => {
+  //     setIsTouching(true);
+  //     setTouchStartX(event.touches[0].clientX);
+  //   };
 
-    const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
-      if (!isTouching) return;
-      const touchX = event.touches[0].clientX;
-      const diffX = touchX - touchStartX;
+  //   const handleTouchMove = (event: TouchEvent<HTMLDivElement>) => {
+  //     if (!isTouching) return;
+  //     const touchX = event.touches[0].clientX;
+  //     const diffX = touchX - touchStartX;
 
-      // If horizontal scroll is detected, prevent default behavior
-      if (Math.abs(diffX) > 10) {
-        event.preventDefault();
-      }
-    };
+  //     // If horizontal scroll is detected, prevent default behavior
+  //     if (Math.abs(diffX) > 10) {
+  //       event.preventDefault();
+  //     }
+  //   };
 
-    const handleTouchEnd = () => {
-      setIsTouching(false);
-    };
+  //   const handleTouchEnd = () => {
+  //     setIsTouching(false);
+  //   };
 
-    if (carousel) {
-      // Add touch event listeners
-      carousel.addEventListener("touchstart", handleTouchStart as any);
-      carousel.addEventListener("touchmove", handleTouchMove as any, {
-        passive: false,
-      });
-      carousel.addEventListener("touchend", handleTouchEnd as any);
-    }
+  //   if (carousel) {
+  //     // Add touch event listeners
+  //     carousel.addEventListener("touchstart", handleTouchStart as any);
+  //     carousel.addEventListener("touchmove", handleTouchMove as any, {
+  //       passive: false,
+  //     });
+  //     carousel.addEventListener("touchend", handleTouchEnd as any);
+  //   }
 
-    return () => {
-      if (carousel) {
-        // Clean up touch event listeners
-        carousel.removeEventListener("touchstart", handleTouchStart as any);
-        carousel.removeEventListener("touchmove", handleTouchMove as any);
-        carousel.removeEventListener("touchend", handleTouchEnd as any);
-      }
-    };
-  }, [isTouching, touchStartX]);
+  //   return () => {
+  //     if (carousel) {
+  //       // Clean up touch event listeners
+  //       carousel.removeEventListener("touchstart", handleTouchStart as any);
+  //       carousel.removeEventListener("touchmove", handleTouchMove as any);
+  //       carousel.removeEventListener("touchend", handleTouchEnd as any);
+  //     }
+  //   };
+  // }, [isTouching, touchStartX]);
 
   return (
     <div
