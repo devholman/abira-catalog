@@ -103,6 +103,9 @@ export default function ItemCard({ item }: ItemCardProps) {
         selectedSize={selectedSize}
         selectedColor={selectedColor}
         errorMsg={error}
+        close={() => {
+          setIsOpen(false);
+        }}
       />
       <div className='flex justify-between items-end' onClick={toggleModal}>
         <div className='flex flex-col py-1 gap-1'>

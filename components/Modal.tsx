@@ -22,6 +22,7 @@ interface ItemModalProps {
   selectedColor: string;
   imageUrl: string;
   errorMsg: string;
+  close: () => void;
 }
 
 export default function ItemModal({
@@ -36,6 +37,7 @@ export default function ItemModal({
   handleColor,
   handleQuantity,
   handleAddtoCart,
+  close,
 }: ItemModalProps) {
   const [mainImage, setMainImage] = useState(imageUrl); // Set main image
   const [images] = useState(
@@ -58,17 +60,27 @@ export default function ItemModal({
   return (
     <div>
       {isOpen && (
-        <div className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'>
+        <div
+          className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'
+          onClick={() => {
+            // close modal when outside of modal is clicked
+            close();
+          }}
+        >
           <div
             className='w-full max-w-lg px-4 py-3 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
             style={{ maxHeight: "calc(100% - env(safe-area-inset-top))" }}
+            onClick={(e) => {
+              // do not close modal if anything inside modal content is clicked
+              e.stopPropagation();
+            }}
           >
-            <div className='flex justify-between relative'>
+            <div className='flex justify-between gap-4 relative'>
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
               </h2>
               <button
-                className='text-right text-black absolute top-4 right-4'
+                className='text-right text-black self-start'
                 onClick={toggleModal}
               >
                 &#x2715;
