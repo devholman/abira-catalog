@@ -6,7 +6,8 @@ import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import ImageCarousel from "./ImageCarousel";
-
+import { Checkbox } from "@headlessui/react";
+import { CheckIcon } from "@heroicons/react/24/solid";
 //helpers
 import { getS3ImageUrl } from "../utils/images";
 
@@ -18,8 +19,11 @@ interface ItemModalProps {
   handleColor: (color: string) => void;
   handleQuantity: (num: number) => void;
   handleAddtoCart: () => void;
+  handleNotes: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  setIsAddNumberToBack: (val: boolean) => void;
   selectedSize: string;
   selectedColor: string;
+  isAddNumberToBack: boolean;
   imageUrl: string;
   errorMsg: string;
   close: () => void;
@@ -30,6 +34,7 @@ export default function ItemModal({
   isOpen,
   selectedSize,
   selectedColor,
+  isAddNumberToBack,
   imageUrl,
   errorMsg,
   toggleModal,
@@ -37,6 +42,8 @@ export default function ItemModal({
   handleColor,
   handleQuantity,
   handleAddtoCart,
+  handleNotes,
+  setIsAddNumberToBack,
   close,
 }: ItemModalProps) {
   const [mainImage, setMainImage] = useState(imageUrl); // Set main image
@@ -133,6 +140,43 @@ export default function ItemModal({
                 onChange={handleQuantity}
                 labelName={"Quantity"}
               />
+              <div className='py-4 mt-4'>
+                {/* <label className='mr-2'>Add name and number to back:</label> */}
+
+                <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded dark:border-gray-700'>
+                  <Checkbox
+                    checked={isAddNumberToBack}
+                    onChange={setIsAddNumberToBack}
+                    className='flex items-center group size-6 border-solid border-2 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white'
+                  >
+                    <CheckIcon className='hidden size-4 fill-black group-data-[checked]:block' />
+                  </Checkbox>
+                  <label
+                    htmlFor='bordered-checkbox-1'
+                    className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
+                  >
+                    Add name and number to back (addtl. $2):
+                  </label>
+                </div>
+              </div>
+              {item.isCustomizable && (
+                <div className='relative w-full my-4'>
+                  <label
+                    htmlFor='notes'
+                    className='py-2 text-gray-800 block space-x-2 text-sm strong'
+                  >
+                    Notes
+                  </label>
+                  <textarea
+                    name='notes'
+                    placeholder={"Enter Customization notes"}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                      handleNotes(e)
+                    }
+                    className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm'
+                  />
+                </div>
+              )}
               <Accordion
                 title={"Description"}
                 content={"100% airlume ringspun cotton"}

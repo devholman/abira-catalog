@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "@/lib/email";
 import confirmationTemplate from "./emailTemplate";
+
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
               price: item.price,
               title: item.title,
               isAddBack: order.isAddBack,
+              notes: order.notes,
             }))
           ),
         },

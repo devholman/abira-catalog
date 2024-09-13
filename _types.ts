@@ -39,6 +39,7 @@ export interface CartItem {
 export interface StoreItem {
   id: number;
   title: string;
+  isCustomizable: boolean;
   price: number;
   image: string;
   images?: string[];
@@ -51,6 +52,7 @@ export interface StoreItem {
     size: string;
     color: string;
     isAddBack: boolean;
+    notes: string;
   }[];
 }
 
