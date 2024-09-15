@@ -4,8 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
 
 //components
-import { Checkbox } from "@headlessui/react";
-import { CheckIcon, PlusCircleIcon } from "@heroicons/react/24/outline";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 import ItemModal from "./Modal";
 
 //helpers
@@ -22,6 +21,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const { cart, addToCart } = useCart();
   const [selected, setSelected] = useState(false);
   const [selectedSize, setSelectedSize] = useState<string>("");
+  const [orderItemNotes, setOrderItemNotes] = useState<string>("");
   const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
   const [isAddNumberToBack, setIsAddNumberToBack] = useState(false);
   const [selectedColor, setSelectedColor] = useState("");
@@ -42,6 +42,10 @@ export default function ItemCard({ item }: ItemCardProps) {
   };
   const handleColor = (color: string) => {
     setSelectedColor(color);
+  };
+  const handleNotes = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setOrderItemNotes(value);
   };
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -66,6 +70,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         size: selectedSize || "S",
         color: selectedColor || "black",
         isAddBack: isAddNumberToBack,
+        notes: orderItemNotes,
       },
     ];
 
@@ -100,6 +105,9 @@ export default function ItemCard({ item }: ItemCardProps) {
         handleColor={handleColor}
         handleQuantity={handleQuantity}
         handleAddtoCart={handleAddtoCart}
+        handleNotes={handleNotes}
+        setIsAddNumberToBack={setIsAddNumberToBack}
+        isAddNumberToBack={isAddNumberToBack}
         selectedSize={selectedSize}
         selectedColor={selectedColor}
         errorMsg={error}
@@ -118,24 +126,6 @@ export default function ItemCard({ item }: ItemCardProps) {
         </div>
         <PlusCircleIcon className='size-7 self-end font-light text-gray-600' />
       </div>
-
-      {/* <div className='mt-2'>
-        <label className='mr-2'>Add Number to back:</label>
-        <Checkbox
-          checked={isAddNumberToBack}
-          onChange={setIsAddNumberToBack}
-          className='group size-6 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white'
-        >
-          <CheckIcon className='hidden size-4 fill-black group-data-[checked]:inline' />
-        </Checkbox>
-      </div> */}
-
-      {/* <button
-        className='mt-4 px-4 py-2 text-white rounded bg-blue-500'
-        onClick={handleAddtoCart}
-      >
-        Add to Cart
-      </button> */}
     </div>
   );
 }

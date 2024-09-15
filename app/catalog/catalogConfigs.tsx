@@ -23,6 +23,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 1,
         title: "T-Shirt",
+        isCustomizable: false,
         category: Categories.TSHIRTS,
         price: 19.99,
         image: "/tshirt.png",
@@ -33,6 +34,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 2,
         title: "Dri-Fit Shirt",
+        isCustomizable: false,
         category: Categories.DRIFITS,
         price: 22.99,
         image: "/tshirt.png",
@@ -61,6 +63,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 2,
         title: "Hoodie",
+        isCustomizable: true,
         category: Categories.HOODIES,
         price: 39.99,
         image: "ren_sb_shirt_mock.png",
@@ -79,6 +82,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 4,
         title: "Shirt",
+        isCustomizable: false,
         category: Categories.HOODIES,
         price: 19.99,
         image: "ren_sb_shirt_mock.png",
@@ -89,6 +93,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 3,
         title: "Shirt",
+        isCustomizable: true,
         category: Categories.HOODIES,
         price: 19.99,
         image: "ren_sb_shirt_mock.png",
@@ -99,6 +104,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 5,
         title: "Shirt",
+        isCustomizable: true,
         category: Categories.HOODIES,
         price: 19.99,
         image: "ren_sb_shirt_mock.png",
