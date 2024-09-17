@@ -1,84 +1,67 @@
-import React, { useState } from "react";
+import React from "react";
+import { UseFormRegister } from "react-hook-form";
 
 interface QuantitySelectorProps {
-  initialQuantity?: number; // Optional initial quantity value
+  register: UseFormRegister<any>; // Register function from react-hook-form
   minQuantity?: number; // Minimum allowed quantity (default is 1)
   maxQuantity?: number; // Maximum allowed quantity (optional)
   labelName: string;
-  onChange?: (quantity: number) => void; // Callback when quantity changes
+  name: string; // Name of the field in the form
 }
 
 const QuantitySelector: React.FC<QuantitySelectorProps> = ({
-  initialQuantity = 1,
+  register,
   minQuantity = 1,
   maxQuantity = 10,
   labelName = "Quantity",
-  onChange,
+  name, // Name to link to react-hook-form
 }) => {
-  const [quantity, setQuantity] = useState(initialQuantity);
-
-  const handleIncrease = () => {
-    if (!maxQuantity || quantity < maxQuantity) {
-      const newQuantity = quantity + 1;
-      setQuantity(newQuantity);
-      onChange?.(newQuantity); // Trigger the onChange callback if provided
-    }
-  };
-
-  const handleDecrease = () => {
-    if (quantity > minQuantity) {
-      const newQuantity = quantity - 1;
-      setQuantity(newQuantity);
-      onChange?.(newQuantity);
-    }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(e.target.value, 10);
-    if (
-      !isNaN(value) &&
-      value >= minQuantity &&
-      (!maxQuantity || value <= maxQuantity)
-    ) {
-      setQuantity(value);
-      onChange?.(value);
-    }
-  };
-
   return (
     <>
       <label className='py-2 text-gray-800 block space-x-2 text-sm strong'>
-        <span className='text-sm text-gray-800 strong'>{labelName}</span> -{" "}
-        {quantity}
+        <span className='text-sm text-gray-800 strong'>{labelName}</span>
       </label>
       <div className='inline-flex items-center border border-gray-300 w-auto'>
         <button
-          onClick={handleDecrease}
-          className={`px-4 py-2 text-xl font-semibold bg-gray-200 ${
-            quantity <= minQuantity ? "text-gray-500" : "text-black"
-          }`}
-          disabled={quantity <= minQuantity}
+          type='button'
+          className={`px-4 py-2 text-xl font-semibold bg-gray-200`}
+          onClick={(e) => {
+            e.preventDefault();
+            const input = document.querySelector(
+              `input[name="${name}"]`
+            ) as HTMLInputElement;
+            if (input && input.valueAsNumber > minQuantity) {
+              input.valueAsNumber -= 1;
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+          }}
         >
           –
         </button>
         <input
           type='number'
           className='w-12 text-center text-lg text-black border-none outline-none'
-          value={quantity}
-          onChange={handleInputChange}
           min={minQuantity}
           max={maxQuantity}
+          {...register(name, {
+            valueAsNumber: true,
+            min: minQuantity,
+            max: maxQuantity,
+          })}
         />
         <button
-          onClick={handleIncrease}
-          className={`px-4 py-2 text-xl font-semibold bg-gray-200 ${
-            maxQuantity && quantity >= maxQuantity
-              ? "text-gray-500"
-              : "text-black"
-          }`}
-          disabled={
-            !!(maxQuantity && maxQuantity > 0 && quantity >= maxQuantity)
-          }
+          type='button'
+          className={`px-4 py-2 text-xl font-semibold bg-gray-200`}
+          onClick={(e) => {
+            e.preventDefault();
+            const input = document.querySelector(
+              `input[name="${name}"]`
+            ) as HTMLInputElement;
+            if (input && (!maxQuantity || input.valueAsNumber < maxQuantity)) {
+              input.valueAsNumber += 1;
+              input.dispatchEvent(new Event("input", { bubbles: true }));
+            }
+          }}
         >
           +
         </button>
