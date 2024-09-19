@@ -21,6 +21,7 @@ interface ItemCardProps {
 export default function ItemCard({ item }: ItemCardProps) {
   const { cart, addToCart } = useCart();
   const [selected, setSelected] = useState(false);
+  const [selectedCartItem, setSelectedCartItem] = useState<StoreItem>();
   const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
   const [isOpen, setIsOpen] = useState(false);
 
@@ -48,12 +49,14 @@ export default function ItemCard({ item }: ItemCardProps) {
 
   useEffect(() => {
     setSelected(cart?.some((cartItem) => cartItem.id === item.id));
-  }, [cart, item.id]);
+    setSelectedCartItem(cart?.find((cartItem) => cartItem.id === item.id));
+  }, [item.id]);
 
   const handleAddtoCart = () => {
     setSelected(!selected);
+
     item.orders = [
-      ...item.orders,
+      ...(selectedCartItem?.orders ?? item.orders),
       {
         id: uuidv4(),
         quantity: selectedQuantity || 1,

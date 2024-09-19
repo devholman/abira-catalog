@@ -51,7 +51,13 @@ const SelectionTiles: React.FC<SelectionTilesProps> = ({
           </label>
         ))}
       </div>
-      {errors && <p className='text-red-500 text-sm'>{errors.message}</p>}
+      <p className='text-red-500 text-sm'>
+        {errors &&
+        errors.type === "required" &&
+        typeof errors.message === "string"
+          ? errors.message
+          : ""}
+      </p>
     </>
   );
 };
