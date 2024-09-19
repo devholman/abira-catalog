@@ -48,12 +48,14 @@ export default function ItemModal({
 
   useEffect(() => {
     if (isOpen) {
+      // Prevent scrolling on the body
       document.documentElement.style.overflow = "hidden";
-      document.body.scroll = "no";
+      document.body.style.overflow = "hidden";
     }
     return (): void => {
-      document.documentElement.style.overflow = "scroll";
-      document.body.scroll = "no";
+      // Restore scrolling on the body
+      document.documentElement.style.overflow = "auto";
+      document.body.style.overflow = "auto";
     };
   }, [isOpen]);
 
