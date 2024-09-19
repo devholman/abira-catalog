@@ -1,5 +1,10 @@
 import React from "react";
-import { UseFormRegister, FieldError } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldError,
+  FieldErrorsImpl,
+  Merge,
+} from "react-hook-form";
 
 interface SelectionTilesProps {
   list: string[];
@@ -8,7 +13,7 @@ interface SelectionTilesProps {
   labelName: string; // Label for the selection tiles
   fieldName: string;
   isRequired: boolean;
-  errors?: FieldError;
+  errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }
 
 const SelectionTiles: React.FC<SelectionTilesProps> = ({

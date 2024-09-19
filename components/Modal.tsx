@@ -26,7 +26,7 @@ interface ItemModalProps {
     orderItemNotes: string;
     isAddNumberToBack: boolean;
   }>;
-  errors: FieldErrors<any>;
+  errors: FieldErrors;
   close: () => void;
 }
 
