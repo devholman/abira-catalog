@@ -21,7 +21,7 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
       <label className='py-2 text-gray-800 block space-x-2 text-sm strong'>
         <span className='text-sm text-gray-800 strong'>{labelName}</span>
       </label>
-      <div className='inline-flex items-center border border-gray-300 w-auto'>
+      <div className='inline-flex items-center border border-gray-300 w-auto mb-4'>
         <button
           type='button'
           className={`px-4 py-2 text-xl font-semibold bg-gray-200`}

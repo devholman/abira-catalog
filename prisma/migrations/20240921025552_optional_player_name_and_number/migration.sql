@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "OrderItem" ALTER COLUMN "playerName" DROP NOT NULL,
+ALTER COLUMN "playerName" DROP DEFAULT,
+ALTER COLUMN "playerNumber" DROP NOT NULL,
+ALTER COLUMN "playerNumber" DROP DEFAULT;

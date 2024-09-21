@@ -53,6 +53,8 @@ export interface StoreItem {
     color: string;
     isAddBack: boolean;
     notes: string;
+    playerName: string;
+    playerNumber: number;
   }[];
 }
 

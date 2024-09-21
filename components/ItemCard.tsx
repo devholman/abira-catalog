@@ -30,6 +30,7 @@ export default function ItemCard({ item }: ItemCardProps) {
     handleSubmit,
     watch,
     reset,
+    setValue,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -38,12 +39,16 @@ export default function ItemCard({ item }: ItemCardProps) {
       selectedQuantity: 1,
       selectedColor: "",
       isAddNumberToBack: false,
+      selectedPlayerNumber: 0,
+      selectedPlayerName: "",
     },
   });
 
   const selectedSize = watch("selectedSize");
   const selectedColor = watch("selectedColor");
   const selectedQuantity = watch("selectedQuantity");
+  const selectedPlayerName = watch("selectedPlayerName");
+  const selectedPlayerNumber = watch("selectedPlayerNumber");
   const orderItemNotes = watch("orderItemNotes");
   const isAddNumberToBack = watch("isAddNumberToBack");
 
@@ -63,6 +68,8 @@ export default function ItemCard({ item }: ItemCardProps) {
         size: selectedSize || "S",
         color: selectedColor || "black",
         isAddBack: isAddNumberToBack,
+        playerName: selectedPlayerName,
+        playerNumber: selectedPlayerNumber,
         notes: orderItemNotes,
       },
     ];
@@ -96,12 +103,15 @@ export default function ItemCard({ item }: ItemCardProps) {
         toggleModal={toggleModal}
         handleAddtoCart={handleSubmit(handleAddtoCart)}
         errors={errors}
+        setValue={setValue}
         close={() => {
           setIsOpen(false);
         }}
         register={register}
         selectedSize={selectedSize}
         selectedColor={selectedColor}
+        selectedPlayerName={selectedPlayerName}
+        selectedPlayerNumber={selectedPlayerNumber}
         isAddNumberToBack={isAddNumberToBack}
       />
       <div className='flex justify-between items-end' onClick={toggleModal}>

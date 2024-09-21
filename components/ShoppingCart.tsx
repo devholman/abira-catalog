@@ -21,6 +21,9 @@ export default function ShoppingCart({
   onConfirm,
   removeOrderItem,
 }: ShoppingCartProps) {
+  const getLastName = (name: string) => {
+    return name.split(" ")[1];
+  };
   return (
     <div className='lg:flex lg:justify-center'>
       <div className='p-8 bg-slate-50 lg:w-full lg:max-w-2xl lg:rounded-lg lg:shadow-md'>
@@ -57,7 +60,18 @@ export default function ShoppingCart({
                         </p>
                       </div>
                       {item?.orders?.map(
-                        ({ quantity, size, color, id }, index) => {
+                        (
+                          {
+                            quantity,
+                            size,
+                            color,
+                            id,
+                            isAddBack,
+                            playerName,
+                            playerNumber,
+                          },
+                          index
+                        ) => {
                           return (
                             <span key={index}>
                               <div className='flex flex-row justify-between bg-slate-200 p-2'>
@@ -71,6 +85,19 @@ export default function ShoppingCart({
                                   <p className='text-xs leading-4 text-black'>
                                     Quantity: {quantity}
                                   </p>
+                                  {isAddBack && (
+                                    <p className='text-xs leading-4 text-black'>
+                                      With back option
+                                    </p>
+                                  )}
+                                  {playerNumber !== 0 && (
+                                    <p className='ml-3 text-xs leading-4 text-black'>
+                                      Player:{" "}
+                                      {`${getLastName(
+                                        playerName
+                                      )} - ${playerNumber}`}
+                                    </p>
+                                  )}
                                 </div>
                                 <div className='flex flex-col justify-between'>
                                   <button
