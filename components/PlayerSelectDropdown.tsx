@@ -21,7 +21,15 @@ interface PlayerSelectDropdownProps {
   // isRequired: boolean;
   selectedPlayerName: string;
   selectedPlayerNumber: number;
-  setValue: UseFormSetValue<FieldValues>;
+  setValue: UseFormSetValue<{
+    selectedSize: string;
+    selectedColor: string;
+    selectedQuantity: number;
+    orderItemNotes: string;
+    isAddNumberToBack: boolean;
+    selectedPlayerName: string;
+    selectedPlayerNumber: number;
+  }>;
   errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }
 let PlayerSelectDropdown = ({
