@@ -6,10 +6,17 @@ import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import ImageCarousel from "./ImageCarousel";
-import { UseFormRegister, FieldErrors } from "react-hook-form";
+import {
+  UseFormRegister,
+  FieldErrors,
+  UseFormSetValue,
+  FieldValues,
+} from "react-hook-form";
 
 //helpers
 import { getS3ImageUrl } from "../utils/images";
+import PlayerSelectDropdown from "./PlayerSelectDropdown";
+import { useStoreConfig } from "@/context/StoreConfigContext";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -17,6 +24,17 @@ interface ItemModalProps {
   isAddNumberToBack: boolean;
   selectedSize: string;
   selectedColor: string;
+  selectedPlayerName: string;
+  selectedPlayerNumber: number;
+  setValue: UseFormSetValue<{
+    selectedSize: string;
+    selectedColor: string;
+    selectedQuantity: number;
+    orderItemNotes: string;
+    isAddNumberToBack: boolean;
+    selectedPlayerName: string;
+    selectedPlayerNumber: number;
+  }>;
   toggleModal: () => void;
   handleAddtoCart: (data: any) => void;
   register: UseFormRegister<{
@@ -25,6 +43,8 @@ interface ItemModalProps {
     selectedQuantity: number;
     orderItemNotes: string;
     isAddNumberToBack: boolean;
+    selectedPlayerName: string;
+    selectedPlayerNumber: number;
   }>;
   errors: FieldErrors;
   close: () => void;
@@ -35,16 +55,25 @@ export default function ItemModal({
   isOpen,
   selectedSize,
   selectedColor,
+  selectedPlayerName,
+  selectedPlayerNumber,
+  isAddNumberToBack,
   errors,
+  setValue,
   toggleModal,
   handleAddtoCart,
   register,
   close,
 }: ItemModalProps) {
-  const [mainImage, setMainImage] = useState(item.image || "");
+  const [mainImage, setMainImage] = useState(getS3ImageUrl(item.image) || "");
   const [images] = useState(
-    item.images?.map((image) => getS3ImageUrl(image)) || [mainImage]
+    item.images?.map((imageObj) => getS3ImageUrl(imageObj.imageUrl)) || [
+      mainImage,
+    ]
   );
+  const {
+    storeConfig: { players },
+  } = useStoreConfig();
 
   useEffect(() => {
     if (isOpen) {
@@ -129,11 +158,21 @@ export default function ItemModal({
                   minQuantity={1}
                   maxQuantity={10}
                   register={register}
-                  labelName={"Quantity"}
+                  labelName='Quantity'
                 />
 
                 {/* Add Number to Back Checkbox */}
-                <div className='py-4 mt-4'>
+                <div className='flex py-4 mt-4 gap-4'>
+                  <Image
+                    src={mainImage}
+                    alt={item.title}
+                    width={40}
+                    height={40}
+                    className='object-contain max-w-fit rounded-lg'
+                    priority
+                    quality={75}
+                    unoptimized
+                  />
                   <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded'>
                     <input
                       type='checkbox'
@@ -145,10 +184,20 @@ export default function ItemModal({
                       htmlFor='addNumberToBack'
                       className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
                     >
-                      Add name and number to back (addtl. $2):
+                      Add last name and number to back (addtl. $2 per shirt):
                     </label>
                   </div>
                 </div>
+                {isAddNumberToBack && (
+                  <PlayerSelectDropdown
+                    players={players}
+                    selectedPlayerName={selectedPlayerName}
+                    selectedPlayerNumber={selectedPlayerNumber}
+                    setValue={setValue}
+                    errors={errors.selectedPlayerName}
+                    register={register}
+                  />
+                )}
 
                 {item.isCustomizable && (
                   <div className='relative w-full my-4'>

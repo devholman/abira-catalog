@@ -70,10 +70,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const calculateTotalPrice = (cart: StoreItem[]): void => {
     let totalPrice = 0;
     cart?.map((item: StoreItem) => {
-      const price = item.orders.reduce(
-        (sum, order) => sum + item.price * order.quantity,
-        0
-      );
+      const price = item.orders.reduce((sum, order) => {
+        const base = sum + item.price * order.quantity;
+        if (order.isAddBack) {
+          return base + order.quantity * 2;
+        }
+        return base;
+      }, 0);
       totalPrice += price;
     });
     let formattedPrice = toFixedNumber(totalPrice, 2, 10);

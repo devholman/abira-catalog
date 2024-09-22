@@ -11,10 +11,8 @@ model Customer {
   id           Int     @id @default(autoincrement())
   firstName    String
   lastName     String
-  playerName   String
   email        String
   phone        String
-  playerNumber Int
   storeId      Int     @default(1)
   orders       Order[]
 }
@@ -37,11 +35,14 @@ model OrderItem {
   quantity  Int
   size      String
   isAddBack Boolean
+  playerName   String?
+  playerNumber Int? 
   category  Categories @default(TSHIRTS)
   color     String     @default("black")
   price     Float      @default(20.00)
   title     String     @default("Retro")
   notes     String?
+  productImage String?
   order     Order      @relation(fields: [orderId], references: [id])
 }
 

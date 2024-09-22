@@ -10,8 +10,7 @@ export async function POST(req: Request) {
     const { customer, cart, totalPrice, notes, storeId } = data;
 
     // Destructure the customer information
-    const { firstName, lastName, playerName, playerNumber, email, phone } =
-      customer;
+    const { firstName, lastName, email, phone } = customer;
 
     // Create a new customer record
     const newCustomer = await prisma.customer.create({
@@ -19,8 +18,6 @@ export async function POST(req: Request) {
         storeId,
         firstName,
         lastName,
-        playerName,
-        playerNumber: parseInt(playerNumber),
         email,
         phone,
       },
@@ -42,7 +39,10 @@ export async function POST(req: Request) {
               category: item.category,
               price: item.price,
               title: item.title,
+              playerName: order.playerName,
+              playerNumber: order.playerNumber,
               isAddBack: order.isAddBack,
+              productImage: order.productId,
               notes: order.notes,
             }))
           ),
@@ -67,11 +67,16 @@ export async function POST(req: Request) {
       cart
     );
 
-    // Send confirmation to customer
-    await sendEmail(customerEmail, "Your Order Confirmation", emailHtml);
+    try {
+      // Send confirmation to customer
+      await sendEmail(customerEmail, "Your Order Confirmation", emailHtml);
 
-    // Send confirmation to business owner
-    await sendEmail(businessOwnerEmail, "New Order Received", emailHtml);
+      // Send confirmation to business owner
+      await sendEmail(businessOwnerEmail, "New Order Received", emailHtml);
+    } catch (emailError) {
+      console.error("Email sending failed:", emailError);
+      // Decide whether to return failure or log the error
+    }
 
     //send response
     return NextResponse.json({

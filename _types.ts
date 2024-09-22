@@ -42,7 +42,7 @@ export interface StoreItem {
   isCustomizable: boolean;
   price: number;
   image: string;
-  images?: string[];
+  images?: { id: number; imageUrl: string; color: string }[];
   sizes: string[];
   colors: string[];
   category: Categories;
@@ -53,6 +53,9 @@ export interface StoreItem {
     color: string;
     isAddBack: boolean;
     notes: string;
+    playerName: string;
+    playerNumber: number;
+    productImage?: string;
   }[];
 }
 
