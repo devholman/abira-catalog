@@ -35,9 +35,9 @@ export const stores: Record<string, StoreConfig> = {
       },
       {
         id: 2,
-        title: "Dri-Fit Shirt",
+        title: "Shirt",
         isCustomizable: false,
-        category: Categories.DRIFITS,
+        category: Categories.TSHIRTS,
         price: 22.99,
         image: "/tshirt.png",
         sizes: ["S", "M", "L", "XL"],
@@ -137,7 +137,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 1,
         title: "Paint Strokes",
-        isCustomizable: false,
+        isCustomizable: true,
         category: Categories.TSHIRTS,
         price: 25.0,
         image: "hustleNational/Paint_HN_black.png",

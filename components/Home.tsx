@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 //components
 import ItemCard from "./ItemCard";
 import CartIcon from "@/images/CartIcon";
-import { Categories } from "@/_types";
 import FilterDropdown from "./FilterDropdown";
 
 export default function Home() {
@@ -16,9 +15,9 @@ export default function Home() {
   } = useStoreConfig();
   const { totalQuantity } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<
-    "TSHIRTS" | "HOODIES" | "DRIFITS" | "ALL"
+    "TSHIRTS" | "HOODIES" | "ALL"
   >("ALL");
-  const categories = ["ALL", "TSHIRTS", "HOODIES", "DRIFITS"];
+  const categories = ["ALL", "TSHIRTS", "HOODIES"];
   const [filteredItems, setFilteredItems] = useState(items);
 
   const router = useRouter();

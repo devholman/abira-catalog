@@ -65,5 +65,4 @@ export enum Categories {
   ALL = "ALL",
   TSHIRTS = "TSHIRTS",
   HOODIES = "HOODIES",
-  DRIFITS = "DRIFITS",
 }

@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 interface FilterDropdownProps {
   categories: string[];
   setSelectedCategory: (category: Categories) => void;
-  selectedCategory: "TSHIRTS" | "HOODIES" | "DRIFITS" | "ALL";
+  selectedCategory: "TSHIRTS" | "HOODIES" | "ALL";
 }
 
 const FilterDropdown = ({
@@ -36,6 +36,8 @@ const FilterDropdown = ({
     };
   }, [isOpen]);
   const handleFilterClick = (category: string) => {
+    // const selectedEnum =
+    //   Categories[category as keyof typeof Categories] || "All";
     setSelectedCategory(category);
     setIsOpen(false); // Close dropdown after selection
   };

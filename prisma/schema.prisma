@@ -50,5 +50,4 @@ model OrderItem {
 enum Categories {
   TSHIRTS
   HOODIES
-  DRIFITS
 }

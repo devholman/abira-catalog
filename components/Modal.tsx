@@ -179,9 +179,9 @@ export default function ItemModal({
                   <Image
                     src={getS3ImageUrl(item.backImage || "")}
                     alt='shirt back'
-                    width={40}
-                    height={40}
-                    className='object-contain max-w-fit rounded-lg'
+                    width={60}
+                    height={50}
+                    className='object-contain max-w-fit'
                     priority
                     quality={75}
                     unoptimized
