@@ -6,26 +6,27 @@ import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import ImageCarousel from "./ImageCarousel";
-import { Checkbox } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/24/solid";
+import { UseFormRegister, FieldErrors } from "react-hook-form";
+
 //helpers
 import { getS3ImageUrl } from "../utils/images";
 
 interface ItemModalProps {
   item: StoreItem;
   isOpen: boolean;
-  toggleModal: () => void;
-  handleSize: (size: string) => void;
-  handleColor: (color: string) => void;
-  handleQuantity: (num: number) => void;
-  handleAddtoCart: () => void;
-  handleNotes: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  setIsAddNumberToBack: (val: boolean) => void;
+  isAddNumberToBack: boolean;
   selectedSize: string;
   selectedColor: string;
-  isAddNumberToBack: boolean;
-  imageUrl: string;
-  errorMsg: string;
+  toggleModal: () => void;
+  handleAddtoCart: (data: any) => void;
+  register: UseFormRegister<{
+    selectedSize: string;
+    selectedColor: string;
+    selectedQuantity: number;
+    orderItemNotes: string;
+    isAddNumberToBack: boolean;
+  }>;
+  errors: FieldErrors;
   close: () => void;
 }
 
@@ -34,33 +35,27 @@ export default function ItemModal({
   isOpen,
   selectedSize,
   selectedColor,
-  isAddNumberToBack,
-  imageUrl,
-  errorMsg,
+  errors,
   toggleModal,
-  handleSize,
-  handleColor,
-  handleQuantity,
   handleAddtoCart,
-  handleNotes,
-  setIsAddNumberToBack,
+  register,
   close,
 }: ItemModalProps) {
-  const [mainImage, setMainImage] = useState(imageUrl); // Set main image
+  const [mainImage, setMainImage] = useState(item.image || "");
   const [images] = useState(
-    item.images?.map((image) => getS3ImageUrl(image)) || [imageUrl]
-  ); // Assume `item.images` holds additional images
+    item.images?.map((image) => getS3ImageUrl(image)) || [mainImage]
+  );
 
   useEffect(() => {
     if (isOpen) {
+      // Prevent scrolling on the body
       document.documentElement.style.overflow = "hidden";
-      // @ts-ignore
-      document.body.scroll = "no";
+      document.body.style.overflow = "hidden";
     }
     return (): void => {
-      document.documentElement.style.overflow = "scroll";
-      // @ts-ignore
-      document.body.scroll = "no";
+      // Restore scrolling on the body
+      document.documentElement.style.overflow = "auto";
+      document.body.style.overflow = "auto";
     };
   }, [isOpen]);
 
@@ -69,20 +64,14 @@ export default function ItemModal({
       {isOpen && (
         <div
           className='fixed inset-0 z-50 flex items-end justify-center bg-black bg-opacity-50'
-          onClick={() => {
-            // close modal when outside of modal is clicked
-            close();
-          }}
+          onClick={close}
         >
           <div
-            className='w-full max-w-lg px-4 py-3 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto'
+            className='w-full max-w-lg px-4 pb-3 bg-white rounded-t-lg h-[calc(100%-40px)] lg:m-auto overflow-y-auto overflow-x-hidden'
             style={{ maxHeight: "calc(100% - env(safe-area-inset-top))" }}
-            onClick={(e) => {
-              // do not close modal if anything inside modal content is clicked
-              e.stopPropagation();
-            }}
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className='flex justify-between gap-4 relative'>
+            <div className='flex justify-between sticky gap-4 top-0 bg-white pt-5 z-10'>
               <h2 className='text-xl font-bold text-black mb-2'>
                 {item.title}
               </h2>
@@ -93,12 +82,7 @@ export default function ItemModal({
                 &#x2715;
               </button>
             </div>
-            <div
-              className='py-3 overflow-y-auto overflow-x-hidden'
-              style={{
-                maxHeight: "calc(100% - 80px - env(safe-area-inset-bottom))", // Account for the padding and the safe area on mobile
-              }}
-            >
+            <div className='py-3'>
               <p className='text-lg text-black mb-4'>${item.price}</p>
 
               {/* Main Image Display */}
@@ -120,77 +104,74 @@ export default function ItemModal({
                 setMainImage={setMainImage}
               />
 
-              {/* Size, Color, Quantity Selectors */}
-              <SelectionTiles
-                handleClick={handleSize}
-                list={item.sizes}
-                value={selectedSize}
-                labelName={"Size"}
-              />
-              <SelectionTiles
-                handleClick={handleColor}
-                list={item.colors}
-                value={selectedColor}
-                labelName={"Color"}
-              />
-              <QuantitySelector
-                initialQuantity={1}
-                minQuantity={1}
-                maxQuantity={10}
-                onChange={handleQuantity}
-                labelName={"Quantity"}
-              />
-              <div className='py-4 mt-4'>
-                {/* <label className='mr-2'>Add name and number to back:</label> */}
+              <form onSubmit={handleAddtoCart}>
+                {/* Size, Color, Quantity Selectors */}
+                <SelectionTiles
+                  list={item.sizes}
+                  register={register}
+                  fieldName='selectedSize'
+                  value={selectedSize}
+                  labelName={"Size"}
+                  isRequired={true}
+                  errors={errors.selectedSize}
+                />
+                <SelectionTiles
+                  list={item.colors}
+                  register={register}
+                  fieldName='selectedColor' // This will be the form field name
+                  value={selectedColor} // Use the value from the form's state
+                  labelName='Color'
+                  isRequired={true}
+                  errors={errors.selectedColor}
+                />
+                <QuantitySelector
+                  name='selectedQuantity'
+                  minQuantity={1}
+                  maxQuantity={10}
+                  register={register}
+                  labelName={"Quantity"}
+                />
 
-                <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded dark:border-gray-700'>
-                  <Checkbox
-                    checked={isAddNumberToBack}
-                    onChange={setIsAddNumberToBack}
-                    className='flex items-center group size-6 border-solid border-2 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset data-[checked]:bg-white'
-                  >
-                    <CheckIcon className='hidden size-4 fill-black group-data-[checked]:block' />
-                  </Checkbox>
-                  <label
-                    htmlFor='bordered-checkbox-1'
-                    className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
-                  >
-                    Add name and number to back (addtl. $2):
-                  </label>
+                {/* Add Number to Back Checkbox */}
+                <div className='py-4 mt-4'>
+                  <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded'>
+                    <input
+                      type='checkbox'
+                      {...register("isAddNumberToBack")}
+                      id='addNumberToBack'
+                      className='size-6 border-solid border-2 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset'
+                    />
+                    <label
+                      htmlFor='addNumberToBack'
+                      className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
+                    >
+                      Add name and number to back (addtl. $2):
+                    </label>
+                  </div>
                 </div>
-              </div>
-              {item.isCustomizable && (
-                <div className='relative w-full my-4'>
-                  <label
-                    htmlFor='notes'
-                    className='py-2 text-gray-800 block space-x-2 text-sm strong'
-                  >
-                    Notes
-                  </label>
-                  <textarea
-                    name='notes'
-                    placeholder={"Enter Customization notes"}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      handleNotes(e)
-                    }
-                    className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm'
-                  />
-                </div>
-              )}
-              <Accordion
-                title={"Description"}
-                content={"100% airlume ringspun cotton"}
-              />
 
-              {/* Add to Cart Button */}
-              <Button
-                handleClick={handleAddtoCart}
-                text={"Add To Cart"}
-                classNames='mb-2'
-              />
-              {errorMsg && (
-                <p className='text-red-500 text-xs mt-1'>{errorMsg}</p>
-              )}
+                {item.isCustomizable && (
+                  <div className='relative w-full my-4'>
+                    <label
+                      htmlFor='orderItemNotes'
+                      className='py-2 text-gray-800 block text-sm strong'
+                    >
+                      Notes
+                    </label>
+                    <textarea
+                      placeholder={"Enter Customization notes"}
+                      {...register("orderItemNotes")}
+                      className='mt-1 block w-full border border-gray-300 rounded-md shadow-sm'
+                    />
+                  </div>
+                )}
+                {/* <Accordion
+                  title={"Description"}
+                  content={"100% airlume ringspun cotton"}
+                /> */}
+
+                <Button type='submit' text={"Add To Cart"} classNames='mb-2' />
+              </form>
             </div>
           </div>
         </div>

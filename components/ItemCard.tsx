@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
+import { useForm } from "react-hook-form";
 
 //components
 import { PlusCircleIcon } from "@heroicons/react/24/outline";
@@ -20,50 +21,42 @@ interface ItemCardProps {
 export default function ItemCard({ item }: ItemCardProps) {
   const { cart, addToCart } = useCart();
   const [selected, setSelected] = useState(false);
-  const [selectedSize, setSelectedSize] = useState<string>("");
-  const [orderItemNotes, setOrderItemNotes] = useState<string>("");
-  const [selectedQuantity, setSelectedQuantity] = useState<number>(1);
-  const [isAddNumberToBack, setIsAddNumberToBack] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedCartItem, setSelectedCartItem] = useState<StoreItem>();
   const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
   const [isOpen, setIsOpen] = useState(false);
-  const [error, setError] = useState<string>("");
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      selectedSize: "",
+      orderItemNotes: "",
+      selectedQuantity: 1,
+      selectedColor: "",
+      isAddNumberToBack: false,
+    },
+  });
+
+  const selectedSize = watch("selectedSize");
+  const selectedColor = watch("selectedColor");
+  const selectedQuantity = watch("selectedQuantity");
+  const orderItemNotes = watch("orderItemNotes");
+  const isAddNumberToBack = watch("isAddNumberToBack");
 
   useEffect(() => {
     setSelected(cart?.some((cartItem) => cartItem.id === item.id));
-  }, [cart, item.id]);
-
-  const handleSize = (size: string) => {
-    setSelectedSize(size);
-  };
-
-  const handleQuantity = (num: number) => {
-    setSelectedQuantity(num);
-  };
-  const handleColor = (color: string) => {
-    setSelectedColor(color);
-  };
-  const handleNotes = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setOrderItemNotes(value);
-  };
-  const toggleModal = () => {
-    setIsOpen(!isOpen);
-  };
+    setSelectedCartItem(cart?.find((cartItem) => cartItem.id === item.id));
+  }, [item.id]);
 
   const handleAddtoCart = () => {
-    if (!selectedSize) {
-      setError("Select a size to continue");
-      return;
-    }
-    if (!selectedColor) {
-      setError("Select a color to continue");
-      return;
-    }
-
     setSelected(!selected);
+
     item.orders = [
-      ...item.orders,
+      ...(selectedCartItem?.orders ?? item.orders),
       {
         id: uuidv4(),
         quantity: selectedQuantity || 1,
@@ -76,12 +69,13 @@ export default function ItemCard({ item }: ItemCardProps) {
 
     addToCart(item);
     if (selected) {
-      setSelectedQuantity(1);
-      setSelectedSize("");
-      setSelectedColor("");
-      setIsAddNumberToBack(false);
+      reset(); // Reset form fields after adding to cart
     }
     toggleModal();
+  };
+
+  const toggleModal = () => {
+    setIsOpen(!isOpen);
   };
 
   return (
@@ -99,21 +93,16 @@ export default function ItemCard({ item }: ItemCardProps) {
       <ItemModal
         item={item}
         isOpen={isOpen}
-        imageUrl={imageUrl}
         toggleModal={toggleModal}
-        handleSize={handleSize}
-        handleColor={handleColor}
-        handleQuantity={handleQuantity}
-        handleAddtoCart={handleAddtoCart}
-        handleNotes={handleNotes}
-        setIsAddNumberToBack={setIsAddNumberToBack}
-        isAddNumberToBack={isAddNumberToBack}
-        selectedSize={selectedSize}
-        selectedColor={selectedColor}
-        errorMsg={error}
+        handleAddtoCart={handleSubmit(handleAddtoCart)}
+        errors={errors}
         close={() => {
           setIsOpen(false);
         }}
+        register={register}
+        selectedSize={selectedSize}
+        selectedColor={selectedColor}
+        isAddNumberToBack={isAddNumberToBack}
       />
       <div className='flex justify-between items-end' onClick={toggleModal}>
         <div className='flex flex-col py-1 gap-1'>
