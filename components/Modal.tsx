@@ -24,11 +24,13 @@ interface ItemModalProps {
   isAddNumberToBack: boolean;
   selectedSize: string;
   selectedColor: string;
+  selectedMaterial: string;
   selectedPlayerName: string;
   selectedPlayerNumber: number;
   setValue: UseFormSetValue<{
     selectedSize: string;
     selectedColor: string;
+    selectedMaterial: string;
     selectedQuantity: number;
     orderItemNotes: string;
     isAddNumberToBack: boolean;
@@ -45,6 +47,7 @@ interface ItemModalProps {
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
     selectedPlayerNumber: number;
+    selectedMaterial: string;
   }>;
   errors: FieldErrors;
   close: () => void;
@@ -57,6 +60,7 @@ export default function ItemModal({
   selectedColor,
   selectedPlayerName,
   selectedPlayerNumber,
+  selectedMaterial,
   isAddNumberToBack,
   errors,
   setValue,
@@ -153,6 +157,15 @@ export default function ItemModal({
                   isRequired={true}
                   errors={errors.selectedColor}
                 />
+                <SelectionTiles
+                  list={item.material}
+                  register={register}
+                  fieldName='selectedMaterial' // This will be the form field name
+                  value={selectedMaterial} // Use the value from the form's state
+                  labelName='Material'
+                  isRequired={true}
+                  errors={errors.selectedMaterial}
+                />
                 <QuantitySelector
                   name='selectedQuantity'
                   minQuantity={1}
@@ -164,8 +177,8 @@ export default function ItemModal({
                 {/* Add Number to Back Checkbox */}
                 <div className='flex py-4 mt-4 gap-4'>
                   <Image
-                    src={mainImage}
-                    alt={item.title}
+                    src={getS3ImageUrl(item.backImage || "")}
+                    alt='shirt back'
                     width={40}
                     height={40}
                     className='object-contain max-w-fit rounded-lg'

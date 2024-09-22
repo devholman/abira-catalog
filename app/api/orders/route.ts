@@ -41,6 +41,7 @@ export async function POST(req: Request) {
               title: item.title,
               playerName: order.playerName,
               playerNumber: order.playerNumber,
+              material: order.material,
               isAddBack: order.isAddBack,
               productImage: order.productId,
               notes: order.notes,

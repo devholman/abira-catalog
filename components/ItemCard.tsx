@@ -41,6 +41,7 @@ export default function ItemCard({ item }: ItemCardProps) {
       isAddNumberToBack: false,
       selectedPlayerNumber: 0,
       selectedPlayerName: "",
+      selectedMaterial: "",
     },
   });
 
@@ -51,6 +52,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const selectedPlayerNumber = watch("selectedPlayerNumber");
   const orderItemNotes = watch("orderItemNotes");
   const isAddNumberToBack = watch("isAddNumberToBack");
+  const selectedMaterial = watch("selectedMaterial");
 
   useEffect(() => {
     setSelected(cart?.some((cartItem) => cartItem.id === item.id));
@@ -59,7 +61,7 @@ export default function ItemCard({ item }: ItemCardProps) {
 
   const matchImage = (color: string) => {
     return item.images?.find((imgObj) => {
-      return imgObj.color.toLocaleLowerCase() === color.toLocaleLowerCase();
+      return imgObj.color.toLowerCase() === color.toLowerCase();
     });
   };
 
@@ -74,6 +76,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         quantity: selectedQuantity || 1,
         size: selectedSize || "S",
         color: selectedColor || "black",
+        material: selectedMaterial || "cotton",
         isAddBack: isAddNumberToBack,
         playerName: selectedPlayerName,
         playerNumber: selectedPlayerNumber,
@@ -118,6 +121,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         register={register}
         selectedSize={selectedSize}
         selectedColor={selectedColor}
+        selectedMaterial={selectedMaterial}
         selectedPlayerName={selectedPlayerName}
         selectedPlayerNumber={selectedPlayerNumber}
         isAddNumberToBack={isAddNumberToBack}

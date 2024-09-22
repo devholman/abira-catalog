@@ -3,7 +3,8 @@ import { Categories, StoreConfig } from "../../_types";
 
 const sizes = ["S", "M", "L", "XL"];
 const colors = ["Black", "Silver", "White"];
-
+const materials = ["Cotton", "Dri-Fit"];
+const backMock = "hustleNational/Back_mock.png";
 export const stores: Record<string, StoreConfig> = {
   store1: {
     id: 1,
@@ -29,6 +30,7 @@ export const stores: Record<string, StoreConfig> = {
         image: "/tshirt.png",
         sizes: ["S", "M", "L", "XL"],
         colors,
+        material: [...materials],
         orders: [],
       },
       {
@@ -40,6 +42,7 @@ export const stores: Record<string, StoreConfig> = {
         image: "/tshirt.png",
         sizes: ["S", "M", "L", "XL"],
         colors,
+        material: [...materials],
         orders: [],
       },
       // More items...
@@ -74,6 +77,7 @@ export const stores: Record<string, StoreConfig> = {
         ],
         sizes,
         colors: [...colors, "Purple"],
+        material: [...materials],
         orders: [],
       },
       {
@@ -85,6 +89,7 @@ export const stores: Record<string, StoreConfig> = {
         image: "ren_sb_shirt_mock.png",
         sizes,
         colors: [...colors, "Purple"],
+        material: [...materials],
         orders: [],
       },
       {
@@ -96,6 +101,7 @@ export const stores: Record<string, StoreConfig> = {
         image: "ren_sb_shirt_mock.png",
         sizes,
         colors: [...colors, "Purple"],
+        material: [...materials],
         orders: [],
       },
       {
@@ -107,9 +113,102 @@ export const stores: Record<string, StoreConfig> = {
         image: "ren_sb_shirt_mock.png",
         sizes,
         colors: [...colors, "Purple"],
+        material: [...materials],
         orders: [],
       },
       // More items...
+    ],
+  },
+  hustle: {
+    id: 3,
+    name: "HUSTLE",
+    branding: {
+      logo: "",
+      primaryColor: "#ffffff",
+      secondaryColor: "#00C0C0",
+    },
+    players: [
+      { name: "Sophia Ramirez", number: 10 },
+      { name: "Jane Smith", number: 12 },
+      { name: "Mike Johnson", number: 8 },
+    ],
+    passcode: "national",
+    items: [
+      {
+        id: 1,
+        title: "Paint Strokes",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 25.0,
+        image: "hustleNational/Paint_HN_black.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "hustleNational/Paint_HN_black.png",
+            color: "black",
+          },
+          {
+            id: 1,
+            imageUrl: "hustleNational/paint_HN_Silver.png",
+            color: "silver",
+          },
+        ],
+        sizes,
+        colors: ["Black", "Silver"],
+        material: [...materials],
+        orders: [],
+      },
+      {
+        id: 2,
+        title: "Born to Hustle",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 25.0,
+        image: "hustleNational/bornToHustle_WhiteTeal_black.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "hustleNational/bornToHustle_WhiteTeal_black.png",
+            color: "black",
+          },
+          {
+            id: 0,
+            imageUrl: "hustleNational/bornToHustle_Silver.png",
+            color: "silver",
+          },
+        ],
+        sizes,
+        colors: ["Black", "Silver"],
+        material: [...materials],
+        orders: [],
+      },
+      {
+        id: 3,
+        title: "Respect Hustle",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 25.0,
+        image: "hustleNational/respectTheHustle_silver.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "hustleNational/respectTheHustle_silver.png",
+            color: "silver",
+          },
+          {
+            id: 0,
+            imageUrl: "hustleNational/respectTheHustle_black.png",
+            color: "black",
+          },
+        ],
+        sizes,
+        colors: ["Black", "Silver"],
+        material: [...materials],
+        orders: [],
+      },
     ],
   },
   // Add more stores as needed...
