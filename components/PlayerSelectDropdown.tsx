@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import {
   UseFormRegister,
-  FieldValues,
   UseFormSetValue,
   FieldError,
   FieldErrorsImpl,

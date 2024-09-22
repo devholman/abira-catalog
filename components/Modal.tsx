@@ -67,7 +67,9 @@ export default function ItemModal({
 }: ItemModalProps) {
   const [mainImage, setMainImage] = useState(getS3ImageUrl(item.image) || "");
   const [images] = useState(
-    item.images?.map((image) => getS3ImageUrl(image)) || [mainImage]
+    item.images?.map((imageObj) => getS3ImageUrl(imageObj.imageUrl)) || [
+      mainImage,
+    ]
   );
   const {
     storeConfig: { players },

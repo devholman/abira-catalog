@@ -57,8 +57,15 @@ export default function ItemCard({ item }: ItemCardProps) {
     setSelectedCartItem(cart?.find((cartItem) => cartItem.id === item.id));
   }, [item.id]);
 
+  const matchImage = (color: string) => {
+    return item.images?.find((imgObj) => {
+      return imgObj.color.toLocaleLowerCase() === color.toLocaleLowerCase();
+    });
+  };
+
   const handleAddtoCart = () => {
     setSelected(!selected);
+    const selectedImage = matchImage(selectedColor)?.imageUrl;
 
     item.orders = [
       ...(selectedCartItem?.orders ?? item.orders),
@@ -70,6 +77,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         isAddBack: isAddNumberToBack,
         playerName: selectedPlayerName,
         playerNumber: selectedPlayerNumber,
+        productImage: selectedImage,
         notes: orderItemNotes,
       },
     ];

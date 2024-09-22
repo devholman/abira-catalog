@@ -36,28 +36,22 @@ export default function ShoppingCart({
           <>
             <ul className='border-b-2'>
               {cartItems?.map((item, index) => {
-                const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
-
                 return (
-                  <li key={index} className='flex w-full mb-4 bg-slate-100 p-4'>
-                    <Image
-                      src={imageUrl}
-                      alt={item.title}
-                      width={200}
-                      height={200}
-                      priority
-                      quality={75}
-                      unoptimized
-                      className='w-24 h-24 object-cover rounded'
-                    />
-                    <div className='flex flex-col pl-4 gap-2 w-4/5'>
-                      <div className='flex flex-row justify-between'>
+                  <li
+                    key={index}
+                    className='flex min-w-80 w-full mb-4 bg-slate-100 p-4'
+                  >
+                    <div className='flex flex-col gap-2 items-center mx-auto'>
+                      <div className='flex flex-row justify-between min-w-72'>
                         <h2 className='text-sm font-semibold text-black'>
                           {item.title.toUpperCase()}
                         </h2>
-                        <p className='flex justify-end text-black'>
-                          ${item.price.toFixed(2)}
-                        </p>
+                        <span className='flex'>
+                          <p className='flex justify-end text-black'>
+                            ${item.price.toFixed(2)}
+                            <sub className='-bottom-3'>/ea.</sub>
+                          </p>
+                        </span>
                       </div>
                       {item?.orders?.map(
                         (
@@ -69,12 +63,24 @@ export default function ShoppingCart({
                             isAddBack,
                             playerName,
                             playerNumber,
+                            productImage,
                           },
                           index
                         ) => {
+                          const imageUrl = getS3ImageUrl(productImage || "");
                           return (
                             <span key={index}>
-                              <div className='flex flex-row justify-between bg-slate-200 p-2'>
+                              <div className='flex flex-row min-w-72 w-full justify-between gap-6 bg-slate-200 p-2'>
+                                <Image
+                                  src={imageUrl}
+                                  alt={item.title}
+                                  width={150}
+                                  height={150}
+                                  priority
+                                  quality={75}
+                                  unoptimized
+                                  className='w-auto h-20 my-auto object-fit rounded'
+                                />
                                 <div className='flex flex-col gap-1'>
                                   <p className='text-xs leading-4 text-black'>
                                     Size: {size}

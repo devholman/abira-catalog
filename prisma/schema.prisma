@@ -42,6 +42,7 @@ model OrderItem {
   price     Float      @default(20.00)
   title     String     @default("Retro")
   notes     String?
+  productImage String?
   order     Order      @relation(fields: [orderId], references: [id])
 }
 
