@@ -2,7 +2,7 @@
 import { Categories, StoreConfig } from "../../_types";
 export const DRIFIT = "Dri-Fit (+ $5)";
 const youthSizes = ["YS", "YM", "YL", "YXL"];
-const sizes = ["S", "M", "L", "XL", "XXL", "XXXL", "XXXXL"];
+const sizes = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
 const allSizes = [...youthSizes, ...sizes];
 const colors = ["Black", "Silver", "White"];
 const materials = ["Cotton", DRIFIT];
@@ -125,7 +125,7 @@ export const stores: Record<string, StoreConfig> = {
   },
   hustle: {
     id: 3,
-    version: 1,
+    version: 2,
     name: "HUSTLE",
     branding: {
       logo: "",
