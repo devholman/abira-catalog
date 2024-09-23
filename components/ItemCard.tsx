@@ -24,6 +24,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const [selectedCartItem, setSelectedCartItem] = useState<StoreItem>();
   const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
   const [isOpen, setIsOpen] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(item.price); // State for total price
 
   const initialValues = {
     selectedSize: "",
@@ -85,6 +86,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         playerName: selectedPlayerName,
         playerNumber: selectedPlayerNumber,
         productImage: selectedImage,
+        orderPrice: totalPrice,
         notes: orderItemNotes,
       },
     ];
@@ -121,6 +123,8 @@ export default function ItemCard({ item }: ItemCardProps) {
         handleAddtoCart={handleSubmit(handleAddtoCart)}
         errors={errors}
         setValue={setValue}
+        setTotalPrice={setTotalPrice}
+        totalPrice={totalPrice}
         close={() => {
           setIsOpen(false);
         }}
@@ -130,6 +134,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         selectedMaterial={selectedMaterial}
         selectedPlayerName={selectedPlayerName}
         selectedPlayerNumber={selectedPlayerNumber}
+        selectedQuantity={selectedQuantity}
         isAddNumberToBack={isAddNumberToBack}
       />
       <div className='flex justify-between items-end' onClick={toggleModal}>

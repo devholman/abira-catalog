@@ -1,13 +1,16 @@
 // stores/storeConfigs.ts
 import { Categories, StoreConfig } from "../../_types";
-
-const sizes = ["S", "M", "L", "XL"];
+export const DRIFIT = "Dri-Fit (+ $5)";
+const youthSizes = ["YS", "YM", "YL", "YXL"];
+const sizes = ["S", "M", "L", "XL", "2XL", "3XL", "4XL"];
+const allSizes = [...youthSizes, ...sizes];
 const colors = ["Black", "Silver", "White"];
-const materials = ["Cotton", "Dri-Fit"];
+const materials = ["Cotton", DRIFIT];
 const backMock = "hustleNational/Back_mock.png";
 export const stores: Record<string, StoreConfig> = {
   store1: {
     id: 1,
+    version: 1,
     name: "Store 1",
     branding: {
       logo: "/store1-logo.png",
@@ -50,6 +53,7 @@ export const stores: Record<string, StoreConfig> = {
   },
   renegades: {
     id: 2,
+    version: 1,
     name: "renegades",
     branding: {
       logo: "",
@@ -121,6 +125,7 @@ export const stores: Record<string, StoreConfig> = {
   },
   hustle: {
     id: 3,
+    version: 2,
     name: "HUSTLE",
     branding: {
       logo: "",
@@ -154,7 +159,7 @@ export const stores: Record<string, StoreConfig> = {
             color: "silver",
           },
         ],
-        sizes,
+        sizes: allSizes,
         colors: ["Black", "Silver"],
         material: [...materials],
         orders: [],
