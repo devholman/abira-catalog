@@ -2,7 +2,8 @@ const generateEmailBody = (
   emailTitle,
   confirmationNumber,
   totalPrice,
-  cart
+  cart,
+  notes = ""
 ) => {
   // Calculate total items and total price
   const totalItems = cart.reduce((total, item) => {
@@ -19,6 +20,9 @@ const generateEmailBody = (
                 <td>${order.color}</td>
                 <td>${order.size}</td>
                 <td>${order.quantity}</td>
+                <td>${order.material}</td>
+                <td>${order.isAddBack ? "yes" : "no"}</td>
+                <td>${order.notes ? order.notes : ""}</td>
             </tr>
         `
       )
@@ -109,12 +113,17 @@ const generateEmailBody = (
                                     <th>Color</th>
                                     <th>Size</th>
                                     <th>Quantity</th>
+                                    <th>Material</th>
+                                    <th>Back Option</th>
+                                    <th>Item Notes</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 ${orderDetails}
                             </tbody>
                         </table>
+                        <h2>General Notes:</h2>
+                        <p>${notes}</p>
                     </div>
                     <div class="summary">
                         <h2>Order Summary:</h2>

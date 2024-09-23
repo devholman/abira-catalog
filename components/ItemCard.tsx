@@ -25,6 +25,17 @@ export default function ItemCard({ item }: ItemCardProps) {
   const imageUrl = getS3ImageUrl(item.image); // Assuming `item.imageKey` stores the S3 key of the image
   const [isOpen, setIsOpen] = useState(false);
 
+  const initialValues = {
+    selectedSize: "",
+    selectedQuantity: 1,
+    selectedColor: "",
+    isAddNumberToBack: false,
+    selectedPlayerName: "",
+    selectedPlayerNumber: 0,
+    selectedMaterial: "",
+    orderItemNotes: "",
+  };
+
   const {
     register,
     handleSubmit,
@@ -34,13 +45,7 @@ export default function ItemCard({ item }: ItemCardProps) {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      selectedSize: "",
-      orderItemNotes: "",
-      selectedQuantity: 1,
-      selectedColor: "",
-      isAddNumberToBack: false,
-      selectedPlayerNumber: 0,
-      selectedPlayerName: "",
+      ...initialValues,
     },
   });
 
@@ -51,6 +56,7 @@ export default function ItemCard({ item }: ItemCardProps) {
   const selectedPlayerNumber = watch("selectedPlayerNumber");
   const orderItemNotes = watch("orderItemNotes");
   const isAddNumberToBack = watch("isAddNumberToBack");
+  const selectedMaterial = watch("selectedMaterial");
 
   useEffect(() => {
     setSelected(cart?.some((cartItem) => cartItem.id === item.id));
@@ -59,7 +65,7 @@ export default function ItemCard({ item }: ItemCardProps) {
 
   const matchImage = (color: string) => {
     return item.images?.find((imgObj) => {
-      return imgObj.color.toLocaleLowerCase() === color.toLocaleLowerCase();
+      return imgObj.color.toLowerCase() === color.toLowerCase();
     });
   };
 
@@ -74,6 +80,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         quantity: selectedQuantity || 1,
         size: selectedSize || "S",
         color: selectedColor || "black",
+        material: selectedMaterial || "cotton",
         isAddBack: isAddNumberToBack,
         playerName: selectedPlayerName,
         playerNumber: selectedPlayerNumber,
@@ -83,9 +90,11 @@ export default function ItemCard({ item }: ItemCardProps) {
     ];
 
     addToCart(item);
-    if (selected) {
-      reset(); // Reset form fields after adding to cart
-    }
+    // Always reset form fields after adding to cart
+    reset({
+      ...initialValues,
+    });
+
     toggleModal();
   };
 
@@ -118,6 +127,7 @@ export default function ItemCard({ item }: ItemCardProps) {
         register={register}
         selectedSize={selectedSize}
         selectedColor={selectedColor}
+        selectedMaterial={selectedMaterial}
         selectedPlayerName={selectedPlayerName}
         selectedPlayerNumber={selectedPlayerNumber}
         isAddNumberToBack={isAddNumberToBack}

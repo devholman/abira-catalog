@@ -42,15 +42,18 @@ export interface StoreItem {
   isCustomizable: boolean;
   price: number;
   image: string;
+  backImage?: string;
   images?: { id: number; imageUrl: string; color: string }[];
   sizes: string[];
   colors: string[];
+  material: string[];
   category: Categories;
   orders: {
     id: string;
     quantity: number;
     size: string;
     color: string;
+    material: string;
     isAddBack: boolean;
     notes: string;
     playerName: string;
@@ -60,7 +63,7 @@ export interface StoreItem {
 }
 
 export enum Categories {
+  ALL = "ALL",
   TSHIRTS = "TSHIRTS",
   HOODIES = "HOODIES",
-  DRIFITS = "DRIFITS",
 }

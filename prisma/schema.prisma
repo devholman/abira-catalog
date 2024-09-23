@@ -39,6 +39,7 @@ model OrderItem {
   playerNumber Int? 
   category  Categories @default(TSHIRTS)
   color     String     @default("black")
+  material     String  @default("cotton")
   price     Float      @default(20.00)
   title     String     @default("Retro")
   notes     String?
@@ -49,5 +50,4 @@ model OrderItem {
 enum Categories {
   TSHIRTS
   HOODIES
-  DRIFITS
 }

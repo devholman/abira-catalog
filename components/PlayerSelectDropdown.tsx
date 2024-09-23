@@ -16,6 +16,7 @@ interface PlayerSelectDropdownProps {
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
     selectedPlayerNumber: number;
+    selectedMaterial: string;
   }>;
   // isRequired: boolean;
   selectedPlayerName: string;
@@ -28,6 +29,7 @@ interface PlayerSelectDropdownProps {
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
     selectedPlayerNumber: number;
+    selectedMaterial: string;
   }>;
   errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
 }

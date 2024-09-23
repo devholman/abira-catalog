@@ -41,6 +41,7 @@ export async function POST(req: Request) {
               title: item.title,
               playerName: order.playerName,
               playerNumber: order.playerNumber,
+              material: order.material,
               isAddBack: order.isAddBack,
               productImage: order.productId,
               notes: order.notes,
@@ -66,13 +67,20 @@ export async function POST(req: Request) {
       totalPrice,
       cart
     );
+    const bizEmailHtml = confirmationTemplate(
+      "Order Confirmation",
+      confirmationNumber,
+      totalPrice,
+      cart,
+      notes
+    );
 
     try {
       // Send confirmation to customer
       await sendEmail(customerEmail, "Your Order Confirmation", emailHtml);
 
       // Send confirmation to business owner
-      await sendEmail(businessOwnerEmail, "New Order Received", emailHtml);
+      await sendEmail(businessOwnerEmail, "New Order Received", bizEmailHtml);
     } catch (emailError) {
       console.error("Email sending failed:", emailError);
       // Decide whether to return failure or log the error
