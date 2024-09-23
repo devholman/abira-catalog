@@ -124,7 +124,7 @@ export const stores: Record<string, StoreConfig> = {
     ],
   },
   hustle: {
-    id: 3,
+    id: 4,
     version: 2,
     name: "HUSTLE",
     branding: {
@@ -142,7 +142,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 1,
         title: "Paint Strokes",
-        isCustomizable: true,
+        isCustomizable: false,
         category: Categories.TSHIRTS,
         price: 25.0,
         image: "hustleNational/Paint_HN_black.png",

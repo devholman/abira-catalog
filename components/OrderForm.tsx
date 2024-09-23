@@ -2,7 +2,8 @@
 
 import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+
 import { useCart } from "../context/CartContext";
 import FormInput from "./FormInput";
 import Button from "./Button";
@@ -26,9 +27,11 @@ const OrderForm = () => {
     formState: { errors },
   } = methods;
 
-  const { clearCart, cart, totalPrice, totalQuantity, storeId } = useCart();
-
+  const { clearCart, cart, totalPrice, totalQuantity, currentStoreId } =
+    useCart();
+  const searchParams = useSearchParams();
   const router = useRouter();
+  const storeName = searchParams?.get("team");
 
   const onSubmit = async (data: OrderFormData) => {
     const response = await fetch("/api/orders", {
@@ -37,7 +40,7 @@ const OrderForm = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        storeId,
+        storeId: currentStoreId,
         customer: data,
         notes: data.notes,
         cart,
@@ -51,7 +54,7 @@ const OrderForm = () => {
     }
 
     console.log("Form Data:", {
-      storeId,
+      storeId: currentStoreId,
       customer: data,
       notes: data.notes,
       cart,
@@ -64,7 +67,7 @@ const OrderForm = () => {
     if (result.success) {
       // Redirect to the confirmation page with the confirmation number
       router.push(
-        `/confirmation?confirmationNumber=${result.confirmationNumber}`
+        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}`
       );
     } else {
       // Handle error case

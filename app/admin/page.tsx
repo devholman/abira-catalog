@@ -22,7 +22,6 @@ const AdminDashboard = () => {
       body: JSON.stringify(filterCriteria),
     });
     const data = await response.json();
-    console.log("🚀 ~ handleFilterOrders ~ data:", data);
     setOrders(data);
   };
 

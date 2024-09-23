@@ -2,14 +2,14 @@
 "use client";
 
 import { ReactNode, useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { StoreConfigProvider } from "../context/StoreConfigContext";
 import { CartProvider } from "../context/CartContext";
-import { stores } from "../app/catalog/catalogConfigs"; // Your static config
 import { StoreConfig } from "@/_types";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [storeConfig, setStoreConfig] = useState<StoreConfig | null>(null);
 
   // useEffect(() => {
@@ -52,11 +52,13 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
   useEffect(() => {
     const updateStoreConfig = async () => {
       const storedConfig = localStorage.getItem("storeConfig");
-      const storeId =
-        pathname?.split("/").filter((path) => path !== "")[1] || "";
+      const storeName =
+        pathname?.split("/").filter((path) => path !== "")[1] ||
+        searchParams?.get("team") ||
+        "";
 
       // Check if there's a storeId available
-      if (!storeId) {
+      if (!storeName) {
         console.error("Store ID not found in pathname");
         return;
       }
@@ -66,7 +68,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         const parsedConfig = JSON.parse(storedConfig);
 
         // Fetch the latest config from the server
-        const latestConfig = await fetchLatestConfig(storeId);
+        const latestConfig = await fetchLatestConfig(storeName);
 
         // Compare the version (or use a timestamp)
         if (latestConfig && latestConfig.version !== parsedConfig.version) {
@@ -77,7 +79,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         }
       } else {
         // No config in localStorage, fetch it from the server
-        const latestConfig = await fetchLatestConfig(storeId);
+        const latestConfig = await fetchLatestConfig(storeName);
         if (latestConfig) {
           setStoreConfig(latestConfig);
           localStorage.setItem("storeConfig", JSON.stringify(latestConfig));
@@ -98,7 +100,7 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <StoreConfigProvider storeConfig={storeConfig}>
-      <CartProvider>{children}</CartProvider>
+      <CartProvider storeId={storeConfig.id}>{children}</CartProvider>
     </StoreConfigProvider>
   );
 }
