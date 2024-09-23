@@ -6,17 +6,13 @@ import QuantitySelector from "./QuantitySelector";
 import Accordion from "./Accordion";
 import Button from "./Button";
 import ImageCarousel from "./ImageCarousel";
-import {
-  UseFormRegister,
-  FieldErrors,
-  UseFormSetValue,
-  FieldValues,
-} from "react-hook-form";
+import { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
 
 //helpers
 import { getS3ImageUrl } from "../utils/images";
 import PlayerSelectDropdown from "./PlayerSelectDropdown";
 import { useStoreConfig } from "@/context/StoreConfigContext";
+import { DRIFIT } from "@/app/catalog/catalogConfigs";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -27,6 +23,9 @@ interface ItemModalProps {
   selectedMaterial: string;
   selectedPlayerName: string;
   selectedPlayerNumber: number;
+  selectedQuantity: number;
+  totalPrice: number;
+  setTotalPrice: (price: number) => void;
   setValue: UseFormSetValue<{
     selectedSize: string;
     selectedColor: string;
@@ -62,7 +61,10 @@ export default function ItemModal({
   selectedPlayerNumber,
   selectedMaterial,
   isAddNumberToBack,
+  selectedQuantity,
+  totalPrice,
   errors,
+  setTotalPrice,
   setValue,
   toggleModal,
   handleAddtoCart,
@@ -75,6 +77,7 @@ export default function ItemModal({
       mainImage,
     ]
   );
+
   const {
     storeConfig: { players },
   } = useStoreConfig();
@@ -92,6 +95,32 @@ export default function ItemModal({
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    calculateTotalPrice();
+  }, [selectedSize, isAddNumberToBack, selectedMaterial, selectedQuantity]);
+
+  const calculateTotalPrice = () => {
+    let price = item.price;
+
+    // Add $2 for sizes 2XL-4XL
+    if (
+      selectedSize === "XXL" ||
+      selectedSize === "XXXL" ||
+      selectedSize === "XXXXL"
+    ) {
+      price += 2;
+    }
+    if (selectedMaterial === DRIFIT) {
+      price += 5;
+    }
+
+    // Add $2 if the number is added to the back
+    if (isAddNumberToBack) {
+      price += 2;
+    }
+
+    setTotalPrice(price * selectedQuantity);
+  };
   return (
     <div>
       {isOpen && (
@@ -148,6 +177,9 @@ export default function ItemModal({
                   isRequired={true}
                   errors={errors.selectedSize}
                 />
+                <p className='text-xs text-gray-800'>
+                  * Additional $2 for sizes 2XL-4XL
+                </p>
                 <SelectionTiles
                   list={item.colors}
                   register={register}
@@ -232,7 +264,11 @@ export default function ItemModal({
                   content={"100% airlume ringspun cotton"}
                 /> */}
 
-                <Button type='submit' text={"Add To Cart"} classNames='mb-2' />
+                <Button
+                  type='submit'
+                  text={`Add To Cart - $${totalPrice}`}
+                  classNames='mb-2'
+                />
               </form>
             </div>
           </div>

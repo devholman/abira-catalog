@@ -11,6 +11,7 @@ import React, {
 import { StoreItem } from "../_types";
 
 import { toFixedNumber } from "../utils/numUtils";
+import { DRIFIT } from "@/app/catalog/catalogConfigs";
 
 interface CartContextType {
   cart: StoreItem[];
@@ -19,6 +20,7 @@ interface CartContextType {
   storeId: Number;
   addToCart: (item: StoreItem) => void;
   removeFromCart: (id: number) => void;
+  calculateTotalPrice: (cart: StoreItem[]) => void;
   removeOrderItem: (id: number, orderId: string) => void;
   setStoreId: (id: number) => void;
   clearCart: () => void;
@@ -71,11 +73,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     let totalPrice = 0;
     cart?.map((item: StoreItem) => {
       const price = item.orders.reduce((sum, order) => {
-        const base = sum + item.price * order.quantity;
+        let base = item.price;
         if (order.isAddBack) {
-          return base + order.quantity * 2;
+          base += 2;
         }
-        return base;
+        if (order.material === DRIFIT) {
+          base += 5;
+        }
+        if (
+          order.size === "XXL" ||
+          order.size === "XXXL" ||
+          order.size === "XXXXL"
+        ) {
+          base += 2;
+        }
+        return sum + base * order.quantity;
       }, 0);
       totalPrice += price;
     });
@@ -149,6 +161,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         totalPrice,
         storeId,
         addToCart,
+        calculateTotalPrice,
         removeFromCart,
         removeOrderItem,
         clearCart,

@@ -1,5 +1,6 @@
 export interface StoreConfig {
   id: number;
+  version: number;
   name: string;
   branding: {
     logo: string;
@@ -59,6 +60,7 @@ export interface StoreItem {
     playerName: string;
     playerNumber: number;
     productImage?: string;
+    orderPrice: number;
   }[];
 }
 

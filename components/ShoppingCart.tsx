@@ -46,12 +46,12 @@ export default function ShoppingCart({
                         <h2 className='text-sm font-semibold text-black'>
                           {item.title.toUpperCase()}
                         </h2>
-                        <span className='flex'>
+                        {/* <span className='flex'>
                           <p className='flex justify-end text-black'>
                             ${item.price.toFixed(2)}
                             <sub className='-bottom-3'>/ea.</sub>
                           </p>
-                        </span>
+                        </span> */}
                       </div>
                       {item?.orders?.map(
                         (
@@ -64,6 +64,7 @@ export default function ShoppingCart({
                             playerName,
                             playerNumber,
                             productImage,
+                            orderPrice,
                           },
                           index
                         ) => {
@@ -112,6 +113,7 @@ export default function ShoppingCart({
                                   >
                                     X
                                   </button>
+                                  <p>${orderPrice}</p>
                                 </div>
                               </div>
                             </span>
