@@ -61,18 +61,19 @@ const OrderForm = () => {
       totalPrice,
       totalQuantity,
     });
-    clearCart();
 
     const result = await response.json();
     if (result.success) {
       // Redirect to the confirmation page with the confirmation number
       router.push(
-        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}`
+        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}&total=${totalPrice}`
       );
     } else {
       // Handle error case
       console.error("Order submission failed:", result.error);
     }
+    clearCart();
+
     return result;
   };
   const firstName = {

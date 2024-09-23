@@ -1,12 +1,14 @@
 import { useCart } from "@/context/CartContext";
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+
 const Confirmation = ({
   confirmationNumber,
 }: {
   confirmationNumber: string;
 }) => {
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
-  const { totalPrice } = useCart();
+  const price = useSearchParams()?.get("total");
   // useEffect(() => {
   //   console.log("run useeffect confirmation");
   //   // Fetch payment link from the server
@@ -60,9 +62,11 @@ const Confirmation = ({
             <li>
               Send the total amount of your order to our Venmo account:{" "}
               <strong>@Ariel-Rodrigues</strong>
-              <h6 className='text-xl mt-2 font-bold text-center text-gray-800 mb-4'>
-                Total: ${totalPrice.toString()}
-              </h6>
+              {price && (
+                <h6 className='text-xl mt-4 font-bold text-center text-gray-800 mb-4'>
+                  Total: ${price}
+                </h6>
+              )}
             </li>
             <li>
               In the note section, make sure to include your{" "}
