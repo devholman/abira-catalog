@@ -16,4 +16,7 @@ export default {
     ],
     domains: ["catalog-images1.s3.us-east-2.amazonaws.com"],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };

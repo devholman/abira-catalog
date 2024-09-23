@@ -17,7 +17,7 @@ interface CartContextType {
   cart: StoreItem[];
   totalQuantity: Number;
   totalPrice: Number;
-  storeId: Number;
+  currentStoreId: Number;
   addToCart: (item: StoreItem) => void;
   removeFromCart: (id: number) => void;
   calculateTotalPrice: (cart: StoreItem[]) => void;
@@ -28,7 +28,13 @@ interface CartContextType {
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-export const CartProvider = ({ children }: { children: ReactNode }) => {
+export const CartProvider = ({
+  children,
+  storeId,
+}: {
+  children: ReactNode;
+  storeId: number;
+}) => {
   const [cart, setCart] = useState<StoreItem[]>(() => {
     // Initialize cart from localStorage
     const storedCart = localStorage.getItem("cart");
@@ -36,7 +42,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   });
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  const [storeId, setStoreId] = useState<number>(0);
+  const [currentStoreId, setStoreId] = useState<number>(0);
+
+  useEffect(() => {
+    if (storeId) {
+      setStoreId(storeId);
+    }
+  }, [storeId]);
 
   useEffect(() => {
     // Retrieve cart data from localStorage when the component mounts
@@ -81,9 +93,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           base += 5;
         }
         if (
-          order.size === "XXL" ||
-          order.size === "XXXL" ||
-          order.size === "XXXXL"
+          order.size === "2XL" ||
+          order.size === "3XL" ||
+          order.size === "4XL"
         ) {
           base += 2;
         }
@@ -159,7 +171,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         cart,
         totalQuantity,
         totalPrice,
-        storeId,
+        currentStoreId,
         addToCart,
         calculateTotalPrice,
         removeFromCart,

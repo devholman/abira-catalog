@@ -2,15 +2,17 @@
 import React from "react";
 
 import ShoppingCart from "../../components/ShoppingCart";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "../../context/CartContext";
 
 export default function Cart() {
   const { cart, removeOrderItem, totalPrice, totalQuantity } = useCart();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
+  const storeId = searchParams?.get("team");
   const handleConfirm = async () => {
-    router.push("/contactForm");
+    router.push(`/contactForm?team=${storeId}`);
   };
 
   return (

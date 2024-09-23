@@ -1,8 +1,41 @@
+import { useCart } from "@/context/CartContext";
+import { useEffect, useState } from "react";
 const Confirmation = ({
   confirmationNumber,
 }: {
   confirmationNumber: string;
 }) => {
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+  const { totalPrice } = useCart();
+  // useEffect(() => {
+  //   console.log("run useeffect confirmation");
+  //   // Fetch payment link from the server
+  //   const fetchPaymentLink = async () => {
+  //     try {
+  //       console.log("fetingch payment link ...");
+  //       const res = await fetch("/api/square/create-payment-link", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           amount: 1000, // For $10.00 payment
+  //           orderId: "YOUR_ORDER_ID", // Unique order identifier
+  //         }),
+  //       });
+
+  //       const data = await res.json();
+  //       if (data.success) {
+  //         setPaymentLink(data.url);
+  //       } else {
+  //         console.error("Error creating payment link:", data.error);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error fetching payment link:", error);
+  //     }
+  //   };
+  //   fetchPaymentLink();
+  // }, []);
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
       {/* Title Section */}
@@ -27,6 +60,9 @@ const Confirmation = ({
             <li>
               Send the total amount of your order to our Venmo account:{" "}
               <strong>@Ariel-Rodrigues</strong>
+              <h6 className='text-xl mt-2 font-bold text-center text-gray-800 mb-4'>
+                Total: ${totalPrice.toString()}
+              </h6>
             </li>
             <li>
               In the note section, make sure to include your{" "}
@@ -47,6 +83,16 @@ const Confirmation = ({
             Pay with Venmo
           </a>
         </div>
+        {/* 
+        <div className='mt-6 flex justify-center'>
+          {paymentLink ? (
+            <a href={paymentLink} target='_blank' rel='noopener noreferrer'>
+              Complete your payment
+            </a>
+          ) : (
+            <p>Loading payment link...</p>
+          )}
+        </div> */}
 
         {/* Contact Section */}
         <div className='mt-8'>

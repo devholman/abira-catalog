@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
 import { useStoreConfig } from "../context/StoreConfigContext";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 //components
 import ItemCard from "./ItemCard";
 import CartIcon from "@/images/CartIcon";
@@ -26,6 +26,8 @@ export default function Home() {
   const [filteredItems, setFilteredItems] = useState(items);
 
   const router = useRouter();
+  const pathname = usePathname();
+  const storeName = pathname?.split("/").filter((path) => path !== "")[1] || "";
 
   useEffect(() => {
     setFilteredItems(
@@ -36,7 +38,7 @@ export default function Home() {
   }, [selectedCategory]);
 
   const handleViewCart = () => {
-    router.push("/cart");
+    router.push(`/cart?team=${storeName}`);
   };
 
   //TODO:: not currently used

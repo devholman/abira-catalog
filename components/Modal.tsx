@@ -104,9 +104,9 @@ export default function ItemModal({
 
     // Add $2 for sizes 2XL-4XL
     if (
-      selectedSize === "XXL" ||
-      selectedSize === "XXXL" ||
-      selectedSize === "XXXXL"
+      selectedSize === "2XL" ||
+      selectedSize === "3XL" ||
+      selectedSize === "4XL"
     ) {
       price += 2;
     }
