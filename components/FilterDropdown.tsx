@@ -1,9 +1,9 @@
-import { Categories } from "@prisma/client";
+import { Categories } from "../_types";
 import React, { useEffect, useRef, useState } from "react";
 
 interface FilterDropdownProps {
-  categories: string[];
-  setSelectedCategory: (category: Categories) => void;
+  categories: (keyof typeof Categories)[];
+  setSelectedCategory: (category: keyof typeof Categories) => void;
   selectedCategory: "TSHIRTS" | "HOODIES" | "ALL";
 }
 
@@ -35,7 +35,8 @@ const FilterDropdown = ({
       window.removeEventListener("resize", updateButtonPosition);
     };
   }, [isOpen]);
-  const handleFilterClick = (category: string) => {
+
+  const handleFilterClick = (category: keyof typeof Categories) => {
     // const selectedEnum =
     //   Categories[category as keyof typeof Categories] || "All";
     setSelectedCategory(category);
@@ -70,7 +71,7 @@ const FilterDropdown = ({
           style={{ top: `${buttonBottom}px` }}
         >
           <ul className='divide-y divide-slate-400 text-sm'>
-            {categories.map((category: string) => (
+            {categories.map((category: keyof typeof Categories) => (
               <li key={category}>
                 <button
                   className={`block w-full text-left px-4 py-2  ${

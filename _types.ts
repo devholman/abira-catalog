@@ -53,6 +53,7 @@ export interface StoreItem {
     quantity: number;
     size: string;
     color: string;
+    material: string;
     isAddBack: boolean;
     notes: string;
     playerName: string;
