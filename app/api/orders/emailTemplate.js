@@ -3,7 +3,8 @@ const generateEmailBody = (
   confirmationNumber,
   totalPrice,
   cart,
-  notes = ""
+  notes = "",
+  paymentLink
 ) => {
   // Calculate total items and total price
   const totalItems = cart.reduce((total, item) => {

@@ -7,8 +7,10 @@ const Confirmation = ({
 }: {
   confirmationNumber: string;
 }) => {
-  const [paymentLink, setPaymentLink] = useState<string | null>(null);
-  const price = useSearchParams()?.get("total");
+  const searchParams = useSearchParams();
+  const paymentLink = searchParams?.get("pl");
+  // const { clearCart, totalPrice } = useCart();
+  // const [paymentLink, setPaymentLink] = useState<string | null>(null);
   // useEffect(() => {
   //   console.log("run useeffect confirmation");
   //   // Fetch payment link from the server
@@ -21,7 +23,7 @@ const Confirmation = ({
   //           "Content-Type": "application/json",
   //         },
   //         body: JSON.stringify({
-  //           amount: 1000, // For $10.00 payment
+  //           amount: totalPrice,
   //           orderId: "YOUR_ORDER_ID", // Unique order identifier
   //         }),
   //       });
@@ -34,6 +36,9 @@ const Confirmation = ({
   //       }
   //     } catch (error) {
   //       console.error("Error fetching payment link:", error);
+  //     } finally {
+  //       setPrice(price);
+  //       clearCart();
   //     }
   //   };
   //   fetchPaymentLink();
@@ -58,8 +63,9 @@ const Confirmation = ({
             How to Pay:
           </h2>
           <ol className='list-decimal list-inside text-gray-700 space-y-2'>
-            <li>Open the Venmo app on your phone or use the web app.</li>
-            <li>
+            <li>Click the link below to complete payment.</li>
+            {/* <li>Open the Venmo app on your phone or use the web app.</li> */}
+            {/* <li>
               Send the total amount of your order to our Venmo account:{" "}
               <strong>@Ariel-Rodrigues</strong>
               {price && (
@@ -67,17 +73,17 @@ const Confirmation = ({
                   Total: ${price}
                 </h6>
               )}
-            </li>
-            <li>
+            </li> */}
+            {/* <li>
               In the note section, make sure to include your{" "}
               <strong>Order Number</strong> and <strong>Your Name</strong>.
-            </li>
+            </li> */}
             <li>Once payment is received, your order will be fullfilled.</li>
           </ol>
         </div>
 
         {/* Venmo Button */}
-        <div className='mt-6 flex justify-center'>
+        {/* <div className='mt-6 flex justify-center'>
           <a
             href='https://venmo.com/'
             target='_blank'
@@ -86,17 +92,22 @@ const Confirmation = ({
           >
             Pay with Venmo
           </a>
-        </div>
-        {/* 
+        </div> */}
+
         <div className='mt-6 flex justify-center'>
           {paymentLink ? (
-            <a href={paymentLink} target='_blank' rel='noopener noreferrer'>
-              Complete your payment
+            <a
+              href={paymentLink}
+              className='underline'
+              target='_blank'
+              rel='noopener noreferrer'
+            >
+              Click here to complete your payment
             </a>
           ) : (
             <p>Loading payment link...</p>
           )}
-        </div> */}
+        </div>
 
         {/* Contact Section */}
         <div className='mt-8'>
