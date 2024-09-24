@@ -8,6 +8,7 @@ import { useCart } from "../context/CartContext";
 import FormInput from "./FormInput";
 import Button from "./Button";
 import Notes from "./Notes";
+import { useStoreConfig } from "@/context/StoreConfigContext";
 
 interface OrderFormData {
   firstName: string;
@@ -29,6 +30,9 @@ const OrderForm = () => {
 
   const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
     useCart();
+  const {
+    storeConfig: { name },
+  } = useStoreConfig();
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
 
   const searchParams = useSearchParams();
@@ -47,6 +51,7 @@ const OrderForm = () => {
           body: JSON.stringify({
             amount: totalPrice,
             orderId: "YOUR_ORDER_ID", // Unique order identifier
+            storeName: name,
           }),
         });
 
@@ -58,7 +63,6 @@ const OrderForm = () => {
         }
       } catch (error) {
         console.error("Error fetching payment link:", error);
-      } finally {
       }
     };
     fetchPaymentLink();

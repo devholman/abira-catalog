@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { amount, orderId } = body;
+    const { amount, orderId, storeName } = body;
 
     /**
      * Converts a dollar amount string (e.g., "$50.00") to cents (e.g., 5000).
@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
 
       // Multiply by 100 to convert dollars to cents
       const amountInCents = BigInt(Math.round(amount * 100));
-      console.log("amountInCents method: ", amountInCents);
       return amountInCents;
     };
 
@@ -47,7 +46,7 @@ export async function POST(req: NextRequest) {
     const response = await client.checkoutApi.createPaymentLink({
       idempotencyKey, // Ensure the request is not processed multiple times
       quickPay: {
-        name: "Team Apparel",
+        name: `Team ${storeName} Apparel`,
         priceMoney: {
           amount: dollarsToCents(amount), // amount in smallest currency unit, e.g., cents
           currency: "USD", // Currency code

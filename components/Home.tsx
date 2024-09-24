@@ -51,7 +51,7 @@ export default function Home() {
           className='text-3xl font-bold'
           style={{ color: branding.secondaryColor }}
         >
-          {name}
+          {name.toUpperCase()}
         </h1>
         <div className='flex items-center gap-2' onClick={handleViewCart}>
           <CartIcon className={"size-7"} />

@@ -1,5 +1,3 @@
-import { useCart } from "@/context/CartContext";
-import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 
 const Confirmation = ({
@@ -9,40 +7,7 @@ const Confirmation = ({
 }) => {
   const searchParams = useSearchParams();
   const paymentLink = searchParams?.get("pl");
-  // const { clearCart, totalPrice } = useCart();
-  // const [paymentLink, setPaymentLink] = useState<string | null>(null);
-  // useEffect(() => {
-  //   console.log("run useeffect confirmation");
-  //   // Fetch payment link from the server
-  //   const fetchPaymentLink = async () => {
-  //     try {
-  //       console.log("fetingch payment link ...");
-  //       const res = await fetch("/api/square/create-payment-link", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           amount: totalPrice,
-  //           orderId: "YOUR_ORDER_ID", // Unique order identifier
-  //         }),
-  //       });
 
-  //       const data = await res.json();
-  //       if (data.success) {
-  //         setPaymentLink(data.url);
-  //       } else {
-  //         console.error("Error creating payment link:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching payment link:", error);
-  //     } finally {
-  //       setPrice(price);
-  //       clearCart();
-  //     }
-  //   };
-  //   fetchPaymentLink();
-  // }, []);
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
       {/* Title Section */}

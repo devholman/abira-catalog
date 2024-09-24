@@ -125,8 +125,8 @@ export const stores: Record<string, StoreConfig> = {
   },
   hustle: {
     id: 3,
-    version: 4,
-    name: "HUSTLE",
+    version: 5,
+    name: "Hustle",
     branding: {
       logo: "",
       primaryColor: "#ffffff",
