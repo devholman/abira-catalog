@@ -1,13 +1,13 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { sendEmail } from "@/lib/email";
-import confirmationTemplate from "./emailTemplate";
-
+import generateCustomerEmailBody from "./emailTemplates/customerConfirmation";
+import generateMerchantEmailBody from "./emailTemplates/merchantConfirmation";
 export async function POST(req: Request) {
   try {
     const data = await req.json();
 
-    const { customer, cart, totalPrice, notes, storeId } = data;
+    const { customer, cart, totalPrice, notes, storeId, paymentLink } = data;
 
     // Destructure the customer information
     const { firstName, lastName, email, phone } = customer;
@@ -41,7 +41,10 @@ export async function POST(req: Request) {
               title: item.title,
               playerName: order.playerName,
               playerNumber: order.playerNumber,
-              material: order.material,
+              material:
+                order.material === "Dri-Fit (+ $5)"
+                  ? "Dri-Fit"
+                  : order.material,
               isAddBack: order.isAddBack,
               productImage: order.productId,
               notes: order.notes,
@@ -59,25 +62,38 @@ export async function POST(req: Request) {
     const confirmationNumber = `ORD-${newOrder.id}`;
 
     //send emails
-    const customerEmail = email; // Replace with the actual email field from the request
+    const customerEmailAddress = email; // Replace with the actual email field from the request
     const businessOwnerEmail = "abirasportsapparel@gmail.com";
-    const emailHtml = confirmationTemplate(
-      "Order Confirmation",
-      confirmationNumber,
-      totalPrice,
-      cart
-    );
-    const bizEmailHtml = confirmationTemplate(
+
+    const customerEmailHtml = generateCustomerEmailBody(
       "Order Confirmation",
       confirmationNumber,
       totalPrice,
       cart,
-      notes
+      notes,
+      paymentLink
+    );
+
+    const bizEmailHtml = generateMerchantEmailBody(
+      "Order Confirmation",
+      confirmationNumber,
+      totalPrice,
+      cart,
+      notes,
+      firstName,
+      lastName,
+      email,
+      phone,
+      storeId
     );
 
     try {
       // Send confirmation to customer
-      await sendEmail(customerEmail, "Your Order Confirmation", emailHtml);
+      await sendEmail(
+        customerEmailAddress,
+        "Your Order Confirmation",
+        customerEmailHtml
+      );
 
       // Send confirmation to business owner
       await sendEmail(businessOwnerEmail, "New Order Received", bizEmailHtml);

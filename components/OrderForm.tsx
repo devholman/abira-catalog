@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -27,11 +27,42 @@ const OrderForm = () => {
     formState: { errors },
   } = methods;
 
-  const { clearCart, cart, totalPrice, totalQuantity, currentStoreId } =
+  const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
     useCart();
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const storeName = searchParams?.get("team");
+
+  useEffect(() => {
+    // Fetch payment link from the server
+    const fetchPaymentLink = async () => {
+      try {
+        const res = await fetch("/api/square/create-payment-link", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: totalPrice,
+            orderId: "YOUR_ORDER_ID", // Unique order identifier
+          }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          setPaymentLink(data.url);
+        } else {
+          console.error("Error creating payment link:", data.error);
+        }
+      } catch (error) {
+        console.error("Error fetching payment link:", error);
+      } finally {
+      }
+    };
+    fetchPaymentLink();
+  }, []);
 
   const onSubmit = async (data: OrderFormData) => {
     const response = await fetch("/api/orders", {
@@ -46,6 +77,7 @@ const OrderForm = () => {
         cart,
         totalPrice,
         totalQuantity,
+        paymentLink,
       }),
     });
 
@@ -53,20 +85,11 @@ const OrderForm = () => {
       throw new Error("Order submission failed");
     }
 
-    console.log("Form Data:", {
-      storeId: currentStoreId,
-      customer: data,
-      notes: data.notes,
-      cart,
-      totalPrice,
-      totalQuantity,
-    });
-
     const result = await response.json();
     if (result.success) {
       // Redirect to the confirmation page with the confirmation number
       router.push(
-        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}&total=${totalPrice}`
+        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}&pl=${paymentLink}`
       );
     } else {
       // Handle error case
