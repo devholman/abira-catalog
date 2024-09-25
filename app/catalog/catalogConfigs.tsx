@@ -20,9 +20,9 @@ export const stores: Record<string, StoreConfig> = {
     },
     passcode: "s1",
     players: [
-      { name: "John Doe", number: 10 },
-      { name: "Jane Smith", number: 12 },
-      { name: "Mike Johnson", number: 8 },
+      { name: "John Doe", number: "10" },
+      { name: "Jane Smith", number: "12" },
+      { name: "Mike Johnson", number: "8" },
     ],
     items: [
       {
@@ -785,9 +785,9 @@ export const stores: Record<string, StoreConfig> = {
       secondaryColor: "#00C0C0",
     },
     players: [
-      { name: "Sophia Ramirez", number: 10 },
-      { name: "Jane Smith", number: 12 },
-      { name: "Mike Johnson", number: 8 },
+      { name: "Sophia Ramirez", number: "10" },
+      { name: "Jane Smith", number: "12" },
+      { name: "Mike Johnson", number: "8" },
     ],
     passcode: "national",
     items: [
