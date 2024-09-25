@@ -7,7 +7,7 @@ export interface StoreConfig {
     primaryColor: string;
     secondaryColor: string;
   };
-  players: { name: string; number: number }[];
+  players: { name: string; number: string }[];
   passcode: string;
   items: StoreItem[];
 }

@@ -1,4 +1,4 @@
-import { StoreItem } from "@/_types";
+import { Categories, StoreItem } from "@/_types";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import SelectionTiles from "./SelectionTiles";
@@ -207,32 +207,34 @@ export default function ItemModal({
                 />
 
                 {/* Add Number to Back Checkbox */}
-                <div className='flex py-4 mt-4 gap-4'>
-                  <Image
-                    src={getS3ImageUrl(item.backImage || "")}
-                    alt='shirt back'
-                    width={60}
-                    height={50}
-                    className='object-contain max-w-fit'
-                    priority
-                    quality={75}
-                    unoptimized
-                  />
-                  <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded'>
-                    <input
-                      type='checkbox'
-                      {...register("isAddNumberToBack")}
-                      id='addNumberToBack'
-                      className='size-6 border-solid border-2 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset'
+                {item.category !== Categories.HOODIES && (
+                  <div className='flex py-4 mt-4 gap-4'>
+                    <Image
+                      src={getS3ImageUrl(item.backImage || "")}
+                      alt='shirt back'
+                      width={60}
+                      height={50}
+                      className='object-contain max-w-fit'
+                      priority
+                      quality={75}
+                      unoptimized
                     />
-                    <label
-                      htmlFor='addNumberToBack'
-                      className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
-                    >
-                      Add last name and number to back (addtl. $2 per shirt):
-                    </label>
+                    <div className='flex gap-1 items-center ps-4 border border-gray-200 rounded'>
+                      <input
+                        type='checkbox'
+                        {...register("isAddNumberToBack")}
+                        id='addNumberToBack'
+                        className='size-6 border-solid border-2 rounded-md bg-white/10 p-1 ring-1 ring-white/15 ring-inset'
+                      />
+                      <label
+                        htmlFor='addNumberToBack'
+                        className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
+                      >
+                        Add last name and number to back (addtl. $2 per shirt):
+                      </label>
+                    </div>
                   </div>
-                </div>
+                )}
                 {isAddNumberToBack && (
                   <PlayerSelectDropdown
                     players={players}
