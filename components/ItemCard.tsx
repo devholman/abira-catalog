@@ -146,7 +146,7 @@ export default function ItemCard({ item }: ItemCardProps) {
             ${item.price.toFixed(2)}
           </p>
         </div>
-        <PlusCircleIcon className='size-7 self-end font-light text-gray-600' />
+        <PlusCircleIcon className='size-7 self-end font-light w-5 min-w-5 text-gray-600' />
       </div>
     </div>
   );
