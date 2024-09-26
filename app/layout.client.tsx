@@ -5,6 +5,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { StoreConfigProvider } from "../context/StoreConfigContext";
 import { CartProvider } from "../context/CartContext";
+import { CustomerDataProvider } from "../context/CustomerDataContext";
 import { StoreConfig } from "@/_types";
 
 export default function ClientLayout({ children }: { children: ReactNode }) {
@@ -100,7 +101,9 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <StoreConfigProvider storeConfig={storeConfig}>
-      <CartProvider storeId={storeConfig.id}>{children}</CartProvider>
+      <CustomerDataProvider>
+        <CartProvider storeId={storeConfig.id}>{children}</CartProvider>
+      </CustomerDataProvider>
     </StoreConfigProvider>
   );
 }

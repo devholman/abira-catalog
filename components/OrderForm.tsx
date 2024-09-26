@@ -1,10 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useCart } from "../context/CartContext";
+import { useCustomerData } from "../context/CustomerDataContext";
+
 import FormInput from "./FormInput";
 import Button from "./Button";
 import Notes from "./Notes";
@@ -26,45 +28,15 @@ const OrderForm = () => {
     handleSubmit,
     formState: { errors },
   } = methods;
-
-  const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
-    useCart();
-  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+  const { setCustomerData } = useCustomerData();
+  const { cart, totalPrice, totalQuantity, currentStoreId } = useCart();
 
   const searchParams = useSearchParams();
   const router = useRouter();
   const storeName = searchParams?.get("team");
 
-  useEffect(() => {
-    // Fetch payment link from the server
-    const fetchPaymentLink = async () => {
-      try {
-        const res = await fetch("/api/square/create-payment-link", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            amount: totalPrice,
-            orderId: "YOUR_ORDER_ID", // Unique order identifier
-          }),
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          setPaymentLink(data.url);
-        } else {
-          console.error("Error creating payment link:", data.error);
-        }
-      } catch (error) {
-        console.error("Error fetching payment link:", error);
-      } finally {
-      }
-    };
-    fetchPaymentLink();
-  }, []);
-
   const onSubmit = async (data: OrderFormData) => {
+    setCustomerData(data);
     const response = await fetch("/api/orders", {
       method: "POST",
       headers: {
@@ -77,7 +49,7 @@ const OrderForm = () => {
         cart,
         totalPrice,
         totalQuantity,
-        paymentLink,
+        storeName,
       }),
     });
 
@@ -89,13 +61,13 @@ const OrderForm = () => {
     if (result.success) {
       // Redirect to the confirmation page with the confirmation number
       router.push(
-        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}&pl=${paymentLink}`
+        `/confirmation?confirmationNumber=${result.confirmationNumber}&team=${storeName}`
       );
     } else {
       // Handle error case
       console.error("Order submission failed:", result.error);
     }
-    clearCart();
+    // clearCart();
 
     return result;
   };
