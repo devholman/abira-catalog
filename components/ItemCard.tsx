@@ -13,6 +13,7 @@ import { getS3ImageUrl } from "../utils/images";
 
 //types
 import { StoreItem } from "../_types";
+import { DEFAULT_PLAYER_NUMBER } from "@/app/catalog/catalogConfigs";
 
 interface ItemCardProps {
   item: StoreItem;
@@ -32,7 +33,7 @@ export default function ItemCard({ item }: ItemCardProps) {
     selectedColor: "",
     isAddNumberToBack: false,
     selectedPlayerName: "",
-    selectedPlayerNumber: 0,
+    selectedPlayerNumber: DEFAULT_PLAYER_NUMBER,
     selectedMaterial: "",
     orderItemNotes: "",
   };

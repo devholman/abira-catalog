@@ -7,7 +7,7 @@ export interface StoreConfig {
     primaryColor: string;
     secondaryColor: string;
   };
-  players: { name: string; number: number }[];
+  players: { name: string; number: string }[];
   passcode: string;
   items: StoreItem[];
 }
@@ -58,7 +58,7 @@ export interface StoreItem {
     isAddBack: boolean;
     notes: string;
     playerName: string;
-    playerNumber: number;
+    playerNumber: string;
     productImage?: string;
     orderPrice: number;
   }[];
@@ -68,4 +68,5 @@ export enum Categories {
   ALL = "ALL",
   TSHIRTS = "TSHIRTS",
   HOODIES = "HOODIES",
+  LONG_SLEEVE = "LONG_SLEEVE",
 }

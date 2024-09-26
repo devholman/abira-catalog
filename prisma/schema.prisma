@@ -36,7 +36,7 @@ model OrderItem {
   size      String
   isAddBack Boolean
   playerName   String?
-  playerNumber Int? 
+  playerNumber String? 
   category  Categories @default(TSHIRTS)
   color     String     @default("black")
   material     String  @default("cotton")
@@ -50,4 +50,5 @@ model OrderItem {
 enum Categories {
   TSHIRTS
   HOODIES
+  LONG_SLEEVE
 }

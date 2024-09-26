@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 interface FilterDropdownProps {
   categories: (keyof typeof Categories)[];
   setSelectedCategory: (category: keyof typeof Categories) => void;
-  selectedCategory: "TSHIRTS" | "HOODIES" | "ALL";
+  selectedCategory: "TSHIRTS" | "HOODIES" | "ALL" | "LONG_SLEEVE";
 }
 
 const FilterDropdown = ({
@@ -15,6 +15,14 @@ const FilterDropdown = ({
   const [isOpen, setIsOpen] = useState(false);
   const [buttonBottom, setButtonBottom] = useState(0); // State to store the bottom position
   const buttonRef = useRef<HTMLButtonElement>(null); // Ref for the button
+
+  // Define a map for UI display values
+  const categoryDisplayNames: Record<Categories, string> = {
+    [Categories.ALL]: "All",
+    [Categories.TSHIRTS]: "T-Shirts",
+    [Categories.HOODIES]: "Hoodies",
+    [Categories.LONG_SLEEVE]: "Long Sleeve",
+  };
 
   // Function to calculate and update the button's bottom position
   const updateButtonPosition = () => {
@@ -81,7 +89,7 @@ const FilterDropdown = ({
                   }`}
                   onClick={() => handleFilterClick(category)}
                 >
-                  {category}
+                  {categoryDisplayNames[category]}
                 </button>
               </li>
             ))}

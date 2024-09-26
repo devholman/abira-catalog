@@ -16,13 +16,15 @@ export default function Home() {
   } = useStoreConfig();
   const { totalQuantity } = useCart();
   const [selectedCategory, setSelectedCategory] = useState<
-    "TSHIRTS" | "HOODIES" | "ALL"
+    "TSHIRTS" | "HOODIES" | "ALL" | "LONG_SLEEVE"
   >("ALL");
   const categories: Categories[] = [
     Categories.ALL,
     Categories.TSHIRTS,
     Categories.HOODIES,
+    Categories.LONG_SLEEVE,
   ];
+
   const [filteredItems, setFilteredItems] = useState(items);
 
   const router = useRouter();
