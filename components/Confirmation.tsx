@@ -1,48 +1,56 @@
 import { useCart } from "@/context/CartContext";
 import { useEffect, useState } from "react";
+import { useCustomerData } from "../context/CustomerDataContext";
 import { useSearchParams } from "next/navigation";
 
-const Confirmation = ({
-  confirmationNumber,
-}: {
-  confirmationNumber: string;
-}) => {
-  const searchParams = useSearchParams();
-  const paymentLink = searchParams?.get("pl");
-  // const { clearCart, totalPrice } = useCart();
-  // const [paymentLink, setPaymentLink] = useState<string | null>(null);
-  // useEffect(() => {
-  //   console.log("run useeffect confirmation");
-  //   // Fetch payment link from the server
-  //   const fetchPaymentLink = async () => {
-  //     try {
-  //       console.log("fetingch payment link ...");
-  //       const res = await fetch("/api/square/create-payment-link", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify({
-  //           amount: totalPrice,
-  //           orderId: "YOUR_ORDER_ID", // Unique order identifier
-  //         }),
-  //       });
+const Confirmation = () => {
+  const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
+    useCart();
+  const { customerData } = useCustomerData();
 
-  //       const data = await res.json();
-  //       if (data.success) {
-  //         setPaymentLink(data.url);
-  //       } else {
-  //         console.error("Error creating payment link:", data.error);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching payment link:", error);
-  //     } finally {
-  //       setPrice(price);
-  //       clearCart();
-  //     }
-  //   };
-  //   fetchPaymentLink();
-  // }, []);
+  const [paymentLink, setPaymentLink] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const confirmationNumber = searchParams?.get("confirmationNumber") || "";
+
+  const storeName = searchParams?.get("team");
+
+  useEffect(() => {
+    console.log("run useeffect confirmation");
+    // Fetch payment link from the server
+    const fetchPaymentLink = async () => {
+      try {
+        console.log("fetingch payment link ...");
+        const res = await fetch("/api/square/create-payment-link", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            amount: totalPrice,
+            confirmationNumber, // Unique order identifier
+            storeId: currentStoreId,
+            customer: customerData,
+            cart,
+            totalPrice,
+            totalQuantity,
+            storeName,
+          }),
+        });
+
+        const data = await res.json();
+        if (data.success) {
+          setPaymentLink(data.url);
+        } else {
+          console.error("Error creating payment link:", data.error);
+        }
+      } catch (error) {
+        console.error("Error fetching payment link:", error);
+      } finally {
+        clearCart();
+      }
+    };
+    fetchPaymentLink();
+  }, []);
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
       {/* Title Section */}
@@ -51,7 +59,10 @@ const Confirmation = ({
           Order Confirmed!
         </h1>
         <p className='text-center text-lg text-gray-600'>
-          Thank you for your order! Your order confirmation number is:
+          Thank you for your order!
+        </p>
+        <p className='text-center text-lg text-gray-600'>
+          Your order confirmation number is:
         </p>
         <p className='text-center text-2xl font-semibold text-gray-800 my-4'>
           #{confirmationNumber || "N/A"}

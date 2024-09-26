@@ -8,7 +8,8 @@ const generateMerchantEmailBody = (
   lastName: string,
   email: string,
   phone: string,
-  storeId: number
+  storeId: number,
+  storeName: string
 ) => {
   const totalItems = cart.reduce((total, item) => {
     return (
@@ -143,6 +144,7 @@ const generateMerchantEmailBody = (
             <p><strong>Email:</strong> ${email}</p>
             <p><strong>Phone:</strong> ${phone}</p>
             <p><strong>Store ID:</strong> ${storeId}</p>
+            <p><strong>Store Name:</strong> ${storeName}</p>
 
             <div class="order-details">
                 <h2>Order Details</h2>
