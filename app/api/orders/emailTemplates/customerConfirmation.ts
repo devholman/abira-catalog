@@ -14,7 +14,8 @@ const generateCustomerEmailBody = (
   }, 0);
 
   const getLastName = (name: string) => {
-    return name.split(" ")[1];
+    const lastName = name.split(" ")[1];
+    return lastName ? lastName : name;
   };
   let hasOrderNotes;
 

@@ -8,6 +8,8 @@ const colors = ["Black", "Silver", "White"];
 const renegadeColors = ["Black", "Gray", "Purple"];
 const materials = ["Cotton", DRIFIT];
 const backMock = "hustleNational/Back_mock.png";
+export const DEFAULT_PLAYER_NUMBER = "n/a";
+export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const stores: Record<string, StoreConfig> = {
   store1: {
     id: 1,
@@ -74,7 +76,7 @@ export const stores: Record<string, StoreConfig> = {
       { name: "Everly Dawson", number: "25" },
       { name: "Johanna Cox", number: "33" },
       { name: "Mya Villaloboz", number: "88" },
-      { name: "Coach", number: "n/a" },
+      coach,
     ],
     passcode: "ren",
     items: [
@@ -153,7 +155,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Little Brother Big Fan Hoodie - Customizable",
         isCustomizable: true,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/11-black-SisBro-hoodie.png",
         images: [
           {
@@ -232,8 +234,8 @@ export const stores: Record<string, StoreConfig> = {
         title: "Renegade Dad Hoodie - Customizable",
         isCustomizable: true,
         category: Categories.HOODIES,
-        price: 30.0,
-        image: "renegades/11-black-SisBro-hoodie.png",
+        price: 35.0,
+        image: "renegades/14-black-dad-hoodie.png",
         images: [
           {
             id: 0,
@@ -351,7 +353,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "TX Renegades Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/10-black-TexRen-hoodie.png",
         images: [
           {
@@ -370,7 +372,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "TX Renegades Crop Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/10-black-TexRen-crop top hoodie.png",
         images: [
           {
@@ -484,7 +486,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Renegade Fastpitch Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/3-black-fastpitch-+Hoodie.png",
         images: [
           {
@@ -503,7 +505,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Retro Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/4-black-retro-+hoodie.png",
         images: [
           {
@@ -552,7 +554,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Play Like a Renegade Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/5-black-play-hoodie.png",
         images: [
           {
@@ -601,7 +603,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Play Block Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/6-black-simple-hoodie.png",
         images: [
           {
@@ -650,7 +652,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Take Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/7-black-take-hoodie.png",
         images: [
           {
@@ -699,7 +701,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Texas State Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
-        price: 30.0,
+        price: 35.0,
         image: "renegades/8-black-texas-hoodie.png",
         images: [
           {
@@ -741,6 +743,432 @@ export const stores: Record<string, StoreConfig> = {
         sizes: allSizes,
         colors: ["Blue", "Gray", "Silver"],
         material: [...materials],
+        orders: [],
+      },
+      {
+        id: 28,
+        title: "Renegades Cotton Jersey T-Shirt",
+        isCustomizable: false,
+        category: Categories.HOODIES,
+        price: 35.0,
+        image: "renegades/17-Black+Jersey+Shirt-+Renegade+Logo-Front.png",
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/17-Black+Jersey+Shirt-+Renegade+Logo-Front.png",
+            color: "Black/Gray",
+          },
+          {
+            id: 1,
+            imageUrl: "renegades/17-Black+Jersey+Shirt-+Renegade+Logo-Back.png",
+            color: "Black/Gray",
+          },
+        ],
+        sizes: ["XS", "S", "M", "L", "XL", "2XL"],
+        colors: ["Black/Gray"],
+        material: ["Cotton"],
+        orders: [],
+      },
+      {
+        id: 29,
+        title: "Texas Renegades Womens Tri-blend Long Sleeve",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image:
+          "renegades/18-+Womens+Gray+Jersey+Shirt-+Texas+Renegade-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/18-+Womens+Gray+Jersey+Shirt-+Texas+Renegade-Front.png",
+            color: "Gray/Black",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["Gray/Black"],
+        material: ["Cotton"],
+        orders: [],
+      },
+      {
+        id: 30,
+        title: "Retro Womens Tri-blend Long Sleeve",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/19-+Womens+Gray+Jersey+Shirt-+Retro-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/19-+Womens+Gray+Jersey+Shirt-+Retro-Front.png",
+            color: "Gray/White Sleeve",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/19-+Womens+Black+Jersey+Shirt-+Retro-Front.png",
+            color: "Black/Gray Sleeve",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Gray/White Sleeve", "Black/Gray Sleeve"],
+        material: ["Cotton"],
+        orders: [],
+      },
+      {
+        id: 31,
+        title: "Take Womens Tri-blend Long Sleeve",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/20-+Womens+Black+Jersey+Shirt-+Take-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/20-+Womens+Black+Jersey+Shirt-+Take-Front.png",
+            color: "Black/Gray Sleeve",
+          },
+          {
+            id: 1,
+            imageUrl: "renegades/20-+Womens+Gray+Jersey+Shirt-+Take-Front.png",
+            color: "Gray/Black Sleeve",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Black/Gray Sleeve", "Gray/Black Sleeve"],
+        material: ["Cotton"],
+        orders: [],
+      },
+      {
+        id: 32,
+        title: "Traditional Blue Logo Drifit Henley",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 30.0,
+        image: "renegades/21-+Henley's+Black+Shirt-+blue-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/21-+Henley's+Black+Shirt-+blue-Front.png",
+            color: "black",
+          },
+          {
+            id: 1,
+            imageUrl: "renegades/21-+Henley's+Purple+Shirt-+blue-Front.png",
+            color: "Purple",
+          },
+        ],
+        sizes: ["S", "M", "XL", "2XL", "3XL"],
+        colors: ["Black", "Purple"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 33,
+        title: "Take Womens Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image: "renegades/23-+Womens+Black+Short+Sleeve+Shirt-+Take-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/23-+Womens+Black+Short+Sleeve+Shirt-+Take-Front.png",
+            color: "black",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/23-+Womens+White+Short+Sleeve+Shirt-+Take-Front.png",
+            color: "white",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Black", "White"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 34,
+        title: "Retro Womens Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image:
+          "renegades/24-+Womens+Purple+Short+Sleeve+Shirt-+Retro-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/24-+Womens+Purple+Short+Sleeve+Shirt-+Retro-Front.png",
+            color: "Purple",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/24-+Womens+Black+Short+Sleeve+Shirt-+Retro-Front.png",
+            color: "Black",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Purple", "Black"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 35,
+        title: "Texas Renegades Womens Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image:
+          "renegades/25-+Womens+White+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/25-+Womens+White+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+            color: "White",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/25-+Womens+Black+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+            color: "Black",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["White", "Black"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 36,
+        title: "Retro Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image: "renegades/26-+Gray+Short+Sleeve+Shirt-+Retro-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/26-+Gray+Short+Sleeve+Shirt-+Retro-Front.png",
+            color: "Gray",
+          },
+          {
+            id: 1,
+            imageUrl: "renegades/26-+Black+Short+Sleeve+Shirt-+Retro-Front.png",
+            color: "Black",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["Gray", "Black"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 37,
+        title: "Texas Renegades Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image:
+          "renegades/27-+White+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/27-+White+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+            color: "White",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/27-+Black+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+            color: "Black",
+          },
+          {
+            id: 2,
+            imageUrl:
+              "renegades/27-+Gray+Short+Sleeve+Shirt-+Texas+Renegade-Front.png",
+            color: "Gray",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["White", "Black", "Gray"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 38,
+        title: "Take Drifit Muscle T-Shirt",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        price: 20.0,
+        image:
+          "renegades/28-+Black+Short+Sleeve+Shirt-+Take+Renegade-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/28-+Black+Short+Sleeve+Shirt-+Take+Renegade-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/28-+White+Short+Sleeve+Shirt-+Take+Renegade-Front.png",
+            color: "White",
+          },
+          {
+            id: 2,
+            imageUrl:
+              "renegades/28-+Gray+Short+Sleeve+Shirt-+Take+Renegade-Front.png",
+            color: "Gray",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["Black", "White", "Gray"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 39,
+        title: "Traditional Blue Quarter Zip Long Sleeve Shirt",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/29-+Black+Quarter+Zipper+Long+Sleeve-+Blue-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/29-+Black+Quarter+Zipper+Long+Sleeve-+Blue-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/29-+White+Quarter+Zipper+Long+Sleeve-+Blue-Front.png",
+            color: "White",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["Black", "White"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 40,
+        title: "Traditional Purple Quarter Zip Long Sleeve T-Shirt",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image:
+          "renegades/30-+White+Quarter+Zipper+Long+Sleeve-+Purple-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/30-+Black+Quarter+Zipper+Long+Sleeve-+Purple-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/30-+White+Quarter+Zipper+Long+Sleeve-+Purple-Front.png",
+            color: "White",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
+        colors: ["Black", "White"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 41,
+        title: "Retro Drifit Long Sleeve T-Shirt",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/31-+Black+Long+Sleeve-+Retro-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/31-+Black+Long+Sleeve-+Retro-Front.png",
+            color: "Black",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["Black"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 42,
+        title: "Take Drifit Long Sleeve T-Shirt",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/32-+white+Long+Sleeve-+Take-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "renegades/32-+white+Long+Sleeve-+Take-Front.png",
+            color: "white",
+          },
+          {
+            id: 1,
+            imageUrl: "renegades/32-+Black+Long+Sleeve-+Take-Front.png",
+            color: "black",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["White", "Black"],
+        material: [DRIFIT],
+        orders: [],
+      },
+      {
+        id: 43,
+        title: "Texas Renegades Drifit Long Sleeve T-Shirt",
+        isCustomizable: false,
+        category: Categories.LONG_SLEEVE,
+        price: 25.0,
+        image: "renegades/33-+Black+Long+Sleeve-+Texas+Renegades-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl:
+              "renegades/33-+Black+Long+Sleeve-+Texas+Renegades-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl:
+              "renegades/33-+White+Long+Sleeve-+Texas+Renegades-Front.png",
+            color: "White",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["Black", "White"],
+        material: [DRIFIT],
         orders: [],
       },
       {

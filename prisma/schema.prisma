@@ -50,4 +50,5 @@ model OrderItem {
 enum Categories {
   TSHIRTS
   HOODIES
+  LONG_SLEEVE
 }

@@ -22,7 +22,7 @@ interface ItemModalProps {
   selectedColor: string;
   selectedMaterial: string;
   selectedPlayerName: string;
-  selectedPlayerNumber: number;
+  selectedPlayerNumber: string;
   selectedQuantity: number;
   totalPrice: number;
   setTotalPrice: (price: number) => void;
@@ -34,7 +34,7 @@ interface ItemModalProps {
     orderItemNotes: string;
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
-    selectedPlayerNumber: number;
+    selectedPlayerNumber: string;
   }>;
   toggleModal: () => void;
   handleAddtoCart: (data: any) => void;
@@ -45,7 +45,7 @@ interface ItemModalProps {
     orderItemNotes: string;
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
-    selectedPlayerNumber: number;
+    selectedPlayerNumber: string;
     selectedMaterial: string;
   }>;
   errors: FieldErrors;

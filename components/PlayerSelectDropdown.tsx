@@ -7,7 +7,7 @@ import {
   Merge,
 } from "react-hook-form";
 interface PlayerSelectDropdownProps {
-  players: { name: string; number: number }[];
+  players: { name: string; number: string }[];
   register: UseFormRegister<{
     selectedSize: string;
     selectedColor: string;
@@ -15,12 +15,12 @@ interface PlayerSelectDropdownProps {
     orderItemNotes: string;
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
-    selectedPlayerNumber: number;
+    selectedPlayerNumber: string;
     selectedMaterial: string;
   }>;
   // isRequired: boolean;
   selectedPlayerName: string;
-  selectedPlayerNumber: number;
+  selectedPlayerNumber: string;
   setValue: UseFormSetValue<{
     selectedSize: string;
     selectedColor: string;
@@ -28,7 +28,7 @@ interface PlayerSelectDropdownProps {
     orderItemNotes: string;
     isAddNumberToBack: boolean;
     selectedPlayerName: string;
-    selectedPlayerNumber: number;
+    selectedPlayerNumber: string;
     selectedMaterial: string;
   }>;
   errors?: FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;

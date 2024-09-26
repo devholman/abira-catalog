@@ -5,6 +5,7 @@ import { StoreItem } from "../_types";
 import Image from "next/image";
 import { getS3ImageUrl } from "@/utils/images";
 import Button from "./Button";
+import { DEFAULT_PLAYER_NUMBER } from "@/app/catalog/catalogConfigs";
 
 interface ShoppingCartProps {
   cartItems: StoreItem[];
@@ -97,12 +98,17 @@ export default function ShoppingCart({
                                       With back option
                                     </p>
                                   )}
-                                  {playerNumber !== 0 && (
+                                  {playerNumber !== DEFAULT_PLAYER_NUMBER && (
                                     <p className='ml-3 text-xs leading-4 text-black'>
                                       Player:{" "}
                                       {`${getLastName(
                                         playerName
                                       )} - ${playerNumber}`}
+                                    </p>
+                                  )}
+                                  {playerName === "Coach" && (
+                                    <p className='ml-3 text-xs leading-4 text-black'>
+                                      Player: {playerName}
                                     </p>
                                   )}
                                 </div>
