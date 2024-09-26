@@ -34,7 +34,7 @@ model OrderItem {
   productId Int
   quantity  Int
   size      String
-  isAddBack Boolean
+  isAddBack Boolean?   @default(false)
   playerName   String?
   playerNumber String? 
   category  Categories @default(TSHIRTS)

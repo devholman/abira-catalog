@@ -81,7 +81,7 @@ export default function ItemModal({
   const {
     storeConfig: { players },
   } = useStoreConfig();
-
+  const showBackOption = item.showBackSelection ?? true;
   useEffect(() => {
     if (isOpen) {
       // Prevent scrolling on the body
@@ -207,7 +207,7 @@ export default function ItemModal({
                 />
 
                 {/* Add Number to Back Checkbox */}
-                {item.category !== Categories.HOODIES && (
+                {showBackOption && (
                   <div className='flex py-4 mt-4 gap-4'>
                     <Image
                       src={getS3ImageUrl(item.backImage || "")}
