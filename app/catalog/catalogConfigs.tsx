@@ -156,6 +156,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: true,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/11-black-SisBro-hoodie.png",
         images: [
           {
@@ -235,6 +236,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: true,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/14-black-dad-hoodie.png",
         images: [
           {
@@ -354,6 +356,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/10-black-TexRen-hoodie.png",
         images: [
           {
@@ -373,6 +376,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/10-black-TexRen-crop top hoodie.png",
         images: [
           {
@@ -487,6 +491,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/3-black-fastpitch-+Hoodie.png",
         images: [
           {
@@ -506,6 +511,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/4-black-retro-+hoodie.png",
         images: [
           {
@@ -555,6 +561,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/5-black-play-hoodie.png",
         images: [
           {
@@ -604,6 +611,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/6-black-simple-hoodie.png",
         images: [
           {
@@ -653,6 +661,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/7-black-take-hoodie.png",
         images: [
           {
@@ -702,6 +711,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/8-black-texas-hoodie.png",
         images: [
           {
@@ -751,6 +761,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 35.0,
+        showBackSelection: false,
         image: "renegades/17-Black+Jersey+Shirt-+Renegade+Logo-Front.png",
         images: [
           {
@@ -1177,6 +1188,7 @@ export const stores: Record<string, StoreConfig> = {
         isCustomizable: false,
         category: Categories.HOODIES,
         price: 30.0,
+        showBackSelection: false,
         image: "renegades/16-black-joggers.png",
         images: [
           {

@@ -43,6 +43,7 @@ export interface StoreItem {
   isCustomizable: boolean;
   price: number;
   image: string;
+  showBackSelection?: boolean;
   backImage?: string;
   images?: { id: number; imageUrl: string; color: string }[];
   sizes: string[];
