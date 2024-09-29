@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/api/orders/emailTemplate.js"
+    "app/api/orders/emailTemplate.js",
+    "app/admin/fulfillment"
   ],
   "exclude": ["node_modules"]
 }
