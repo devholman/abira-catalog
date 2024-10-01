@@ -8,21 +8,22 @@ import { useRouter, usePathname } from "next/navigation";
 import ItemCard from "./ItemCard";
 import CartIcon from "@/images/CartIcon";
 import FilterDropdown from "./FilterDropdown";
-import { Categories } from "@/_types";
+import { Categories, CategoriesUnion } from "@/_types";
 
 export default function Home() {
   const {
     storeConfig: { name, branding, items },
   } = useStoreConfig();
   const { totalQuantity } = useCart();
-  const [selectedCategory, setSelectedCategory] = useState<
-    "TSHIRTS" | "HOODIES" | "ALL" | "LONG_SLEEVE"
-  >("ALL");
+  const [selectedCategory, setSelectedCategory] = useState<CategoriesUnion>(
+    Categories.ALL
+  );
   const categories: Categories[] = [
     Categories.ALL,
     Categories.TSHIRTS,
     Categories.HOODIES,
     Categories.LONG_SLEEVE,
+    Categories.BOTTOMS,
   ];
 
   const [filteredItems, setFilteredItems] = useState(items);
