@@ -56,7 +56,7 @@ export const stores: Record<string, StoreConfig> = {
   },
   renegades: {
     id: 2,
-    version: 1,
+    version: 2,
     name: "renegades",
     branding: {
       logo: "",
@@ -283,6 +283,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 4,
         title: "Traditional Purple TX Softball T-Shirt",
+        showBackSelection: false,
         isCustomizable: false,
         category: Categories.TSHIRTS,
         price: 25.0,
@@ -393,6 +394,7 @@ export const stores: Record<string, StoreConfig> = {
       {
         id: 14,
         title: "Traditional Blue TX Softball T-Shirt",
+        showBackSelection: false,
         isCustomizable: false,
         category: Categories.TSHIRTS,
         price: 25.0,
@@ -782,104 +784,6 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 29,
-        title: "Texas Renegades Womens Tri-blend Long Sleeve",
-        isCustomizable: false,
-        category: Categories.LONG_SLEEVE,
-        price: 25.0,
-        image:
-          "renegades/18-+Womens+Gray+Jersey+Shirt-+Texas+Renegade-Front.png",
-        backImage: backMock,
-        images: [
-          {
-            id: 0,
-            imageUrl:
-              "renegades/18-+Womens+Gray+Jersey+Shirt-+Texas+Renegade-Front.png",
-            color: "Gray/Black",
-          },
-        ],
-        sizes: ["S", "M", "L", "XL", "2XL", "3XL"],
-        colors: ["Gray/Black"],
-        material: ["Cotton"],
-        orders: [],
-      },
-      {
-        id: 30,
-        title: "Retro Womens Tri-blend Long Sleeve",
-        isCustomizable: false,
-        category: Categories.LONG_SLEEVE,
-        price: 25.0,
-        image: "renegades/19-+Womens+Gray+Jersey+Shirt-+Retro-Front.png",
-        backImage: backMock,
-        images: [
-          {
-            id: 0,
-            imageUrl: "renegades/19-+Womens+Gray+Jersey+Shirt-+Retro-Front.png",
-            color: "Gray/White Sleeve",
-          },
-          {
-            id: 1,
-            imageUrl:
-              "renegades/19-+Womens+Black+Jersey+Shirt-+Retro-Front.png",
-            color: "Black/Gray Sleeve",
-          },
-        ],
-        sizes: ["S", "M", "L", "XL", "2XL"],
-        colors: ["Gray/White Sleeve", "Black/Gray Sleeve"],
-        material: ["Cotton"],
-        orders: [],
-      },
-      {
-        id: 31,
-        title: "Take Womens Tri-blend Long Sleeve",
-        isCustomizable: false,
-        category: Categories.LONG_SLEEVE,
-        price: 25.0,
-        image: "renegades/20-+Womens+Black+Jersey+Shirt-+Take-Front.png",
-        backImage: backMock,
-        images: [
-          {
-            id: 0,
-            imageUrl: "renegades/20-+Womens+Black+Jersey+Shirt-+Take-Front.png",
-            color: "Black/Gray Sleeve",
-          },
-          {
-            id: 1,
-            imageUrl: "renegades/20-+Womens+Gray+Jersey+Shirt-+Take-Front.png",
-            color: "Gray/Black Sleeve",
-          },
-        ],
-        sizes: ["S", "M", "L", "XL", "2XL"],
-        colors: ["Black/Gray Sleeve", "Gray/Black Sleeve"],
-        material: ["Cotton"],
-        orders: [],
-      },
-      {
-        id: 32,
-        title: "Traditional Blue Logo Drifit Henley",
-        isCustomizable: false,
-        category: Categories.TSHIRTS,
-        price: 30.0,
-        image: "renegades/21-+Henley's+Black+Shirt-+blue-Front.png",
-        backImage: backMock,
-        images: [
-          {
-            id: 0,
-            imageUrl: "renegades/21-+Henley's+Black+Shirt-+blue-Front.png",
-            color: "black",
-          },
-          {
-            id: 1,
-            imageUrl: "renegades/21-+Henley's+Purple+Shirt-+blue-Front.png",
-            color: "Purple",
-          },
-        ],
-        sizes: ["S", "M", "XL", "2XL", "3XL"],
-        colors: ["Black", "Purple"],
-        material: [DRIFIT],
-        orders: [],
-      },
-      {
         id: 33,
         title: "Take Womens Drifit Muscle T-Shirt",
         isCustomizable: false,
@@ -1186,7 +1090,7 @@ export const stores: Record<string, StoreConfig> = {
         id: 13,
         title: "Renegade Joggers",
         isCustomizable: false,
-        category: Categories.HOODIES,
+        category: Categories.BOTTOMS,
         price: 30.0,
         showBackSelection: false,
         image: "renegades/16-black-joggers.png",
@@ -2613,7 +2517,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "Hustle Joggers",
         isCustomizable: false,
         showBackSelection: false,
-        category: Categories.HOODIES,
+        category: Categories.BOTTOMS,
         price: 35.0,
         image: "hustleNational/60-BlackJoggers-Front.png",
         backImage: backMock,

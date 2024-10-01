@@ -1,10 +1,10 @@
-import { Categories } from "../_types";
+import { Categories, CategoriesUnion } from "../_types";
 import React, { useEffect, useRef, useState } from "react";
 
 interface FilterDropdownProps {
   categories: (keyof typeof Categories)[];
   setSelectedCategory: (category: keyof typeof Categories) => void;
-  selectedCategory: "TSHIRTS" | "HOODIES" | "ALL" | "LONG_SLEEVE";
+  selectedCategory: CategoriesUnion;
 }
 
 const FilterDropdown = ({
@@ -22,6 +22,7 @@ const FilterDropdown = ({
     [Categories.TSHIRTS]: "T-Shirts",
     [Categories.HOODIES]: "Hoodies",
     [Categories.LONG_SLEEVE]: "Long Sleeve",
+    [Categories.BOTTOMS]: "Bottoms",
   };
 
   // Function to calculate and update the button's bottom position

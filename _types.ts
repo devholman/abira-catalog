@@ -70,4 +70,11 @@ export enum Categories {
   TSHIRTS = "TSHIRTS",
   HOODIES = "HOODIES",
   LONG_SLEEVE = "LONG_SLEEVE",
+  BOTTOMS = "BOTTOMS",
 }
+export type CategoriesUnion =
+  | "TSHIRTS"
+  | "HOODIES"
+  | "ALL"
+  | "LONG_SLEEVE"
+  | "BOTTOMS";
