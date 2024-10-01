@@ -40,7 +40,7 @@ const generateCustomerEmailBody = (
                     ? `${getLastName(order.playerName)} - ${order.playerNumber}`
                     : "no"
                 }</td>
-                ${order.notes ? `<td>order.notes</td>` : ""}
+                ${order.notes ? `<td>${order.notes}</td>` : `<td></td>`}
             </tr>
           `;
       })
@@ -159,7 +159,7 @@ const generateCustomerEmailBody = (
                             <th>Quantity</th>
                             <th>Material</th>
                             <th>Back Option</th>
-                            ${hasOrderNotes ? `<th>Item Notes</th>` : ""}
+                            <th>Item Notes</th>
                         </tr>
                     </thead>
                     <tbody>
