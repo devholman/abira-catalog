@@ -18,7 +18,7 @@ const createOrderItems = (cart: any) => {
       material:
         order.material === "Dri-Fit (+ $5)" ? "Dri-Fit" : order.material,
       isAddBack: order.isAddBack,
-      productImage: order.productId,
+      productImage: order.productImage,
       notes: order.notes,
     }))
   );

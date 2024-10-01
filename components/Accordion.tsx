@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Accordion = ({ title, content }: { title: string; content: string }) => {
+const Accordion = ({ title, content }: { title: string; content: any }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
@@ -33,11 +33,7 @@ const Accordion = ({ title, content }: { title: string; content: string }) => {
       </button>
 
       {/* Content */}
-      {isOpen && (
-        <div className='py-2 text-gray-600'>
-          <p>{content}</p>
-        </div>
-      )}
+      {isOpen && <div className='py-2 text-gray-600'>{content}</div>}
     </div>
   );
 };

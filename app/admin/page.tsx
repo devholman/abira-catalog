@@ -1,10 +1,14 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Input } from "@headlessui/react";
+import CatalogCard from "../../components/CatalogCard";
+import { stores } from "../catalog/catalogConfigs";
+import OrderCard from "@/components/OrderCard";
+import Accordion from "@/components/Accordion";
+import Link from "next/link";
 
 const AdminDashboard = () => {
   const [customers, setCustomers] = useState([]);
-  const [orders, setOrders] = useState([]);
   const [storeId, setStoreId] = useState("");
   const [filterCriteria, setFilterCriteria] = useState({
     firstName: "",
@@ -15,6 +19,25 @@ const AdminDashboard = () => {
   });
   const [dateRange, setDateRange] = useState({ startDate: "", endDate: "" });
   const [itemId, setItemId] = useState("");
+  const [catalogData, setCatalogData] = useState([]);
+  const [orders, setOrders] = useState<any[]>([]);
+
+  // Fetch catalog and order data on page load
+  useEffect(() => {
+    const fetchCatalogOrders = async () => {
+      const response = await fetch("/api/orders/catalogOrders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ catalogConfig: stores, dateRange }),
+      });
+
+      const data = await response.json();
+      setCatalogData(data);
+    };
+    fetchCatalogOrders();
+  }, []);
 
   const handleFilterOrders = async () => {
     const response = await fetch("/api/orders/filterByCustomer", {
@@ -47,11 +70,18 @@ const AdminDashboard = () => {
     const data = await response.json();
     setOrders(data);
   };
-
+  const fetchOrders = async (catalogId: number) => {
+    try {
+      const response = await fetch(`/api/orders/catalogOrders/${catalogId}`); // API to fetch orders for the catalog
+      const data = await response.json();
+      setOrders(data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
   return (
     <div className='p-8'>
       <h1 className='text-2xl font-bold mb-4'>Admin Dashboard</h1>
-
       <div className='mb-4'>
         <h2 className='text-xl font-semibold'>Filter Orders by Customer</h2>
         <Input
@@ -110,7 +140,6 @@ const AdminDashboard = () => {
           Filter Orders
         </button>
       </div>
-
       <div className='mb-4'>
         <h2 className='text-xl font-semibold'>List Customers by Store ID</h2>
         <input
@@ -127,7 +156,6 @@ const AdminDashboard = () => {
           List Customers
         </button>
       </div>
-
       <div className='mb-4'>
         <h2 className='text-xl font-semibold'>
           Filter Orders by Item and Date Range
@@ -164,16 +192,25 @@ const AdminDashboard = () => {
           Filter by Date
         </button>
       </div>
-
-      <div className='mt-8'>
-        <h2 className='text-xl font-semibold'>Orders</h2>
-        <pre>{JSON.stringify(orders, null, 2)}</pre>
+      <Link href='/admin/fulfillment'>Fulfillment</Link>
+      <h2 className='text-xl font-semibold mb-8'>Stores</h2>
+      <div className='container mx-auto p-4 '>
+        <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
+          {catalogData.map((catalog: any) => (
+            <CatalogCard
+              key={catalog.id}
+              catalog={catalog}
+              fetchOrders={fetchOrders}
+            />
+          ))}
+        </div>
       </div>
-
-      <div className='mt-8'>
-        <h2 className='text-xl font-semibold'>Customers</h2>
-        <pre>{JSON.stringify(customers, null, 2)}</pre>
-      </div>
+      <Accordion
+        title={"Orders"}
+        content={orders.map((order) => (
+          <OrderCard key={order.id} order={order} />
+        ))}
+      />
     </div>
   );
 };

@@ -7,31 +7,12 @@ import { StoreConfigProvider } from "../context/StoreConfigContext";
 import { CartProvider } from "../context/CartContext";
 import { CustomerDataProvider } from "../context/CustomerDataContext";
 import { StoreConfig } from "@/_types";
+import Header from "../components/Header";
 
-export default function ClientLayout({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
+export function ClientLayout({ children }: { children: ReactNode }) {
+  const pathname = usePathname() || "";
   const searchParams = useSearchParams();
   const [storeConfig, setStoreConfig] = useState<StoreConfig | null>(null);
-
-  // useEffect(() => {
-  //   // Retrieve storeConfig from localStorage if available
-  //   const storedConfig = localStorage.getItem("storeConfig");
-  //   if (storedConfig) {
-  //     setStoreConfig(JSON.parse(storedConfig));
-  //   } else {
-  //     // If not in localStorage, determine based on pathname
-  //     const storeId =
-  //       pathname?.split("/").filter((path) => path !== "")[1] || "";
-  //     const matchingConfig = stores[storeId];
-  //     if (matchingConfig) {
-  //       setStoreConfig(matchingConfig);
-  //       localStorage.setItem("storeConfig", JSON.stringify(matchingConfig));
-  //     } else {
-  //       // Handle missing store config, maybe redirect or show an error
-  //       console.error("Store config not found");
-  //     }
-  //   }
-  // }, [pathname]);
 
   // Function to fetch the latest config from the server
   const fetchLatestConfig = async (storeId: string) => {
@@ -105,5 +86,22 @@ export default function ClientLayout({ children }: { children: ReactNode }) {
         <CartProvider storeId={storeConfig.id}>{children}</CartProvider>
       </CustomerDataProvider>
     </StoreConfigProvider>
+  );
+}
+
+export default function LayoutWrapper({ children }: { children: ReactNode }) {
+  const pathname = usePathname() || ""; // Get the current route
+
+  const isAdminRoute = pathname?.startsWith("/admin"); // Check if it's an admin page
+
+  return (
+    <>
+      {!isAdminRoute && <Header />} {/* Show Header only for non-admin pages */}
+      {!isAdminRoute ? (
+        <ClientLayout>{children}</ClientLayout> // Wrap ClientLayout for non-admin pages
+      ) : (
+        children // Render only children for admin pages
+      )}
+    </>
   );
 }
