@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-type Item = {
+export type Item = {
   color: string;
   material: string;
   size: string;
   category: string;
   quantity: number;
+  itemNames: string[];
 };
 
 const FulfillmentTable = ({ items }: { items: Item[] }) => {
@@ -13,6 +14,7 @@ const FulfillmentTable = ({ items }: { items: Item[] }) => {
     key: keyof Item;
     direction: "asc" | "desc";
   } | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   const sortedItems = [...items].sort((a, b) => {
     if (sortConfig) {
@@ -37,7 +39,7 @@ const FulfillmentTable = ({ items }: { items: Item[] }) => {
   };
 
   return (
-    <table className='min-w-full bg-white shadow-sm'>
+    <table className='min-w-full bg-white shadow-sm text-black'>
       <thead>
         <tr>
           <th className='px-4 py-2'>
@@ -59,13 +61,28 @@ const FulfillmentTable = ({ items }: { items: Item[] }) => {
       </thead>
       <tbody>
         {sortedItems.map((item, index) => (
-          <tr key={index}>
-            <td className='border px-4 py-2'>{item.color}</td>
-            <td className='border px-4 py-2'>{item.material}</td>
-            <td className='border px-4 py-2'>{item.size}</td>
-            <td className='border px-4 py-2'>{item.category}</td>
-            <td className='border px-4 py-2'>{item.quantity}</td>
-          </tr>
+          <>
+            <tr key={index}>
+              <td
+                className='border px-4 py-2'
+                onClick={() => setShowDetails((prev) => !prev)}
+              >
+                {item.color}
+              </td>
+              <td className='border px-4 py-2'>{item.material}</td>
+              <td className='border px-4 py-2'>{item.size}</td>
+              <td className='border px-4 py-2'>{item.category}</td>
+              <td className='border px-4 py-2'>{item.quantity}</td>
+            </tr>
+            <tr
+              className={`text-gray-600 indent-4 ${
+                !showDetails ? "hidden" : ""
+              }`}
+            >
+              {" "}
+              {item.itemNames.join(", ")}
+            </tr>
+          </>
         ))}
       </tbody>
     </table>

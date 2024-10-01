@@ -1,22 +1,24 @@
 "use client";
-import { useEffect, useState } from "react";
-import FulfillmentTable from "./FulfillmentTable";
+import { useState } from "react";
+import FulfillmentTable, { Item } from "./FulfillmentTable";
 import Button from "../../../components/Button";
 import { stores } from "../../catalog/catalogConfigs";
+import Accordion from "@/components/Accordion";
+import LogoCountTable from "./LogoCountTable";
 
-type Item = {
+type LogoCount = {
+  [key: string]: number;
+};
+type FulfillmentObj = {
   color: string;
   material: string;
   size: string;
   category: string;
   quantity: number;
+  itemNames: string[];
 };
 
-type CatalogConfig = {
-  [storeName: string]: {
-    storeId: number;
-  };
-};
+const exclusionWords = ["Sleeve", "(+", "$5)"];
 
 const FulfillmentDashboard = () => {
   const [startDate, setStartDate] = useState("");
@@ -24,6 +26,7 @@ const FulfillmentDashboard = () => {
   const [storeId, setStoreId] = useState<number | null>(null);
 
   const [items, setItems] = useState<Item[]>([]);
+  const [logoCount, setLogoCount] = useState<LogoCount>({});
 
   const handleStoreChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedStoreId = parseInt(e.target.value, 10);
@@ -42,25 +45,35 @@ const FulfillmentDashboard = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log("🚀 ~ fetchFulfillmentData ~ data:", data);
-      const formattedData = Object.entries(data).map(([key, obj]) => {
-        const [color, material, size, category] = key
-          .split(" ")
-          .filter((word) => word !== "Sleeve");
-        const { quantity, itemNames } = obj;
+      const {
+        fulfillmentCount,
+        logoCount,
+      }: {
+        fulfillmentCount: { [key: string]: FulfillmentObj };
+        logoCount: LogoCount;
+      } = data;
 
-        return { color, material, size, category, quantity, itemNames };
-      });
+      const formattedData = Object.entries(fulfillmentCount).map(
+        ([key, obj]) => {
+          const [color, material, size, category] = key
+            .split(" ")
+            .filter((word: string) => !exclusionWords.includes(word));
+          const { quantity, itemNames } = obj;
+
+          return { color, material, size, category, quantity, itemNames };
+        }
+      );
       setItems(formattedData);
+      setLogoCount(logoCount);
     } else {
       console.error("Failed to fetch fulfillment data");
     }
   };
 
   return (
-    <div>
-      <h1>Fulfillment Dashboard</h1>
-      <div className='mb-8'>
+    <div className='p-6'>
+      <h1 className='text-2xl font-bold mb-4'>Fulfillment Dashboard</h1>
+      <div className='flex mb-8'>
         <input
           type='date'
           value={startDate}
@@ -88,15 +101,22 @@ const FulfillmentDashboard = () => {
             </option>
           ))}
         </select>
-        <Button
-          classNames='w-40'
-          text={"Get Fulfillment Data"}
-          type={"button"}
-          handleClick={fetchFulfillmentData}
-        ></Button>
+        <span className='flex w-40'>
+          <Button
+            text={"Get Fulfillment Data"}
+            type='button'
+            handleClick={fetchFulfillmentData}
+          ></Button>
+        </span>
       </div>
-
-      <FulfillmentTable items={items} />
+      <Accordion
+        title='What to Order'
+        content={<FulfillmentTable items={items} />}
+      />
+      <Accordion
+        title='Logo count'
+        content={<LogoCountTable logoCount={logoCount} />}
+      />
     </div>
   );
 };
