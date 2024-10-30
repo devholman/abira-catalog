@@ -1,4 +1,5 @@
 // stores/storeConfigs.ts
+import { DIRTY } from "zod";
 import { Categories, StoreConfig } from "../../_types";
 export const DRIFIT = "Dri-Fit (+ $5)";
 const youthSizes = ["YS", "YM", "YL", "YXL"];
@@ -7,7 +8,7 @@ const allSizes = [...youthSizes, ...sizes];
 const colors = ["Black", "Silver", "White"];
 const renegadeColors = ["Black", "Gray", "Purple"];
 const materials = ["Cotton", DRIFIT];
-const backMock = "hustleNational/Back_mock.png";
+const backMock = "reign/SHIRTBACK.png";
 export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const stores: Record<string, StoreConfig> = {
@@ -3051,6 +3052,262 @@ export const stores: Record<string, StoreConfig> = {
         sizes: allSizes,
         colors: ["Dark Gray", "Black"],
         material: ["Cotton"],
+        orders: [],
+      },
+    ],
+  },
+  reign: {
+    id: 4,
+    version: 1,
+    name: "REIGN",
+    branding: {
+      logo: "",
+      primaryColor: "#ffffff",
+      secondaryColor: "#00C0C0",
+    },
+    players: [
+      { name: "Kaia Sherman", number: "11" },
+      { name: "Aria Etuk", number: "8" },
+      { name: "Londyn Lewis", number: "2" },
+      { name: "Charlotte Bean", number: "12" },
+      { name: "Ainsley Elledge", number: "1" },
+      { name: "Madeline Garcia", number: "10" },
+      { name: "Olivia Zwillman", number: "6" },
+      { name: "Madeline Perez", number: "5" },
+      { name: "Kyler Junco", number: "9" },
+      { name: "Lucie Lott", number: "7" },
+      { name: "Stella White", number: "3" },
+      { name: "Gracie Hayes", number: "4" },
+      { name: "Coach", number: "n/a" },
+    ],
+    passcode: "reign",
+    items: [
+      {
+        id: 1,
+        title: "Reign White Jersey",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        showBackSelection: false,
+        price: 15.0,
+        image: "reign/1-White-Jersey-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/1-White-Jersey-Front.png",
+            color: "White",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/1-White-Jersey-FrontAndBack.png",
+            color: "White",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["White"],
+        material: ["Dri-Fit"],
+        orders: [],
+      },
+      {
+        id: 2,
+        title: "Reign Purple Jersey",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        showBackSelection: false,
+        price: 15.0,
+        image: "reign/2-Purple-Jersey-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/2-Purple-Jersey-Front.png",
+            color: "Purple",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/2-Purple-Jersey-FrontAndBack.png",
+            color: "Purple",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["Purple"],
+        material: ["Dri-Fit"],
+        orders: [],
+      },
+      {
+        id: 3,
+        title: "Reign Practice Shorts",
+        isCustomizable: false,
+        category: Categories.BOTTOMS,
+        showBackSelection: false,
+        price: 15.0,
+        image: "reign/3-Purple-PracticeShorts-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/3-Purple-PracticeShorts-Front.png",
+            color: "Purple",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/3-Purple-PracticeShorts-Side.png",
+            color: "Purple",
+          },
+          {
+            id: 2,
+            imageUrl: "reign/3-Purple-PracticeShorts-LOGO.png",
+            color: "Purple",
+          },
+        ],
+        sizes: ["YXS", "YS", "YM", "YL", "YXL", "S", "M", "L", "XL", "2XL"],
+        colors: ["Purple"],
+        material: ["Dri-Fit"],
+        orders: [],
+      },
+      {
+        id: 4,
+        title: "Reign Womens Shorts",
+        isCustomizable: false,
+        category: Categories.BOTTOMS,
+        showBackSelection: false,
+        price: 25.0,
+        image: "reign/4-Purple-WomensShorts-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/4-Purple-WomensShorts-Front.png",
+            color: "Purple",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/4-Purple-WomensShorts-Side.png",
+            color: "Purple",
+          },
+          {
+            id: 2,
+            imageUrl: "reign/4-Purple-WomensShorts-LOGO.png",
+            color: "Purple",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL"],
+        colors: ["Purple"],
+        material: ["Dri-Fit"],
+        orders: [],
+      },
+      {
+        id: 5,
+        title: "Reign Mens 7in. Inseam Shorts",
+        isCustomizable: false,
+        category: Categories.BOTTOMS,
+        showBackSelection: false,
+        price: 20.0,
+        image: "reign/5-Purple-MensShorts-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/5-Purple-MensShorts-Front.png",
+            color: "Purple",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/5-Purple-MensShorts-Side.png",
+            color: "Purple",
+          },
+          {
+            id: 2,
+            imageUrl: "reign/5-Purple-MensShorts-LOGO.png",
+            color: "Purple",
+          },
+        ],
+        sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
+        colors: ["Purple"],
+        material: ["Mesh"],
+        orders: [],
+      },
+      {
+        id: 6,
+        title: "Reign Hoodie",
+        isCustomizable: false,
+        category: Categories.HOODIES,
+        showBackSelection: false,
+        price: 30.0,
+        image: "reign/6-Black-Hoodie-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/6-Black-Hoodie-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/6-Purple-Hoodie-Front.png",
+            color: "Purple",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["Black", "Purple"],
+        material: ["Cottom"],
+        orders: [],
+      },
+      {
+        id: 7,
+        title: "Reign Joggers",
+        isCustomizable: false,
+        category: Categories.BOTTOMS,
+        showBackSelection: false,
+        price: 25.0,
+        image: "reign/7-Black-Joggers-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/7-Black-Joggers-Front.png",
+            color: "Black",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/7-Black-Joggers-Mockup.png",
+            color: "Black",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["Black"],
+        material: ["Cottom"],
+        orders: [],
+      },
+      {
+        id: 8,
+        title: "Reign Long Sleeve",
+        isCustomizable: false,
+        category: Categories.TSHIRTS,
+        showBackSelection: true,
+        price: 20.0,
+        image: "reign/8-White-LongSleeve-Front.png",
+        backImage: backMock,
+        images: [
+          {
+            id: 0,
+            imageUrl: "reign/8-White-LongSleeve-Front.png",
+            color: "White",
+          },
+          {
+            id: 1,
+            imageUrl: "reign/8-Black-LongSleeve-Front.png",
+            color: "Black",
+          },
+          {
+            id: 2,
+            imageUrl: "reign/8-Purple-LongSleeve-Front.png",
+            color: "Purple",
+          },
+        ],
+        sizes: allSizes,
+        colors: ["White", "Black", "Purple"],
+        material: materials,
         orders: [],
       },
     ],
