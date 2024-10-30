@@ -3250,7 +3250,7 @@ export const stores: Record<string, StoreConfig> = {
         ],
         sizes: allSizes,
         colors: ["Black", "Purple"],
-        material: ["Cottom"],
+        material: ["Cotton"],
         orders: [],
       },
       {
@@ -3276,7 +3276,7 @@ export const stores: Record<string, StoreConfig> = {
         ],
         sizes: allSizes,
         colors: ["Black"],
-        material: ["Cottom"],
+        material: ["Cotton"],
         orders: [],
       },
       {
