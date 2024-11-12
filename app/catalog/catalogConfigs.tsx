@@ -3057,7 +3057,7 @@ export const stores: Record<string, StoreConfig> = {
     ],
   },
   reign: {
-    id: 4,
+    id: 5,
     version: 1,
     name: "REIGN",
     branding: {
@@ -3084,36 +3084,10 @@ export const stores: Record<string, StoreConfig> = {
     items: [
       {
         id: 1,
-        title: "Reign White Jersey",
+        title: "Reign Jersey",
         isCustomizable: false,
         category: Categories.TSHIRTS,
-        showBackSelection: false,
-        price: 15.0,
-        image: "reign/1-White-Jersey-Front.png",
-        backImage: backMock,
-        images: [
-          {
-            id: 0,
-            imageUrl: "reign/1-White-Jersey-Front.png",
-            color: "White",
-          },
-          {
-            id: 1,
-            imageUrl: "reign/1-White-Jersey-FrontAndBack.png",
-            color: "White",
-          },
-        ],
-        sizes: allSizes,
-        colors: ["White"],
-        material: ["Dri-Fit"],
-        orders: [],
-      },
-      {
-        id: 2,
-        title: "Reign Purple Jersey",
-        isCustomizable: false,
-        category: Categories.TSHIRTS,
-        showBackSelection: false,
+        showBackSelection: true,
         price: 15.0,
         image: "reign/2-Purple-Jersey-Front.png",
         backImage: backMock,
@@ -3124,18 +3098,28 @@ export const stores: Record<string, StoreConfig> = {
             color: "Purple",
           },
           {
+            id: 2,
+            imageUrl: "reign/1-White-Jersey-Front.png",
+            color: "White",
+          },
+          {
             id: 1,
+            imageUrl: "reign/2-Black-Jersey-Front+(1).png",
+            color: "Black",
+          },
+          {
+            id: 3,
             imageUrl: "reign/2-Purple-Jersey-FrontAndBack.png",
-            color: "Purple",
+            color: "White",
           },
         ],
         sizes: allSizes,
-        colors: ["Purple"],
+        colors: ["Purple", "White", "Black"],
         material: ["Dri-Fit"],
         orders: [],
       },
       {
-        id: 3,
+        id: 4,
         title: "Reign Practice Shorts",
         isCustomizable: false,
         category: Categories.BOTTOMS,
@@ -3151,8 +3135,8 @@ export const stores: Record<string, StoreConfig> = {
           },
           {
             id: 1,
-            imageUrl: "reign/3-Purple-PracticeShorts-Side.png",
-            color: "Purple",
+            imageUrl: "reign/3-Black-PracticeShorts-Front.png",
+            color: "Black",
           },
           {
             id: 2,
@@ -3161,12 +3145,12 @@ export const stores: Record<string, StoreConfig> = {
           },
         ],
         sizes: ["YXS", "YS", "YM", "YL", "YXL", "S", "M", "L", "XL", "2XL"],
-        colors: ["Purple"],
+        colors: ["Purple", "Black"],
         material: ["Dri-Fit"],
         orders: [],
       },
       {
-        id: 4,
+        id: 5,
         title: "Reign Womens Shorts",
         isCustomizable: false,
         category: Categories.BOTTOMS,
@@ -3197,7 +3181,7 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 5,
+        id: 6,
         title: "Reign Mens 7in. Inseam Shorts",
         isCustomizable: false,
         category: Categories.BOTTOMS,
@@ -3213,8 +3197,8 @@ export const stores: Record<string, StoreConfig> = {
           },
           {
             id: 1,
-            imageUrl: "reign/5-Purple-MensShorts-Side.png",
-            color: "Purple",
+            imageUrl: "reign/5-Black-MensShorts-Front.png",
+            color: "Black",
           },
           {
             id: 2,
@@ -3223,12 +3207,12 @@ export const stores: Record<string, StoreConfig> = {
           },
         ],
         sizes: ["S", "M", "L", "XL", "2XL", "3XL", "4XL"],
-        colors: ["Purple"],
+        colors: ["Purple", "Black"],
         material: ["Mesh"],
         orders: [],
       },
       {
-        id: 6,
+        id: 7,
         title: "Reign Hoodie",
         isCustomizable: false,
         category: Categories.HOODIES,
@@ -3254,7 +3238,7 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 7,
+        id: 8,
         title: "Reign Joggers",
         isCustomizable: false,
         category: Categories.BOTTOMS,
@@ -3280,7 +3264,7 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 8,
+        id: 9,
         title: "Reign Long Sleeve",
         isCustomizable: false,
         category: Categories.TSHIRTS,
@@ -3311,7 +3295,7 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 9,
+        id: 10,
         title: "Reign Quarter Zip Shirt",
         isCustomizable: false,
         category: Categories.TSHIRTS,
@@ -3357,7 +3341,7 @@ export const stores: Record<string, StoreConfig> = {
         orders: [],
       },
       {
-        id: 10,
+        id: 11,
         title: "Reign Mens Polo Shirt",
         isCustomizable: false,
         category: Categories.TSHIRTS,
