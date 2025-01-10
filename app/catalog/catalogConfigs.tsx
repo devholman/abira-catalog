@@ -3058,7 +3058,7 @@ export const stores: Record<string, StoreConfig> = {
   },
   reign: {
     id: 5,
-    version: 2,
+    version: 3,
     name: "REIGN",
     branding: {
       logo: "",
