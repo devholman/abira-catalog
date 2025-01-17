@@ -52,8 +52,11 @@ export function ClientLayout({ children }: { children: ReactNode }) {
         // Fetch the latest config from the server
         const latestConfig = await fetchLatestConfig(storeName);
 
-        // Compare the version (or use a timestamp)
-        if (latestConfig && latestConfig.version !== parsedConfig.version) {
+        // Compare the version and store id
+        if (
+          (latestConfig && latestConfig.version !== parsedConfig.version) ||
+          (latestConfig && latestConfig.id !== parsedConfig.id)
+        ) {
           setStoreConfig(latestConfig);
           localStorage.setItem("storeConfig", JSON.stringify(latestConfig)); // Update localStorage with the new config
         } else {
