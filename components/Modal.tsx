@@ -102,6 +102,13 @@ export default function ItemModal({
     calculateTotalPrice();
   }, [selectedSize, isAddNumberToBack, selectedMaterial, selectedQuantity]);
 
+  //requires the back option to be filled out
+  useEffect(() => {
+    if (item.isBackRequired) {
+      setValue("isAddNumberToBack", true);
+    }
+  }, []);
+
   const calculateTotalPrice = () => {
     let price = item.price;
 
@@ -210,7 +217,7 @@ export default function ItemModal({
                 />
 
                 {/* Add Number to Back Checkbox */}
-                {showBackOption && (
+                {showBackOption && !item.isBackRequired && (
                   <div className='flex py-4 mt-4 gap-4'>
                     <Image
                       src={getS3ImageUrl(item.backImage || "")}
