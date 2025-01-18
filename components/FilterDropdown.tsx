@@ -62,7 +62,9 @@ const FilterDropdown = ({
       >
         Filter
       </button>
-      <p className='text-sm text-black ml-2'>SHOWING: {selectedCategory}</p>
+      <p className='text-sm text-black ml-2'>
+        SHOWING: {categoryDisplayNames[selectedCategory]}
+      </p>
 
       {/* Darkened background */}
       {isOpen && (

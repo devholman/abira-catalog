@@ -100,13 +100,7 @@ export default function ItemModal({
 
   useEffect(() => {
     calculateTotalPrice();
-  }, [
-    selectedSize,
-    isAddNumberToBack,
-    selectedMaterial,
-    selectedQuantity,
-    backOptionPrice,
-  ]);
+  }, [selectedSize, isAddNumberToBack, selectedMaterial, selectedQuantity]);
 
   const calculateTotalPrice = () => {
     let price = item.price;
