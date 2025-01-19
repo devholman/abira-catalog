@@ -60,6 +60,7 @@ export default function ShoppingCart({
                             quantity,
                             size,
                             color,
+                            notes,
                             id,
                             isAddBack,
                             playerName,
@@ -109,6 +110,11 @@ export default function ShoppingCart({
                                   {playerName === "Coach" && (
                                     <p className='ml-3 text-xs leading-4 text-black'>
                                       Player: {playerName}
+                                    </p>
+                                  )}
+                                  {notes && (
+                                    <p className='text-xs leading-4 text-black'>
+                                      Notes: {notes}
                                     </p>
                                   )}
                                 </div>

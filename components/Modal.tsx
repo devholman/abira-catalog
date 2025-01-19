@@ -13,6 +13,7 @@ import { getS3ImageUrl } from "../utils/images";
 import PlayerSelectDropdown from "./PlayerSelectDropdown";
 import { useStoreConfig } from "@/context/StoreConfigContext";
 import { DRIFIT } from "@/app/catalog/catalogConfigs";
+import { DEFAULT_BACKOPTION_PRICE } from "@/app/cart/cartConfig";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -82,6 +83,8 @@ export default function ItemModal({
     storeConfig: { players },
   } = useStoreConfig();
   const showBackOption = item.showBackSelection ?? true;
+  const backOptionPrice = item.backOptionPrice ?? DEFAULT_BACKOPTION_PRICE;
+
   useEffect(() => {
     if (isOpen) {
       // Prevent scrolling on the body
@@ -98,6 +101,13 @@ export default function ItemModal({
   useEffect(() => {
     calculateTotalPrice();
   }, [selectedSize, isAddNumberToBack, selectedMaterial, selectedQuantity]);
+
+  //requires the back option to be filled out
+  useEffect(() => {
+    if (item.isBackRequired) {
+      setValue("isAddNumberToBack", true);
+    }
+  }, []);
 
   const calculateTotalPrice = () => {
     let price = item.price;
@@ -116,7 +126,7 @@ export default function ItemModal({
 
     // Add $2 if the number is added to the back
     if (isAddNumberToBack) {
-      price += 2;
+      price += backOptionPrice;
     }
 
     setTotalPrice(price * selectedQuantity);
@@ -207,7 +217,7 @@ export default function ItemModal({
                 />
 
                 {/* Add Number to Back Checkbox */}
-                {showBackOption && (
+                {showBackOption && !item.isBackRequired && (
                   <div className='flex py-4 mt-4 gap-4'>
                     <Image
                       src={getS3ImageUrl(item.backImage || "")}
@@ -230,7 +240,8 @@ export default function ItemModal({
                         htmlFor='addNumberToBack'
                         className='w-full py-4 ms-2 text-sm font-medium text-gray-950'
                       >
-                        Add last name and number to back (addtl. $2 per shirt):
+                        Add last name and number to back (addtl. $
+                        {backOptionPrice} per shirt):
                       </label>
                     </div>
                   </div>

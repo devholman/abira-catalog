@@ -44,6 +44,8 @@ export interface StoreItem {
   price: number;
   image: string;
   showBackSelection?: boolean;
+  isBackRequired?: boolean;
+  backOptionPrice?: number;
   backImage?: string;
   images?: { id: number; imageUrl: string; color: string }[];
   sizes: string[];

@@ -1,0 +1,1 @@
+export const DEFAULT_BACKOPTION_PRICE = 2;

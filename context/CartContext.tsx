@@ -12,6 +12,7 @@ import { StoreItem } from "../_types";
 
 import { toFixedNumber } from "../utils/numUtils";
 import { DRIFIT } from "@/app/catalog/catalogConfigs";
+import { DEFAULT_BACKOPTION_PRICE } from "@/app/cart/cartConfig";
 
 interface CartContextType {
   cart: StoreItem[];
@@ -86,8 +87,10 @@ export const CartProvider = ({
     cart?.map((item: StoreItem) => {
       const price = item.orders.reduce((sum, order) => {
         let base = item.price;
+        const backOptionPrice =
+          item.backOptionPrice ?? DEFAULT_BACKOPTION_PRICE;
         if (order.isAddBack) {
-          base += 2;
+          base += backOptionPrice;
         }
         if (order.material === DRIFIT) {
           base += 5;
