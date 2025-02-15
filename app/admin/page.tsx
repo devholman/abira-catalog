@@ -79,6 +79,30 @@ const AdminDashboard = () => {
       console.error("Error fetching orders:", error);
     }
   };
+
+  const handleDeleteOrder = async (orderId: number, storeId: number) => {
+    try {
+      const response = await fetch(
+        `/api/orders/${orderId}?storeId=${storeId}`,
+        {
+          method: "DELETE",
+        }
+      );
+      if (response.ok) {
+        // Remove the deleted order from the state
+        setOrders((prevOrders) =>
+          prevOrders.filter((order) => order.id !== orderId)
+        );
+        console.log("Order deleted successfully");
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to delete order:", errorData.message);
+      }
+    } catch (error) {
+      console.error("Error deleting order:", error);
+    }
+  };
+
   return (
     <div className='p-8'>
       <h1 className='text-2xl font-bold mb-4'>Admin Dashboard</h1>
@@ -208,7 +232,11 @@ const AdminDashboard = () => {
       <Accordion
         title={"Orders"}
         content={orders.map((order) => (
-          <OrderCard key={order.id} order={order} />
+          <OrderCard
+            key={order.id}
+            order={order}
+            handleDeleteOrder={handleDeleteOrder}
+          />
         ))}
       />
     </div>

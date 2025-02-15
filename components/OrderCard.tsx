@@ -18,8 +18,10 @@ interface OrderItem {
 }
 
 interface OrderProps {
+  handleDeleteOrder: (orderId: number, storeId: number) => void;
   order: {
     id: number;
+    storeId: number;
     firstName: string;
     lastName: string;
     totalItems: number;
@@ -29,8 +31,7 @@ interface OrderProps {
   };
 }
 
-const OrderCard = ({ order }: OrderProps) => {
-  console.log("🚀 ~ OrderCard ~ order:", order);
+const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -57,48 +58,56 @@ const OrderCard = ({ order }: OrderProps) => {
 
       {/* Expanded View */}
       {isExpanded && (
-        <table className='min-w-full mt-4 bg-white shadow-sm'>
-          <thead>
-            <tr>
-              <th className='px-4 py-2'>Color</th>
-              <th className='px-4 py-2'>Name</th>
-              <th className='px-4 py-2'>Size</th>
-              <th className='px-4 py-2'>Material</th>
-              <th className='px-4 py-2'>Color</th>
-              <th className='px-4 py-2'>Quantity</th>
-              <th className='px-4 py-2'>Add Back</th>
-              <th className='px-4 py-2'>Notes</th>
-            </tr>
-          </thead>
-          <tbody>
-            {order.items.map((item) => (
-              <tr key={item.id}>
-                <td className='border px-4 py-2'>
-                  <Image
-                    src={getS3ImageUrl(item.productImage)}
-                    alt={item.title}
-                    width={100}
-                    height={100}
-                    priority
-                    quality={75} // Adjust quality for optimization
-                    unoptimized
-                  />
-                </td>
-                <td className='border px-4 py-2'>{item.title}</td>
-                <td className='border px-4 py-2'>{item.size}</td>
-                <td className='border px-4 py-2'>{item.material}</td>
-                <td className='border px-4 py-2'>{item.color}</td>
-                <td className='border px-4 py-2'>{item.quantity}</td>
-                <td className='border px-4 py-2'>
-                  {item.isAddBack
-                    ? `${item.playerName} - ${item.playerNumber}`
-                    : "No"}
-                </td>
-                <td className='border px-4 py-2'>{item.notes}</td>
+        <>
+          <table className='min-w-full mt-4 bg-white shadow-sm mb-2'>
+            <thead>
+              <tr>
+                <th className='px-4 py-2'>Color</th>
+                <th className='px-4 py-2'>Name</th>
+                <th className='px-4 py-2'>Size</th>
+                <th className='px-4 py-2'>Material</th>
+                <th className='px-4 py-2'>Color</th>
+                <th className='px-4 py-2'>Quantity</th>
+                <th className='px-4 py-2'>Add Back</th>
+                <th className='px-4 py-2'>Notes</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {order.items.map((item) => (
+                <tr key={item.id}>
+                  <td className='border px-4 py-2'>
+                    <Image
+                      src={getS3ImageUrl(item.productImage)}
+                      alt={item.title}
+                      width={100}
+                      height={100}
+                      priority
+                      quality={75} // Adjust quality for optimization
+                      unoptimized
+                    />
+                  </td>
+                  <td className='border px-4 py-2'>{item.title}</td>
+                  <td className='border px-4 py-2'>{item.size}</td>
+                  <td className='border px-4 py-2'>{item.material}</td>
+                  <td className='border px-4 py-2'>{item.color}</td>
+                  <td className='border px-4 py-2'>{item.quantity}</td>
+                  <td className='border px-4 py-2'>
+                    {item.isAddBack
+                      ? `${item.playerName} - ${item.playerNumber}`
+                      : "No"}
+                  </td>
+                  <td className='border px-4 py-2'>{item.notes}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button
+            onClick={() => handleDeleteOrder(order.id, order.storeId)}
+            className='bg-red-500 text-white p-2 rounded'
+          >
+            Delete
+          </button>
+        </>
       )}
     </div>
   );

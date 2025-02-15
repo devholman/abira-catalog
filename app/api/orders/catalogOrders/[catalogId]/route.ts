@@ -23,6 +23,7 @@ export async function GET(
 
     const response = orders.map((order) => ({
       id: order.id,
+      storeId: order.storeId,
       firstName: order.customer.firstName,
       lastName: order.customer.lastName,
       totalItems: order.items.length,

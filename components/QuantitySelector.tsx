@@ -12,7 +12,7 @@ interface QuantitySelectorProps {
 const QuantitySelector: React.FC<QuantitySelectorProps> = ({
   register,
   minQuantity = 1,
-  maxQuantity = 10,
+  maxQuantity = 1000,
   labelName = "Quantity",
   name, // Name to link to react-hook-form
 }) => {
@@ -48,7 +48,22 @@ const QuantitySelector: React.FC<QuantitySelectorProps> = ({
             min: minQuantity,
             max: maxQuantity,
           })}
+          style={{
+            MozAppearance: "textfield",
+            WebkitAppearance: "none",
+            margin: 0,
+          }}
         />
+        <style jsx>{`
+          input[type="number"]::-webkit-outer-spin-button,
+          input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+          }
+          input[type="number"] {
+            -moz-appearance: textfield;
+          }
+        `}</style>
         <button
           type='button'
           className={`px-4 py-2 text-xl font-semibold bg-gray-200`}
