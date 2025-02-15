@@ -55,8 +55,9 @@ const FulfillmentDashboard = () => {
 
       const formattedData = Object.entries(fulfillmentCount).map(
         ([key, obj]) => {
+          console.log(key);
           const [color, material, size, category] = key
-            .split(" ")
+            .split(",")
             .filter((word: string) => !exclusionWords.includes(word));
           const { quantity, itemNames } = obj;
 

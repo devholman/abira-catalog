@@ -28,7 +28,7 @@ export async function POST(request: Request) {
     // Aggregate order items
     orders.forEach((order) => {
       order.items.forEach((item) => {
-        const key = `${item.color} ${item.material} ${item.size} ${item.category}`;
+        const key = `${item.color},${item.material},${item.size},${item.category}`;
         if (fulfillmentCount[key]) {
           fulfillmentCount[key] = {
             quantity: (fulfillmentCount[key].quantity += item.quantity),
