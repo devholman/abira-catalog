@@ -65,7 +65,7 @@ let PlayerSelectDropdown = ({
       >
         <option value=''>Select a player</option>
         {players.map((player) => (
-          <option key={player.number} value={player.name}>
+          <option key={player.name + player.number} value={player.name}>
             {player.name}
           </option>
         ))}

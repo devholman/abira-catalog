@@ -211,7 +211,6 @@ export default function ItemModal({
                 <QuantitySelector
                   name='selectedQuantity'
                   minQuantity={1}
-                  maxQuantity={10}
                   register={register}
                   labelName='Quantity'
                 />
