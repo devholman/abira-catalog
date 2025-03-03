@@ -7,7 +7,7 @@ const SQUARE_SIGNATURE_KEY = process.env.SQUARE_SIGNATURE_KEY || "";
 const DEV_NOTIFICATION_URL =
   "https://6829-23-120-10-250.ngrok-free.app/api/webhooks/square";
 const PRODUCTION_NOTIFICATION_URL =
-  "https://teamstore.abirasports.com/api/webhoooks/square";
+  "https://teamstore.abirasports.com/api/webhooks/square";
 
 // This helper function will verify the signature using the Square helper
 function isFromSquare(signature: string, body: string): Promise<boolean> {
