@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
-import { SquareClient, SquareEnvironment, WebhooksHelper } from "square";
+import { WebhooksHelper } from "square";
 
 const SQUARE_SIGNATURE_KEY =
   process.env.SQUARE_SIGNATURE_KEY || "siMsTjxQn252eZwy1Vj2XA";
@@ -10,25 +10,13 @@ const DEV_NOTIFICATION_URL =
 const PRODUCTION_NOTIFICATION_URL =
   "https://teamstore.abirasports.com/api/webhoooks/square";
 
-// Load environment variables
-const SQUARE_ACCESS_TOKEN = process.env.SQUARE_ACCESS_TOKEN || "";
-const environment =
-  process.env.SQUARE_ENVIRONMENT === "sandbox"
-    ? SquareEnvironment.Sandbox
-    : SquareEnvironment.Production;
 const notificationUrl =
   process.env.SQUARE_ENVIRONMENT === "sandbox"
     ? DEV_NOTIFICATION_URL
     : PRODUCTION_NOTIFICATION_URL;
 
-// Initialize Square client
-const client = new SquareClient({
-  token: SQUARE_ACCESS_TOKEN,
-  environment,
-});
-
 // This helper function will verify the signature using the Square helper
-function isFromSquare(signature: string, body: string): boolean {
+function isFromSquare(signature: string, body: string): Promise<boolean> {
   return WebhooksHelper.verifySignature({
     requestBody: body, // The raw body of the request
     signatureHeader: signature, // The signature from the `x-square-hmacsha256-signature` header
