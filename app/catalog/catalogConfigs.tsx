@@ -20,7 +20,7 @@ export const stores: Record<string, StoreConfig> = {
       primaryColor: "#ff5733",
       secondaryColor: "#c70039",
     },
-    passcode: "s1",
+    passcode: "str1",
     players: [
       { name: "John Doe", number: "10" },
       { name: "Jane Smith", number: "12" },
