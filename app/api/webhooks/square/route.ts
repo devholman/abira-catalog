@@ -2,8 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
 import { WebhooksHelper } from "square";
 
-const SQUARE_SIGNATURE_KEY =
-  process.env.SQUARE_SIGNATURE_KEY || "siMsTjxQn252eZwy1Vj2XA";
+const SQUARE_SIGNATURE_KEY = process.env.SQUARE_SIGNATURE_KEY || "";
 
 const DEV_NOTIFICATION_URL =
   "https://6829-23-120-10-250.ngrok-free.app/api/webhooks/square";
