@@ -9,14 +9,14 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const cinco = {
   id: 4,
-  version: 1,
+  version: 2,
   name: "CINCO RANCH",
   branding: {
     logo: "",
     primaryColor: "#ffffff",
     secondaryColor: "#5c0a15",
   },
-  passcode: "cincomama",
+  passcode: "cinco",
   players: [
     { name: "Abigail Blum", number: "4" },
     { name: "Ariana Hernandez", number: "3" },
