@@ -9,32 +9,46 @@ const DEV_NOTIFICATION_URL =
 const PRODUCTION_NOTIFICATION_URL =
   "https://teamstore.abirasports.com/api/webhoooks/square";
 
-const notificationUrl =
-  process.env.SQUARE_ENVIRONMENT === "sandbox"
-    ? DEV_NOTIFICATION_URL
-    : PRODUCTION_NOTIFICATION_URL;
-
 // This helper function will verify the signature using the Square helper
 function isFromSquare(signature: string, body: string): Promise<boolean> {
   return WebhooksHelper.verifySignature({
     requestBody: body, // The raw body of the request
     signatureHeader: signature, // The signature from the `x-square-hmacsha256-signature` header
     signatureKey: SQUARE_SIGNATURE_KEY, // Your Square signature key
-    notificationUrl: notificationUrl, // The webhook URL Square is posting to
+    notificationUrl: PRODUCTION_NOTIFICATION_URL, // The webhook URL Square is posting to
   });
 }
 
 export async function POST(req: NextRequest) {
   const signature = req.headers.get("x-square-hmacsha256-signature") as string;
   const body = await req.text();
+  console.log("🚀  SQUARE ENDPOINT: SUCCESSFULLY HIT");
 
   // Verify the signature using Square's helper function
   if (!isFromSquare(signature, body)) {
+    console.log("🚀 ~ POST ~ : Invalid signature");
+    console.log(
+      "🚀 ~ isFromSquare-invalidSig ~ SQUARE_SIGNATURE_KEY:",
+      SQUARE_SIGNATURE_KEY
+    );
+    console.log(
+      "🚀 ~ isFromSquare-invalidSig ~ PRODUCTION_NOTIFICATION_URL:",
+      PRODUCTION_NOTIFICATION_URL
+    );
     return NextResponse.json(
       { success: false, message: "Invalid signature" },
       { status: 403 }
     );
   }
+
+  console.log(
+    "🚀 ~ isFromSquare ~ SQUARE_SIGNATURE_KEY:",
+    SQUARE_SIGNATURE_KEY
+  );
+  console.log(
+    "🚀 ~ isFromSquare ~ PRODUCTION_NOTIFICATION_URL:",
+    PRODUCTION_NOTIFICATION_URL
+  );
 
   let event;
   try {
