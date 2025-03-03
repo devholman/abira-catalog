@@ -5,8 +5,10 @@ import { SquareClient, SquareEnvironment, WebhooksHelper } from "square";
 const SQUARE_SIGNATURE_KEY =
   process.env.SQUARE_SIGNATURE_KEY || "siMsTjxQn252eZwy1Vj2XA";
 
-const NOTIFICATION_URL =
+const DEV_NOTIFICATION_URL =
   "https://6829-23-120-10-250.ngrok-free.app/api/webhooks/square";
+const PRODUCTION_NOTIFICATION_URL =
+  "https://teamstore.abirasports.com/api/webhoooks/square";
 
 // Load environment variables
 const SQUARE_ACCESS_TOKEN = process.env.SQUARE_ACCESS_TOKEN || "";
@@ -14,6 +16,10 @@ const environment =
   process.env.SQUARE_ENVIRONMENT === "sandbox"
     ? SquareEnvironment.Sandbox
     : SquareEnvironment.Production;
+const notificationUrl =
+  process.env.SQUARE_ENVIRONMENT === "sandbox"
+    ? DEV_NOTIFICATION_URL
+    : PRODUCTION_NOTIFICATION_URL;
 
 // Initialize Square client
 const client = new SquareClient({
@@ -27,7 +33,7 @@ function isFromSquare(signature: string, body: string): boolean {
     requestBody: body, // The raw body of the request
     signatureHeader: signature, // The signature from the `x-square-hmacsha256-signature` header
     signatureKey: SQUARE_SIGNATURE_KEY, // Your Square signature key
-    notificationUrl: NOTIFICATION_URL, // The webhook URL Square is posting to
+    notificationUrl: notificationUrl, // The webhook URL Square is posting to
   });
 }
 

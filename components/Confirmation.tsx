@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation";
 const Confirmation = () => {
   const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
     useCart();
-  console.log("🚀 ~ Confirmation ~ totalPrice:", totalPrice);
   const { customerData } = useCustomerData();
 
   const [paymentLink, setPaymentLink] = useState<string | null>(null);

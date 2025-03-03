@@ -98,7 +98,6 @@ const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
                 <th className='px-4 py-2'>Quantity</th>
                 <th className='px-4 py-2'>Add Back</th>
                 <th className='px-4 py-2'>Notes</th>
-                <th className='px-4 py-2'>Item Price</th>
               </tr>
             </thead>
             <tbody>
@@ -126,7 +125,6 @@ const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
                       : "No"}
                   </td>
                   <td className='border px-4 py-2'>{item.notes}</td>
-                  <td className='border px-4 py-2'>{item.orderPrice}</td>
                 </tr>
               ))}
             </tbody>

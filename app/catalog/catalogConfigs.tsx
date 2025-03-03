@@ -32,7 +32,7 @@ export const stores: Record<string, StoreConfig> = {
         title: "T-Shirt",
         isCustomizable: false,
         category: Categories.TSHIRTS,
-        price: 19.99,
+        price: 1.0,
         image: "/tshirt.png",
         sizes: ["S", "M", "L", "XL"],
         colors,

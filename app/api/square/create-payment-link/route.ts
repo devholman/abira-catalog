@@ -92,7 +92,6 @@ export async function POST(req: NextRequest) {
     };
 
     const response = await withRetry(createPaymentLink, 1, 20000);
-    console.log("🚀 ~ POST ~ response:", response);
 
     const paymentLink = response.paymentLink?.url || ""; // paymentLink is inside the response object
     const paymentLinkId = response.paymentLink?.orderId; // paymentLinkId is inside the paymentLink object
