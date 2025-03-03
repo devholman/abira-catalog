@@ -1,22 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Client, Environment } from "square";
+import { SquareClient, SquareEnvironment } from "square";
 import crypto from "crypto";
 import generateCustomerEmailBody from "../../orders/emailTemplates/customerConfirmation";
 import generateMerchantEmailBody from "../../orders/emailTemplates/merchantConfirmation";
 import { sendEmail } from "@/lib/email";
 import { withRetry } from "@/utils/server";
+import prisma from "../../../../lib/prisma";
 
 // Load environment variables
 const SQUARE_ACCESS_TOKEN = process.env.SQUARE_ACCESS_TOKEN || "";
 const SQUARE_LOCATION_ID = process.env.SQUARE_LOCATION_ID || "L6KHB6ZN0RVHJ";
 const environment =
   process.env.SQUARE_ENVIRONMENT === "sandbox"
-    ? Environment.Sandbox
-    : Environment.Production;
+    ? SquareEnvironment.Sandbox
+    : SquareEnvironment.Production;
 
 // Initialize Square client
-const client = new Client({
-  accessToken: SQUARE_ACCESS_TOKEN,
+const client = new SquareClient({
+  token: SQUARE_ACCESS_TOKEN,
   environment,
 });
 
@@ -35,24 +36,84 @@ export async function POST(req: NextRequest) {
     // Generate an idempotency key for Square API
     const idempotencyKey = crypto.randomBytes(16).toString("hex");
 
-    // Create a payment link with retry logic
-    const createPaymentLink = async () => {
-      return client.checkoutApi.createPaymentLink({
-        idempotencyKey, // Prevent double charging
-        quickPay: {
-          name: `Team Apparel ${confirmationNumber}`,
-          priceMoney: {
-            amount: dollarsToCents(amount),
+    // Extract the reference_id from the confirmationNumber
+    const orderId = confirmationNumber.split("-").pop();
+
+    // Utility function for creating an order item
+    const createOrderItems = (cart: any) => {
+      return cart.flatMap((item: any) =>
+        item.orders.map((order: any) => ({
+          name: item.title,
+          quantity: order.quantity.toString(),
+          note: order.notes,
+          basePriceMoney: {
+            amount: dollarsToCents(order.orderPrice), // Amount in cents
             currency: "USD",
           },
-          locationId: SQUARE_LOCATION_ID,
-        },
+          // size: order.size,
+          // color: order.color,
+          // category: item.category,
+          // price: item.price,
+          // playerName: order.playerName,
+          // playerNumber: order.playerNumber,
+          // material:
+          //   order.material === "Dri-Fit (+ $5)" ? "Dri-Fit" : order.material,
+          // isAddBack: order.isAddBack,
+          // productImage: order.productImage,
+        }))
+      );
+    };
+
+    // Create a payment link with retry logic
+    const createPaymentLink = async () => {
+      try {
+        const response = client.checkout.paymentLinks.create({
+          idempotencyKey, // Prevent double charging
+          order: {
+            locationId: SQUARE_LOCATION_ID,
+            lineItems: createOrderItems(cart),
+            taxes: [
+              {
+                name: "Sales Tax",
+                type: "ADDITIVE",
+                percentage: "8.25",
+                scope: "ORDER",
+              },
+            ],
+            referenceId: orderId,
+            ticketName: `Team Apparel ${confirmationNumber}`,
+          },
+        });
+        return response;
+      } catch (error) {
+        console.log("error creating payment link", error);
+        throw error;
+      }
+    };
+
+    const response = await withRetry(createPaymentLink, 1, 20000);
+
+    const paymentLink = response.paymentLink?.url || ""; // paymentLink is inside the response object
+    const paymentLinkId = response.paymentLink?.orderId; // paymentLinkId is inside the paymentLink object
+
+    if (!paymentLinkId) {
+      throw new Error("Payment link ID not found in the response");
+    }
+
+    // Store the paymentLinkId along with your internal orderId in your database
+    const storePaymentLinkId = () => {
+      return prisma.order.update({
+        where: { id: parseInt(orderId, 10) },
+        data: { paymentLinkId: paymentLinkId },
       });
     };
 
-    const response = await withRetry(createPaymentLink);
+    try {
+      await storePaymentLinkId();
+    } catch (error) {
+      console.error("failed to store paymentLinkId:", error);
+    }
 
-    const paymentLink = response.result.paymentLink?.url || "";
     const customerEmailHtml = generateCustomerEmailBody(
       "Order Confirmation",
       confirmationNumber,
@@ -89,7 +150,7 @@ export async function POST(req: NextRequest) {
     };
 
     try {
-      await withRetry(sendEmails);
+      await sendEmails();
     } catch (emailError) {
       console.error("Email sending failed after retries:", emailError);
     }
@@ -97,7 +158,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: true,
       url: paymentLink,
-      orderId: confirmationNumber,
+      confirmationNumber,
     });
   } catch (error) {
     const errorMessage =

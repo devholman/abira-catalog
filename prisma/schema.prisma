@@ -22,8 +22,11 @@ model Order {
   customerId Int
   totalPrice Float
   createdAt  DateTime    @default(now())
+  updatedAt  DateTime?    @updatedAt
   notes      String?
   storeId    Int
+  paymentLinkId String?   // Square's unique payment link ID
+  paymentStatus PaymentStatus @default(PENDING)
   customer   Customer    @relation(fields: [customerId], references: [id])
   items      OrderItem[]
 }
@@ -52,4 +55,10 @@ enum Categories {
   HOODIES
   LONG_SLEEVE
   BOTTOMS
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
 }

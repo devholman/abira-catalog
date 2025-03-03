@@ -27,9 +27,31 @@ interface OrderProps {
     totalItems: number;
     totalPrice: number;
     createdAt: string;
+    paymentStatus: string;
+    updatedAt: string;
     items: OrderItem[];
   };
 }
+const mapPaymentStatus = (status: string) => {
+  switch (status) {
+    case "COMPLETED":
+      return <span className='bg-green-500 text-white p-2 rounded'>Paid</span>;
+    case "PENDING":
+      return (
+        <span className='bg-yellow-500 text-white p-2 rounded'>Pending</span>
+      );
+    case "FAILED":
+      return <span className='bg-red-500 text-white p-2 rounded'>Failed</span>;
+    default:
+      return status;
+  }
+};
+
+const calculatePriceWithTax = (price: number): number => {
+  const taxRate = 0.0825;
+  const tax = price * taxRate;
+  return parseFloat((price + tax).toFixed(2));
+};
 
 const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -45,8 +67,14 @@ const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
             {order.firstName} {order.lastName}
           </h4>
           <p>Total Items: {order.totalItems}</p>
-          <p>Total Price: ${order.totalPrice.toFixed(2)}</p>
+          <p>
+            Total Order Price: $
+            {calculatePriceWithTax(parseInt(order.totalPrice.toFixed(2)))}
+          </p>
           <p>Order Date: {new Date(order.createdAt).toLocaleDateString()}</p>
+          <p className='mt-2'>
+            Payment Status: {mapPaymentStatus(order.paymentStatus)}
+          </p>
         </div>
         <button
           className='text-sm text-blue-500'
