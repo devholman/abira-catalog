@@ -30,6 +30,7 @@ const OrderForm = () => {
   } = methods;
   const { setCustomerData } = useCustomerData();
   const { cart, totalPrice, totalQuantity, currentStoreId } = useCart();
+  console.log("🚀 ~ OrderForm ~ totalPrice:", totalPrice);
 
   const searchParams = useSearchParams();
   const router = useRouter();

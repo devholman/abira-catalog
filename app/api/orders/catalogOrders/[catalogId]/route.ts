@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PaymentStatus, PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const prisma = new PrismaClient();
@@ -29,6 +29,8 @@ export async function GET(
       totalItems: order.items.length,
       totalPrice: order.totalPrice,
       createdAt: order.createdAt,
+      paymentStatus: order.paymentStatus,
+      updatedAt: order.updatedAt,
       items: order.items.map((item) => ({
         id: item.productId,
         title: item.title,

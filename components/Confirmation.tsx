@@ -1,11 +1,12 @@
 import { useCart } from "@/context/CartContext";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useCustomerData } from "../context/CustomerDataContext";
 import { useSearchParams } from "next/navigation";
 
 const Confirmation = () => {
   const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
     useCart();
+  console.log("🚀 ~ Confirmation ~ totalPrice:", totalPrice);
   const { customerData } = useCustomerData();
 
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
@@ -13,6 +14,7 @@ const Confirmation = () => {
   const confirmationNumber = searchParams?.get("confirmationNumber") || "";
 
   const storeName = searchParams?.get("team");
+  const hasFetchedPaymentLink = useRef(false);
 
   useEffect(() => {
     console.log("run useeffect confirmation");
@@ -49,7 +51,10 @@ const Confirmation = () => {
         clearCart();
       }
     };
-    fetchPaymentLink();
+    if (!hasFetchedPaymentLink.current) {
+      fetchPaymentLink();
+      hasFetchedPaymentLink.current = true;
+    }
   }, []);
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
