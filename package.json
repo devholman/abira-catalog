@@ -33,6 +33,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.53.0",
+    "shippo": "^2.15.0",
     "square": "^40.0.0",
     "tailwind-scrollbar-hide": "^1.1.7",
     "uuidv4": "^6.2.13",
