@@ -81,7 +81,7 @@ export async function POST(req: NextRequest) {
               },
             ],
             referenceId: orderId,
-            ticketName: `Team Apparel ${confirmationNumber}`,
+            ticketName: confirmationNumber.slice(0, 30),
           },
         });
         return response;
