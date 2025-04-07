@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Shippo } from "shippo";
 
+const SHIPPO_TEST_API_KEY = process.env.SHIPPO_TEST_API_KEY || "";
 // Initialize Shippo client
 const shippo = new Shippo({
-  apiKeyHeader: "ShippoToken <API_TOKEN>",
+  apiKeyHeader: `ShippoToken ${SHIPPO_TEST_API_KEY}`,
   shippoApiVersion: "2018-02-08",
 });
 
@@ -38,7 +39,7 @@ const validateAddress = async (address: Address) => {
       city: address.city,
       state: address.state,
       zip: address.zip,
-      country: address.country,
+      country: address.country || "US",
       phone: address.phone || "",
       email: address.email || "",
     });
@@ -118,32 +119,36 @@ export async function POST(req: NextRequest) {
 
     // Validate the shipping address
     const validatedAddress = await validateAddress(toAddress);
+    console.log("🚀 ~ POST ~ validatedAddress:", validatedAddress);
+    return NextResponse.json({
+      validatedAddress,
+    });
 
     // Calculate shipping rates
-    const rates = await calculateShippingRates(
-      fromAddress,
-      validatedAddress,
-      parcel
-    );
+    // const rates = await calculateShippingRates(
+    //   fromAddress,
+    //   validatedAddress,
+    //   parcel
+    // );
 
     // Select the chosen shipping rate
-    const selectedShippingRate = rates.find(
-      (rate: any) => rate.carrier === selectedRate
-    );
+    // const selectedShippingRate = rates.find(
+    //   (rate: any) => rate.carrier === selectedRate
+    // );
 
     // Create a shipping label
-    const label = await createShippingLabel(
-      fromAddress,
-      validatedAddress,
-      parcel,
-      selectedShippingRate ? selectedShippingRate.objectId : ""
-    );
+    // const label = await createShippingLabel(
+    //   fromAddress,
+    //   validatedAddress,
+    //   parcel,
+    //   selectedShippingRate ? selectedShippingRate.objectId : ""
+    // );
 
     // Return the shipping rates and label URL
-    return NextResponse.json({
-      rates,
-      labelUrl: label.labelUrl, // URL for the generated shipping label
-    });
+    // return NextResponse.json({
+    //   rates,
+    //   labelUrl: label.labelUrl, // URL for the generated shipping label
+    // });
   } catch (error) {
     console.error("Error processing shipping:", error);
     return NextResponse.json(

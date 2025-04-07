@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -19,9 +19,17 @@ interface OrderFormData {
   email: string;
   phone: string;
   notes?: string;
+  localPickup: boolean; // For tracking local pickup selection
+  street1?: string;
+  street2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
 }
 
 const OrderForm = () => {
+  const [isLocalPickup, setIsLocalPickup] = useState(false); // State for local pickup checkbox
   const methods = useForm<OrderFormData>();
   const {
     register,
@@ -71,6 +79,8 @@ const OrderForm = () => {
 
     return result;
   };
+
+  // Form inputs and validation setup
   const firstName = {
     id: "firstName",
     label: "First Name",
@@ -130,6 +140,52 @@ const OrderForm = () => {
     },
   };
 
+  const shippingFields = isLocalPickup ? null : (
+    <>
+      <FormInput
+        id='street1'
+        label='Street Address'
+        placeholder='123 Main St'
+        register={register("street1", { required: !isLocalPickup })}
+        error={errors.street1}
+      />
+      <FormInput
+        id='street2'
+        label='Street Address 2 (Optional)'
+        placeholder='Apt 4B'
+        register={register("street2")}
+      />
+      <FormInput
+        id='city'
+        label='City'
+        placeholder='New York'
+        register={register("city", { required: !isLocalPickup })}
+        error={errors.city}
+      />
+      <FormInput
+        id='state'
+        label='State'
+        placeholder='NY'
+        register={register("state", { required: !isLocalPickup })}
+        error={errors.state}
+      />
+      <FormInput
+        id='zip'
+        label='Zip Code'
+        placeholder='10001'
+        register={register("zip", { required: !isLocalPickup })}
+        error={errors.zip}
+      />
+      <FormInput
+        id='country'
+        label='Country'
+        placeholder='US'
+        register={register("country", { required: !isLocalPickup })}
+        error={errors.country}
+      />
+    </>
+  );
+
   return (
     <div className='lg:flex lg:justify-center'>
       <FormProvider {...methods}>
@@ -142,6 +198,24 @@ const OrderForm = () => {
           <FormInput {...email} />
           <FormInput {...phoneNumber} />
           <Notes {...notes} />
+
+          {/* Local Pickup Checkbox */}
+          <div className='flex items-center'>
+            <input
+              type='checkbox'
+              id='localPickup'
+              {...register("localPickup")}
+              checked={isLocalPickup}
+              onChange={() => setIsLocalPickup(!isLocalPickup)}
+            />
+            <label htmlFor='localPickup' className='ml-2'>
+              Local Pickup
+            </label>
+          </div>
+
+          {/* Conditionally rendered shipping fields */}
+          {shippingFields}
+
           <Button
             type='submit'
             text={"Submit Order"}
@@ -152,4 +226,5 @@ const OrderForm = () => {
     </div>
   );
 };
+
 export default OrderForm;
