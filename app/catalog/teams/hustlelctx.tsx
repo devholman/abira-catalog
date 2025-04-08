@@ -10,7 +10,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const hustlelctx = {
   id: 6,
-  version: 1,
+  version: 2,
   name: "HUSTLE LCTX 2K14",
   branding: {
     logo: "",
