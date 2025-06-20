@@ -10,7 +10,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const hustlelctx = {
   id: 6,
-  version: 2,
+  version: 3,
   name: "HUSTLE LCTX 2K14",
   branding: {
     logo: "",
@@ -30,7 +30,7 @@ export const hustlelctx = {
     { name: "Skar De La Cruz", number: "55" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "hustlelctx",
+  passcode: "hustlelctx-closed",
   items: [
     {
       id: 1,
