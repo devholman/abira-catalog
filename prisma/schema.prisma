@@ -29,6 +29,7 @@ model Order {
   paymentStatus PaymentStatus @default(PENDING)
   customer   Customer    @relation(fields: [customerId], references: [id])
   items      OrderItem[]
+  shippingLabels ShippingLabel[]
 }
 
 model OrderItem {
@@ -49,6 +50,17 @@ model OrderItem {
   productImage String?
   order     Order      @relation(fields: [orderId], references: [id])
 }
+
+model ShippingLabel {
+  id             String   @id @default(uuid())
+  orderId        Int   // Assuming you have an Order model and orderId is a string
+  rateId         String
+  labelUrl       String
+  trackingNumber String
+  createdAt      DateTime @default(now())
+  order          Order    @relation(fields: [orderId], references: [id])
+}
+
 
 enum Categories {
   TSHIRTS
