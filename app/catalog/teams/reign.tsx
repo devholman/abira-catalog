@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const reign = {
   id: 5,
-  version: 9,
+  version: 10,
   name: "REIGN",
   branding: {
     logo: "",
@@ -19,6 +19,7 @@ export const reign = {
   players: [
     { name: "Lucille Ridley", number: "6" },
     { name: "Mackenzie Leff", number: "10" },
+    { name: "Nixon Humphreys", number: "19" },
     { name: "Lynlee Overton", number: "67" },
     { name: "Lauren Schaefer", number: "4" },
     { name: "Madeline Garcia", number: "9" },
