@@ -112,13 +112,13 @@ export default function ItemModal({
   const calculateTotalPrice = () => {
     let price = item.price;
 
-    // Add $2 for sizes 2XL-4XL
+    // Add $3 for sizes 2XL-4XL
     if (
       selectedSize === "2XL" ||
       selectedSize === "3XL" ||
       selectedSize === "4XL"
     ) {
-      price += 2;
+      price += 3;
     }
     if (selectedMaterial === DRIFIT) {
       price += 5;
@@ -188,7 +188,7 @@ export default function ItemModal({
                   errors={errors.selectedSize}
                 />
                 <p className='text-xs text-gray-800'>
-                  * Additional $2 for sizes 2XL-4XL
+                  * Additional $3 for sizes 2XL-4XL
                 </p>
                 <SelectionTiles
                   list={item.colors}
