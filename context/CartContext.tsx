@@ -100,7 +100,7 @@ export const CartProvider = ({
           order.size === "3XL" ||
           order.size === "4XL"
         ) {
-          base += 2;
+          base += 3;
         }
         return sum + base * order.quantity;
       }, 0);
