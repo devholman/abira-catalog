@@ -10,7 +10,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const hustle = {
   id: 3,
-  version: 5,
+  version: 6,
   name: "HUSTLE NATIONAL 2033",
   branding: {
     logo: "",
@@ -1959,7 +1959,7 @@ export const hustle = {
         },
       ],
       sizes: allSizes,
-      colors: ["Black", "Dark Gray"],
+      colors: ["Black", "Dark Gray", "Navy", "Teal"],
       material: materials,
       orders: [],
     },
