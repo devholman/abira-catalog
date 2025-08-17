@@ -8,7 +8,7 @@ const backMock = "reign/SHIRTBACK.png";
 export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 
-export const hustleGuzman = {
+export const hustleguzman = {
   id: 7,
   version: 1,
   name: "Hustle National 2034 Guzman",
