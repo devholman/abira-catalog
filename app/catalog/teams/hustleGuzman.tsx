@@ -30,7 +30,7 @@ export const hustleGuzman = {
     { name: "Ariel Reyes", number: "21" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "national",
+  passcode: "guzman",
   items: [
     {
       id: 1,
