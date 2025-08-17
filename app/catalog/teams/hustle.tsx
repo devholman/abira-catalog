@@ -2248,6 +2248,66 @@ export const hustle = {
       material: ["Cotton"],
       orders: [],
     },
+    {
+      id: 78,
+      title: "Hustle Come & Get It Shirt",
+      isCustomizable: false,
+      category: Categories.TSHIRTS,
+      price: 25.0,
+      image: "hustleNational/82-HustleCome&getit-Gray.png",
+      backImage: backMock,
+      images: [
+        {
+          id: 0,
+          imageUrl: "hustleNational/82-HustleCome&getit-Gray.png",
+          color: "Gray",
+        },
+        {
+          id: 1,
+          imageUrl: "hustleNational/82-HustleCome&getit-Navy.png",
+          color: "Navy",
+        },
+        {
+          id: 2,
+          imageUrl: "hustleNational/82-HustleCome&getit-Black.png",
+          color: "Black",
+        },
+      ],
+      sizes: allSizes,
+      colors: ["Gray", "Navy", "Black"],
+      material: materials,
+      orders: [],
+    },
+    {
+      id: 79,
+      title: "Hustle National Come & Get It Shirt",
+      isCustomizable: false,
+      category: Categories.TSHIRTS,
+      price: 25.0,
+      image: "hustleNational/81-HustleNationalCome&getit-Navy.png",
+      backImage: backMock,
+      images: [
+        {
+          id: 0,
+          imageUrl: "hustleNational/81-HustleNationalCome&getit-Navy.png",
+          color: "Navy",
+        },
+        {
+          id: 1,
+          imageUrl: "hustleNational/81-HustleNationalCome&getit-Gray.png",
+          color: "Gray",
+        },
+        {
+          id: 2,
+          imageUrl: "hustleNational/81-HustleNationalCome&getit-Black.png",
+          color: "Black",
+        },
+      ],
+      sizes: allSizes,
+      colors: ["Navy", "Gray", "Black"],
+      material: materials,
+      orders: [],
+    },
   ],
 };
 
