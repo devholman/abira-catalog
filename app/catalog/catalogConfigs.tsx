@@ -10,7 +10,7 @@ import { reign } from "./teams/reign";
 import { renegades } from "./teams/renegades";
 import { cinco } from "./teams/cinco";
 import { hustlelctx } from "./teams/hustlelctx";
-import { hustleGuzman } from "./teams/hustleGuzman";
+import { hustleGuzman } from "./teams/hustleguzman";
 
 export const stores: Record<string, StoreConfig> = {
   store1: {
