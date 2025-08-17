@@ -36,7 +36,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
       const storedConfig = localStorage.getItem("storeConfig");
       const storeName =
         pathname?.split("/").filter((path) => path !== "")[1] ||
-        searchParams?.get("team")?.toLocaleLowerCase() ||
+        searchParams?.get("team") ||
         "";
 
       // Check if there's a storeId available
