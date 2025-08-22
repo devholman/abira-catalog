@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const reign = {
   id: 5,
-  version: 10,
+  version: 11,
   name: "REIGN",
   branding: {
     logo: "",
@@ -17,6 +17,7 @@ export const reign = {
     secondaryColor: "#00C0C0",
   },
   players: [
+    { name: "Hailey Hicks", number: "51" },
     { name: "Xyla Martinez", number: "26" },
     { name: "Lucille Ridley", number: "6" },
     { name: "Mackenzie Leff", number: "10" },
