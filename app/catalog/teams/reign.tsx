@@ -50,7 +50,7 @@ export const reign = {
     { name: "Victoria Carmona", number: "3" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "reign",
+  passcode: "reign-closed",
   items: [
     {
       id: 70,
