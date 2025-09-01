@@ -10,7 +10,7 @@ export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 
 export const hustleguzman = {
   id: 7,
-  version: 1,
+  version: 2,
   name: "Hustle National 2034 Guzman",
   branding: {
     logo: "",
@@ -30,7 +30,7 @@ export const hustleguzman = {
     { name: "Ariel Reyes", number: "21" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "guzman",
+  passcode: "guzman-closed",
   items: [
     {
       id: 1,
