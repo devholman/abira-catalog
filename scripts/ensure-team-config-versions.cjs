@@ -58,7 +58,6 @@ function setOrInsertVersion(text, next) {
 
   const bumped = [];
   for (const file of staged) {
-    // Read HEAD (previous) and staged/working content
     const headText = tryGitShow(`HEAD:${file}`) ?? "";
     const stagedText = tryGitShow(`:${file}`) ?? fs.readFileSync(file, "utf8");
 
