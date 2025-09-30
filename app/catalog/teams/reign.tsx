@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const reign = {
   id: 5,
-  version: 14,
+  version: 15,
   name: "REIGN",
   branding: {
     logo: "",
@@ -2056,3 +2056,4 @@ export const reign = {
     },
   ],
 };
+// test
