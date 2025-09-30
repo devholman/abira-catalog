@@ -2056,4 +2056,3 @@ export const reign = {
     },
   ],
 };
-// test
