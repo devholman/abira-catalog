@@ -10,7 +10,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const hustle = {
   id: 3,
-  version: 7,
+  version: 9,
   name: "HUSTLE NATIONAL 2033",
   branding: {
     logo: "",
@@ -30,7 +30,7 @@ export const hustle = {
     { name: "Scarlett Torres", number: "77" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "national-closed",
+  passcode: "national",
   items: [
     {
       id: 1,
@@ -40,36 +40,24 @@ export const hustle = {
       showBackSelection: false,
       price: 35.0,
       image:
-        "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Front.png",
+        "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
           imageUrl:
-            "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Front.png",
-          color: "Black",
-        },
-        {
-          id: 2,
-          imageUrl:
-            "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Back.png",
-          color: "Black",
-        },
-        {
-          id: 1,
-          imageUrl:
             "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Front.png",
           color: "Navy",
         },
         {
-          id: 3,
+          id: 1,
           imageUrl:
             "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Back.png",
           color: "Navy",
         },
       ],
       sizes: ["S", "M", "L", "XL", "2XL"],
-      colors: ["Black", "Navy"],
+      colors: ["Navy"],
       material: ["Cotton"],
       orders: [],
     },
