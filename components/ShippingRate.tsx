@@ -49,6 +49,7 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
       <h2 className='text-xl font-semibold'>Select Shipping Option</h2>
       <div className='space-y-2'>
         {rates
+          .filter((r) => /usps/i.test(r.carrier))
           .sort((a, b) => parseInt(a.amount) - parseInt(b.amount))
           .map((rate) => (
             <label

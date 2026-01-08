@@ -54,6 +54,7 @@ const calculatePriceWithTax = (price: number): number => {
 };
 
 const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
+  console.log("🚀 ~ OrderCard ~ order:", order);
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (

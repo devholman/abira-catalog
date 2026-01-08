@@ -126,6 +126,9 @@ export async function POST(req: NextRequest) {
         if (!localPickup) {
           paymentLinkOptions.checkoutOptions = {
             askForShippingAddress: true,
+            acceptedPaymentMethods: {
+              applePay: true,
+            },
             shippingFee: {
               name: "Shipping",
               charge: {

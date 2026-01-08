@@ -1,0 +1,22 @@
+{
+  "functions": {
+    "api/cron/finalize-deletes/route.ts": {
+      "schedule": "0 */2 * * *"
+    }
+  }
+}
+// This configuration file for Vercel schedules the function at `api/cron/finalize-deletes/route.ts`
+// to run every 2 hours. The cron expression "0 */2 * * *"
+// means it will trigger at the start of every 2nd hour (e.g., 00:00, 02:00, 04:00, etc.).
+// This is useful for tasks that need to be performed periodically, such as cleaning up or finalizing deletions in a database or system.
+// Make sure to adjust the path and schedule according to your specific requirements.
+// Note: Ensure that the function at the specified path is set up to handle the scheduled execution
+// and that it performs the intended operations without causing issues during execution.
+// For more information on Vercel's cron jobs, refer to their documentation: https://vercel.com/docs/concepts/functions/scheduled-functions
+// This file should be placed in the root of your Vercel project.
+// Ensure that your project is set up to use Vercel's serverless functions and that
+// the function at `api/cron/finalize-deletes/route.ts` is correctly implemented to handle the scheduled task.
+// You can test the function locally before deploying to ensure it behaves as expected.
+// After deploying, monitor the function's execution to ensure it runs as scheduled and performs the necessary
+// operations without errors. If you encounter issues, check the logs in the Vercel dashboard
+// for debugging information and adjust the function code as needed.

@@ -15,7 +15,7 @@ function isFromSquare(signature: string, body: string): Promise<boolean> {
     requestBody: body, // The raw body of the request
     signatureHeader: signature, // The signature from the `x-square-hmacsha256-signature` header
     signatureKey: SQUARE_SIGNATURE_KEY, // Your Square signature key
-    notificationUrl: PRODUCTION_NOTIFICATION_URL, // The webhook URL Square is posting to
+    notificationUrl: DEV_NOTIFICATION_URL, // The webhook URL Square is posting to
   });
 }
 
