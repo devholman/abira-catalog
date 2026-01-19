@@ -11,7 +11,7 @@ export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 
 export const renegades = {
   id: 2,
-  version: 3,
+  version: 4,
   name: "RENEGADES 12U",
   branding: {
     logo: "",
@@ -32,7 +32,7 @@ export const renegades = {
     { name: "Charlotte Hand", number: "55" },
     coach,
   ],
-  passcode: "renegades",
+  passcode: "renegades-closed",
   items: [
     {
       id: 2,
