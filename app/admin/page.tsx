@@ -103,6 +103,29 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleBuyLabel = async (orderId: number) => {
+    try {
+      const response = await fetch("/api/shippo/buy-rate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Label purchased successfully:", data);
+        // Refresh the orders to show the updated shipping label
+        await handleFilterOrders();
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to buy label:", errorData.message);
+        alert(`Failed to buy label: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error buying label:", error);
+      alert("Error buying label");
+    }
+  };
+
   return (
     <div className='p-8'>
       <h1 className='text-2xl font-bold mb-4'>Admin Dashboard</h1>
@@ -243,6 +266,7 @@ const AdminDashboard = () => {
             key={order.id}
             order={order}
             handleDeleteOrder={handleDeleteOrder}
+            handleBuyLabel={handleBuyLabel}
           />
         ))}
       />

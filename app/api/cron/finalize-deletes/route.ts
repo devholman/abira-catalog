@@ -43,7 +43,7 @@ export async function GET() {
           await prisma.shippingLabel.update({
             where: { id: label.id },
             data: {
-              refundStatus: refund.status,
+              refundStatus: refund.status === "ERROR" ? "FAILED" : refund.status,
               refunded: refund.status === "SUCCESS",
               refundedAt: refund.status === "SUCCESS" ? new Date() : null,
             },

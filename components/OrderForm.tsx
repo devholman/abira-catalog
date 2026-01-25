@@ -64,6 +64,7 @@ const OrderForm = () => {
           storeId: currentStoreId,
           customer: data,
           notes: data.notes,
+          localPickup: data.localPickup,
           cart,
           totalPrice,
           totalQuantity,
@@ -237,6 +238,16 @@ const OrderForm = () => {
       return;
     }
     try {
+      // 1. Save the rate selection
+      await fetch("/api/shippo/save-rate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          orderId,
+          rateId,
+        }),
+      });
+      // 2. Purchase the shipping label
       const labelRes = await fetch("/api/shippo/label", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

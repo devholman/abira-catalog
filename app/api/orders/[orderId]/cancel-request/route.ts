@@ -12,10 +12,13 @@ const shippo = new Shippo({
  * Attempts to refund a shipping label using Shippo API.
  * Returns success message or error details.
  */
-export async function attemptRefund(label: {
+async function attemptRefund(label: {
   id: string;
-  shippoTransactionId: string;
+  shippoTransactionId: string | null;
 }) {
+  if (!label.shippoTransactionId) {
+    return { success: false, error: "No transaction ID" };
+  }
   try {
     const refundResponse = await shippo.refunds.create({
       transaction: label.shippoTransactionId,
@@ -73,7 +76,7 @@ export async function POST(
 
   const order = await prisma.order.findUnique({
     where: { id: orderId },
-    include: { shippingLabels: true, shippingRateSelections: true },
+    include: { shippingLabels: true, ShippingRateSelection: true },
   });
 
   if (!order) {
@@ -89,6 +92,8 @@ export async function POST(
   if (label) {
     if (label.refunded) {
       console.log("Label already refunded");
+    } else if (!label.shippoTransactionId) {
+      console.log("No transaction ID for refund");
     } else {
       const refund = await attemptRefund(label);
 
@@ -109,7 +114,7 @@ export async function POST(
       });
       console.log("Label refund processed");
     }
-  } else if (order.shippingRateSelections.length > 0) {
+  } else if (order.ShippingRateSelection.length > 0) {
     await prisma.shippingRateSelection.deleteMany({
       where: { orderId },
     });

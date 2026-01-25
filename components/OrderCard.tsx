@@ -19,6 +19,7 @@ interface OrderItem {
 
 interface OrderProps {
   handleDeleteOrder: (orderId: number, storeId: number) => void;
+  handleBuyLabel: (orderId: number) => void;
   order: {
     id: number;
     storeId: number;
@@ -28,8 +29,11 @@ interface OrderProps {
     totalPrice: number;
     createdAt: string;
     paymentStatus: string;
+    isPickup: boolean;
     updatedAt: string;
     items: OrderItem[];
+    shippingPrice?: number;
+    shippingLabelUrl?: string;
   };
 }
 const mapPaymentStatus = (status: string) => {
@@ -52,8 +56,13 @@ const calculatePriceWithTax = (price: number): number => {
   const tax = price * taxRate;
   return parseFloat((price + tax).toFixed(2));
 };
+const calculateTax = (price: number): number => {
+  const taxRate = 0.0825;
+  const tax = price * taxRate;
+  return parseFloat(tax.toFixed(2));
+};
 
-const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
+const OrderCard = ({ order, handleDeleteOrder, handleBuyLabel }: OrderProps) => {
   console.log("🚀 ~ OrderCard ~ order:", order);
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -69,10 +78,27 @@ const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
           </h4>
           <p>Total Items: {order.totalItems}</p>
           <p>
-            Total Order Price: $
-            {calculatePriceWithTax(parseInt(order.totalPrice.toFixed(2)))}
+            Subtotal: ${order.totalPrice.toFixed(2)} | Tax: $
+            {calculateTax(order.totalPrice).toFixed(2)} | Total: $
+            {calculatePriceWithTax(order.totalPrice).toFixed(2)}
           </p>
           <p>Order Date: {new Date(order.createdAt).toLocaleDateString()}</p>
+          <p>Shipping: {order.isPickup ? "Local Pickup" : "Ship"}</p>
+          {!order.isPickup && order.shippingPrice && (
+            <p>Shipping Price: ${order.shippingPrice.toFixed(2)}</p>
+          )}
+          {!order.isPickup && order.shippingLabelUrl && (
+            <p>
+              <a
+                href={order.shippingLabelUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 underline"
+              >
+                View Shipping Label
+              </a>
+            </p>
+          )}
           <p className='mt-2'>
             Payment Status: {mapPaymentStatus(order.paymentStatus)}
           </p>
@@ -130,6 +156,14 @@ const OrderCard = ({ order, handleDeleteOrder }: OrderProps) => {
               ))}
             </tbody>
           </table>
+          {!order.isPickup && !order.shippingLabelUrl && (
+            <button
+              onClick={() => handleBuyLabel(order.id)}
+              className='bg-blue-500 text-white p-2 rounded mr-2'
+            >
+              Buy Shipping Label
+            </button>
+          )}
           <button
             onClick={() => handleDeleteOrder(order.id, order.storeId)}
             className='bg-red-500 text-white p-2 rounded'

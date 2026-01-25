@@ -25,7 +25,7 @@ const client = new SquareClient({
 const dollarsToCents = (amount: number): bigint =>
   BigInt(Math.round(amount * 100));
 
-export function formatPhoneNumber(phone: string): string {
+function formatPhoneNumber(phone: string): string {
   if (phone.length !== 10) {
     throw new Error("Phone number must be 10 digits long");
   }
@@ -72,6 +72,19 @@ export async function POST(req: NextRequest) {
     // Extract the reference_id from the confirmationNumber
     const orderId = confirmationNumber.split("-").pop();
 
+    const formatPhoneNumber = (phone: string): string => {
+      if (phone.length !== 10) {
+        throw new Error("Phone number must be 10 digits long");
+      }
+
+      const countryCode = "1"; // Assuming the country code is always "1"
+      const areaCode = phone.slice(0, 3);
+      const centralOfficeCode = phone.slice(3, 6);
+      const lineNumber = phone.slice(6);
+
+      return `${countryCode}-${areaCode}-${centralOfficeCode}-${lineNumber}`;
+    };
+
     // Utility function for creating an order item
     const createOrderItems = (cart: any) => {
       return cart.flatMap((item: any) =>
@@ -80,7 +93,7 @@ export async function POST(req: NextRequest) {
           quantity: order.quantity.toString(),
           note: order.notes,
           basePriceMoney: {
-            amount: dollarsToCents(order.orderPrice), // Amount in cents
+            amount: dollarsToCents(order.orderPrice / order.quantity), // Amount in cents per unit
             currency: "USD",
           },
           // size: order.size,
@@ -193,7 +206,8 @@ export async function POST(req: NextRequest) {
       amount,
       cart,
       notes,
-      paymentLink
+      paymentLink,
+      localPickup
     );
 
     const bizEmailHtml = generateMerchantEmailBody(
@@ -207,7 +221,8 @@ export async function POST(req: NextRequest) {
       email,
       phone,
       storeId,
-      storeName
+      storeName,
+      localPickup
     );
 
     // Send confirmation emails with retries

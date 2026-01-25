@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../lib/prisma";
+import prisma from "@/lib/prisma";
 import { Shippo } from "shippo";
 
 const SHIPPO_TEST_API_KEY = process.env.SHIPPO_TEST_API_KEY || "";
@@ -50,8 +50,8 @@ export async function POST(req: NextRequest) {
       data: {
         orderId,
         rateId: rateSelection.rateId,
-        labelUrl: transaction.labelUrl,
-        trackingNumber: transaction.trackingNumber,
+        labelUrl: transaction.labelUrl || "",
+        trackingNumber: transaction.trackingNumber || "",
         shippoTransactionId: transaction.objectId,
       },
     });
