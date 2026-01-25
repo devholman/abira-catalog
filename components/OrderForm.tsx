@@ -73,7 +73,6 @@ const OrderForm = () => {
       });
       if (!orderRes.ok) throw new Error("Order submission failed");
       const orderResult = await orderRes.json();
-      console.log("🚀 ~ onSubmit ~ orderResult:", orderResult);
       setOrderId(orderResult.order.id);
       setConfirmationNumber(orderResult.confirmationNumber);
 
@@ -259,8 +258,7 @@ const OrderForm = () => {
 
       if (!labelRes.ok) throw new Error("Label generation failed");
       const labelResult = await labelRes.json();
-      console.log("🚀 ~ handleRateSelect ~ labelResult:", labelResult);
-
+      // 3. Redirect to confirmation
       router.push(
         `/confirmation?confirmationNumber=${confirmationNumber}&team=${storeName}`
       );

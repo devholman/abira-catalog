@@ -62,8 +62,11 @@ const calculateTax = (price: number): number => {
   return parseFloat(tax.toFixed(2));
 };
 
-const OrderCard = ({ order, handleDeleteOrder, handleBuyLabel }: OrderProps) => {
-  console.log("🚀 ~ OrderCard ~ order:", order);
+const OrderCard = ({
+  order,
+  handleDeleteOrder,
+  handleBuyLabel,
+}: OrderProps) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -91,9 +94,9 @@ const OrderCard = ({ order, handleDeleteOrder, handleBuyLabel }: OrderProps) => 
             <p>
               <a
                 href={order.shippingLabelUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 underline"
+                target='_blank'
+                rel='noopener noreferrer'
+                className='text-blue-500 underline'
               >
                 View Shipping Label
               </a>

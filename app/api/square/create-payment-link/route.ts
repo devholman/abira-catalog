@@ -64,7 +64,6 @@ export async function POST(req: NextRequest) {
       zip,
       localPickup,
     } = customer;
-    console.log("🚀 ~ POST ~ phone:", typeof phone);
 
     // Generate an idempotency key for Square API
     const idempotencyKey = crypto.randomBytes(16).toString("hex");

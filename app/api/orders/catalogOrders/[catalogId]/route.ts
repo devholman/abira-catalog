@@ -35,17 +35,11 @@ export async function GET(
         let shippingPrice: number | undefined;
         let shippingLabelUrl: string | undefined;
 
-        console.log(
-          "🚀 ~ GET ~ order.ShippingRateSelection.length:",
-          order.ShippingRateSelection.length
-        );
-      if (!order.isPickup && order.ShippingRateSelection.length > 0) {
-        const rateId = order.ShippingRateSelection[0].rateId;
-          console.log("🚀 ~ GET ~ rateId:", rateId);
+        if (!order.isPickup && order.ShippingRateSelection.length > 0) {
+          const rateId = order.ShippingRateSelection[0].rateId;
           try {
             const rate = await shippo.rates.get(rateId);
             shippingPrice = parseFloat(rate.amount);
-            console.log("🚀 ~ GET ~ shippingPrice:", shippingPrice);
           } catch (error) {
             console.error("Error fetching shipping rate:", error);
           }

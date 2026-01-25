@@ -14,7 +14,6 @@ export async function GET(req: NextRequest) {
         },
       },
     });
-    console.log("🚀 ~ GET ~ orders:", orders);
 
     return NextResponse.json(orders, { status: 200 });
   } catch (error) {
