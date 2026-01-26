@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const cinco = {
   id: 4,
-  version: 2,
+  version: 3,
   name: "CINCO RANCH",
   branding: {
     logo: "",
@@ -58,17 +58,17 @@ export const cinco = {
       isBackRequired: true,
       backOptionPrice: 0,
       price: 25.0,
-      image: "cinco-Ranch/1-MaroonShirt-Varsity-Front.png",
+      image: "cinco-Ranch/33-MaroonShirt-Varsity+2026-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/1-MaroonShirt-Varsity-Front.png",
+          imageUrl: "cinco-Ranch/33-MaroonShirt-Varsity+2026-Front.png",
           color: "Maroon",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/1-MaroonShirt-Varsity-Front%26Back.png",
+          imageUrl: "cinco-Ranch/33-MaroonShirt-Varsity+2026-Front%26Back.png",
           color: "Maroon",
         },
       ],
@@ -86,17 +86,17 @@ export const cinco = {
       isBackRequired: true,
       backOptionPrice: 0,
       price: 25.0,
-      image: "cinco-Ranch/2-GrayShirt-JV-Front.png",
+      image: "cinco-Ranch/32-DarkGrayShirt-JV+2026-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/2-GrayShirt-JV-Front.png",
+          imageUrl: "cinco-Ranch/32-DarkGrayShirt-JV+2026-Front.png",
           color: "Gray",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/2-GrayShirt-JV-Front%26Back.png",
+          imageUrl: "cinco-Ranch/32-DarkGrayShirt-JV+2026-Front%26Back.png",
           color: "Gray",
         },
       ],
@@ -114,17 +114,17 @@ export const cinco = {
       isBackRequired: true,
       backOptionPrice: 0,
       price: 25.0,
-      image: "cinco-Ranch/3-MaroonLongSleeve-Varsity-front.png",
+      image: "cinco-Ranch/44-MaroonLongSleeve-Varsity-front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/3-MaroonLongSleeve-Varsity-front.png",
+          imageUrl: "cinco-Ranch/44-MaroonLongSleeve-Varsity-front.png",
           color: "Maroon",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/3-MaroonLongSleeve-Varsity-front%26back.png",
+          imageUrl: "cinco-Ranch/44-MaroonLongSleeve-Varsity-front%26back.png",
           color: "Maroon",
         },
       ],
@@ -142,17 +142,17 @@ export const cinco = {
       isBackRequired: true,
       backOptionPrice: 0,
       price: 25.0,
-      image: "cinco-Ranch/4-GrayLongSleeve-JV-front.png",
+      image: "cinco-Ranch/45-DarkGrayLongSleeve-JV-front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/4-GrayLongSleeve-JV-front.png",
+          imageUrl: "cinco-Ranch/45-DarkGrayLongSleeve-JV-front.png",
           color: "Gray",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/4-GrayLongSleeve-JV-front%26back.png",
+          imageUrl: "cinco-Ranch/45-DarkGrayLongSleeve-JV-front%26back.png",
           color: "Gray",
         },
       ],
@@ -170,17 +170,17 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 25.0,
-      image: "cinco-Ranch/10-WhiteShirt-CougarsSurge-Front.png",
+      image: "cinco-Ranch/37-WhiteShirt-CougarsSurge-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/10-WhiteShirt-CougarsSurge-Front.png",
+          imageUrl: "cinco-Ranch/37-WhiteShirt-CougarsSurge-Front.png",
           color: "White",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/10-SilverShirt-CougarsSurge-Front.png",
+          imageUrl: "cinco-Ranch/37-SilverShirt-CougarsSurge-Front.png",
           color: "Gray",
         },
       ],
@@ -198,17 +198,17 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 30.0,
-      image: "cinco-Ranch/11-WhiteLongSleeve-CougarsSurge-front.png",
+      image: "cinco-Ranch/38-WhiteLongSleeve-CougarsSurge-front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/11-WhiteLongSleeve-CougarsSurge-front.png",
+          imageUrl: "cinco-Ranch/38-WhiteLongSleeve-CougarsSurge-front.png",
           color: "White",
         },
         {
           id: 1,
-          imageUrl: "cinco-Ranch/11-SilverLongSleeve-CougarsSurge-front.png",
+          imageUrl: "cinco-Ranch/38-SilverLongSleeve-CougarsSurge-front.png",
           color: "Gray",
         },
       ],
@@ -226,12 +226,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 25.0,
-      image: "cinco-Ranch/12-GrayCropTop-CougarsSurge-Front.png",
+      image: "cinco-Ranch/39-GrayCropTop-CougarsSurge-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/12-GrayCropTop-CougarsSurge-Front.png",
+          imageUrl: "cinco-Ranch/39-GrayCropTop-CougarsSurge-Front.png",
           color: "Gray",
         },
         {
@@ -254,12 +254,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 35.0,
-      image: "cinco-Ranch/13-GrayCropTopHoodie-CougarsSurge-Front.png",
+      image: "cinco-Ranch/40-GrayCropTopHoodie-CougarsSurge-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/13-GrayCropTopHoodie-CougarsSurge-Front.png",
+          imageUrl: "cinco-Ranch/40-GrayCropTopHoodie-CougarsSurge-Front.png",
           color: "Gray",
         },
         {
@@ -282,12 +282,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 35.0,
-      image: "cinco-Ranch/14-GrayHoodie-CougarsSurge-Front.png",
+      image: "cinco-Ranch/41-GrayHoodie-CougarsSurge-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/14-GrayHoodie-CougarsSurge-Front.png",
+          imageUrl: "cinco-Ranch/41-GrayHoodie-CougarsSurge-Front.png",
           color: "Gray",
         },
       ],
@@ -381,12 +381,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 25.0,
-      image: "cinco-Ranch/7-MaroonShirt-CincoPride-Front.png",
+      image: "cinco-Ranch/34-MaroonShirt-CincoPride-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/7-MaroonShirt-CincoPride-Front.png",
+          imageUrl: "cinco-Ranch/34-MaroonShirt-CincoPride-Front.png",
           color: "Maroon",
         },
       ],
@@ -404,12 +404,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 30.0,
-      image: "cinco-Ranch/8-MaroonLongSleeve-CincoPride-front.png",
+      image: "cinco-Ranch/35-MaroonLongSleeve-CincoPride-front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/8-MaroonLongSleeve-CincoPride-front.png",
+          imageUrl: "cinco-Ranch/35-MaroonLongSleeve-CincoPride-front.png",
           color: "Maroon",
         },
       ],
@@ -427,12 +427,12 @@ export const cinco = {
       isBackRequired: false,
       backOptionPrice: 2.0,
       price: 35.0,
-      image: "cinco-Ranch/9-MaroonHoodie-CincoPride-Front.png",
+      image: "cinco-Ranch/36-MaroonHoodie-CincoPride-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
-          imageUrl: "cinco-Ranch/9-MaroonHoodie-CincoPride-Front.png",
+          imageUrl: "cinco-Ranch/36-MaroonHoodie-CincoPride-Front.png",
           color: "Maroon",
         },
       ],
@@ -804,6 +804,82 @@ export const cinco = {
       sizes: sizes,
       colors: ["Gray", "Black"],
       material: ["Cotton"],
+      orders: [],
+    },
+    {
+      id: 26,
+      title: "Cinco Softball Shirt",
+      isCustomizable: false,
+      category: Categories.TSHIRTS,
+      showBackSelection: true,
+      isBackRequired: false,
+      backOptionPrice: 2.0,
+      price: 25.0,
+      image: "cinco-Ranch/43-SilverShirt-LOGO-Front.png",
+      backImage: backMock,
+      images: [
+        {
+          id: 0,
+          imageUrl: "cinco-Ranch/43-SilverShirt-LOGO-Front.png",
+          color: "Light Gray",
+        },
+        {
+          id: 1,
+          imageUrl: "cinco-Ranch/43-BlackShirt-LOGO-Front.png",
+          color: "Black",
+        },
+        {
+          id: 2,
+          imageUrl: "cinco-Ranch/43-MaroonShirt-LOGO-Front.png",
+          color: "Maroon",
+        },
+        {
+          id: 3,
+          imageUrl: "cinco-Ranch/43-DarkGrayShirt-LOGO-Front.png",
+          color: "Dark Gray",
+        },
+      ],
+      sizes: allSizes,
+      colors: ["Light Gray", "Black", "Maroon", "Dark Gray"],
+      material: materials,
+      orders: [],
+    },
+    {
+      id: 27,
+      title: "Cinco Softball Long Sleeve Shirt",
+      isCustomizable: false,
+      category: Categories.LONG_SLEEVE,
+      showBackSelection: true,
+      isBackRequired: false,
+      backOptionPrice: 2.0,
+      price: 30.0,
+      image: "cinco-Ranch/42-SilverLongSleeve-LOGO-front.png",
+      backImage: backMock,
+      images: [
+        {
+          id: 0,
+          imageUrl: "cinco-Ranch/42-SilverLongSleeve-LOGO-front.png",
+          color: "Light Gray",
+        },
+        {
+          id: 1,
+          imageUrl: "cinco-Ranch/42-BlackLongSleeve-LOGO-front.png",
+          color: "Black",
+        },
+        {
+          id: 2,
+          imageUrl: "cinco-Ranch/42-MaroonLongSleeve-LOGO-front.png",
+          color: "Maroon",
+        },
+        {
+          id: 3,
+          imageUrl: "cinco-Ranch/42-DarkGrayLongSleeve-LOGO-front.png",
+          color: "Dark Gray",
+        },
+      ],
+      sizes: allSizes,
+      colors: ["Light Gray", "Black", "Maroon", "Dark Gray"],
+      material: materials,
       orders: [],
     },
   ],

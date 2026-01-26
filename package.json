@@ -17,7 +17,8 @@
     "prismaDev": "dotenv -e .env.local -- npx prisma migrate dev",
     "prisma:devgenerate": "dotenv -e .env.local -- npx prisma generate",
     "prismaStudio": "dotenv -e .env.local -- npx prisma studio",
-    "prisma:format": "npx prisma format"
+    "prisma:format": "npx prisma format",
+    "prepare": "husky"
   },
   "dependencies": {
     "@headlessui/react": "^2.1.2",
@@ -51,6 +52,7 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.5",
+    "husky": "^9.1.7",
     "postcss": "^8",
     "prisma": "^6.11.1",
     "tailwindcss": "^3.4.1",

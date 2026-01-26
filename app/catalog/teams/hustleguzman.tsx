@@ -1,4 +1,3 @@
-// stores/storeConfigs.ts
 import { Categories } from "../../../_types";
 export const DRIFIT = "Dri-Fit (+ $5)";
 const youthSizes = ["YS", "YM", "YL", "YXL"];
@@ -8,29 +7,30 @@ const materials = ["Cotton", DRIFIT];
 const backMock = "reign/SHIRTBACK.png";
 export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
-export const hustle = {
-  id: 3,
-  version: 10,
-  name: "HUSTLE NATIONAL 2033",
+
+export const hustleguzman = {
+  id: 7,
+  version: 2,
+  name: "Hustle National 2034 Guzman",
   branding: {
     logo: "",
     primaryColor: "#ffffff",
     secondaryColor: "#00C0C0",
   },
   players: [
-    { name: "Analina Ramirez", number: "2" },
-    { name: "Skylar Ottele", number: "3" },
-    { name: "Aaliyah Johnson", number: "8" },
-    { name: "Maddi Gonzalez", number: "9" },
-    { name: "Kaylee Riddle", number: "10" },
-    { name: "Lilee Galvan", number: "13" },
-    { name: "Sophia Ramirez", number: "19" },
-    { name: "Olivia Canas", number: "17" },
-    { name: "Malaya Dislate", number: "44" },
-    { name: "Scarlett Torres", number: "77" },
+    { name: "Delainey Durbin", number: "4" },
+    { name: "Berkleigh Meredith", number: "44" },
+    { name: "Elizabeth Wilkerson", number: "11" },
+    { name: "Aurora Faltysek", number: "23" },
+    { name: "Adailiz (Addy) Rodriguez", number: "10" },
+    { name: "Elleigh Delcambre", number: "73" },
+    { name: "Karsyn Williams", number: "14" },
+    { name: "Audrey Vernor", number: "6" },
+    { name: "Brayci Martin", number: "25" },
+    { name: "Ariel Reyes", number: "21" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "national-closed",
+  passcode: "guzman-closed",
   items: [
     {
       id: 1,
@@ -40,24 +40,36 @@ export const hustle = {
       showBackSelection: false,
       price: 35.0,
       image:
-        "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Front.png",
+        "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Front.png",
       backImage: backMock,
       images: [
         {
           id: 0,
           imageUrl:
+            "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Front.png",
+          color: "Black",
+        },
+        {
+          id: 2,
+          imageUrl:
+            "hustleNational/1-BlackJerseyShirt-HustleNationalSoftball-Back.png",
+          color: "Black",
+        },
+        {
+          id: 1,
+          imageUrl:
             "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Front.png",
           color: "Navy",
         },
         {
-          id: 1,
+          id: 3,
           imageUrl:
             "hustleNational/1-NavyJerseyShirt-HustleNationalSoftball-Back.png",
           color: "Navy",
         },
       ],
       sizes: ["S", "M", "L", "XL", "2XL"],
-      colors: ["Navy"],
+      colors: ["Black", "Navy"],
       material: ["Cotton"],
       orders: [],
     },
@@ -2236,67 +2248,5 @@ export const hustle = {
       material: ["Cotton"],
       orders: [],
     },
-    {
-      id: 78,
-      title: "Hustle Come & Get It Shirt",
-      isCustomizable: false,
-      category: Categories.TSHIRTS,
-      price: 25.0,
-      image: "hustleNational/82-HustleCome&getit-Gray.png",
-      backImage: backMock,
-      images: [
-        {
-          id: 0,
-          imageUrl: "hustleNational/82-HustleCome&getit-Gray.png",
-          color: "Gray",
-        },
-        {
-          id: 1,
-          imageUrl: "hustleNational/82-HustleCome&getit-Navy.png",
-          color: "Navy",
-        },
-        {
-          id: 2,
-          imageUrl: "hustleNational/82-HustleCome&getit-Black.png",
-          color: "Black",
-        },
-      ],
-      sizes: allSizes,
-      colors: ["Gray", "Navy", "Black"],
-      material: materials,
-      orders: [],
-    },
-    {
-      id: 79,
-      title: "Hustle National Come & Get It Shirt",
-      isCustomizable: false,
-      category: Categories.TSHIRTS,
-      price: 25.0,
-      image: "hustleNational/81-HustleNationalCome&getit-Navy.png",
-      backImage: backMock,
-      images: [
-        {
-          id: 0,
-          imageUrl: "hustleNational/81-HustleNationalCome&getit-Navy.png",
-          color: "Navy",
-        },
-        {
-          id: 1,
-          imageUrl: "hustleNational/81-HustleNationalCome&getit-Gray.png",
-          color: "Gray",
-        },
-        {
-          id: 2,
-          imageUrl: "hustleNational/81-HustleNationalCome&getit-Black.png",
-          color: "Black",
-        },
-      ],
-      sizes: allSizes,
-      colors: ["Navy", "Gray", "Black"],
-      material: materials,
-      orders: [],
-    },
   ],
 };
-
-// Add more stores as needed...
