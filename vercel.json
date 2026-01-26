@@ -1,6 +1,6 @@
 {
   "functions": {
-    "api/cron/finalize-deletes/route.ts": {
+    "api/cron/finalize-deletes.ts": {
       "schedule": "0 */2 * * *"
     }
   }
