@@ -44,6 +44,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Ensure transaction ID is available for refunds
+    if (!transaction.objectId) {
+      return NextResponse.json(
+        { message: "Transaction ID not available. Cannot purchase label without refund capability." },
+        { status: 500 }
+      );
+    }
+
     // Persist label + tracking
     await prisma.shippingLabel.create({
       data: {
@@ -51,6 +59,7 @@ export async function POST(req: NextRequest) {
         rateId, // Shippo rate ID used to purchase label
         labelUrl: transaction.labelUrl || "",
         trackingNumber: transaction.trackingNumber || "",
+        shippoTransactionId: transaction.objectId,
       },
     });
 

@@ -58,10 +58,17 @@ export async function GET(
           totalPrice: order.totalPrice,
           createdAt: order.createdAt,
           paymentStatus: order.paymentStatus,
+          status: order.status,
           isPickup: order.isPickup,
           updatedAt: order.updatedAt,
           shippingPrice,
           shippingLabelUrl,
+          shippingLabels: order.shippingLabels.map((label) => ({
+            id: label.id,
+            trackingNumber: label.trackingNumber,
+            refundStatus: label.refundStatus,
+            refunded: label.refunded,
+          })),
           items: order.items.map((item) => ({
             id: item.productId,
             title: item.title,

@@ -267,6 +267,9 @@ const AdminDashboard = () => {
             order={order}
             handleDeleteOrder={handleDeleteOrder}
             handleBuyLabel={handleBuyLabel}
+            handleRemoveOrderFromUI={(id) =>
+              setOrders((prev) => prev.filter((o) => o.id !== id))
+            }
           />
         ))}
       />

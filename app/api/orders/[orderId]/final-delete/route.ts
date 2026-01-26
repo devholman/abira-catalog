@@ -29,12 +29,12 @@ export async function DELETE(
     );
   }
 
-  const label = order.shippingLabels[0];
-  if (label && !label.refunded) {
+  const unrefundedLabels = order.shippingLabels.filter((label) => !label.refunded);
+  if (unrefundedLabels.length > 0) {
     return NextResponse.json(
       {
         success: false,
-        message: "Cannot delete order: shipping label has not been refunded",
+        message: "Cannot delete order: some shipping labels have not been refunded",
       },
       { status: 400 }
     );

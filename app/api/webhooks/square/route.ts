@@ -5,7 +5,7 @@ import { WebhooksHelper } from "square";
 const SQUARE_SIGNATURE_KEY = process.env.SQUARE_SIGNATURE_KEY || "";
 
 const DEV_NOTIFICATION_URL =
-  "https://6829-23-120-10-250.ngrok-free.app/api/webhooks/square";
+  "https://17c1c3a237cc.ngrok-free.app/api/webhooks/square";
 const PRODUCTION_NOTIFICATION_URL =
   "https://teamstore.abirasports.com/api/webhooks/square";
 

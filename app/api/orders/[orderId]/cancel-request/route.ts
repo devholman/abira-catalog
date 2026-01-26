@@ -17,6 +17,7 @@ async function attemptRefund(label: {
   shippoTransactionId: string | null;
 }) {
   if (!label.shippoTransactionId) {
+    console.log(`No transaction ID for refund on label ${label.id}`);
     return { success: false, error: "No transaction ID" };
   }
   try {
@@ -87,32 +88,30 @@ export async function POST(
   }
 
   // Handle shipping label refund or rate cleanup
-  const label = order.shippingLabels[0];
+  if (order.shippingLabels.length > 0) {
+    for (const label of order.shippingLabels) {
+      if (label.refunded) {
+        console.log(`Label ${label.id} already refunded`);
+      } else {
+        const refund = await attemptRefund(label);
 
-  if (label) {
-    if (label.refunded) {
-      console.log("Label already refunded");
-    } else if (!label.shippoTransactionId) {
-      console.log("No transaction ID for refund");
-    } else {
-      const refund = await attemptRefund(label);
+        if (!refund.success) {
+          return NextResponse.json(
+            {
+              success: false,
+              message: "Label refund failed. Cannot cancel order.",
+              error: refund.error,
+            },
+            { status: 500 }
+          );
+        }
 
-      if (!refund.success) {
-        return NextResponse.json(
-          {
-            success: false,
-            message: "Label refund failed. Cannot cancel order.",
-            error: refund.error,
-          },
-          { status: 500 }
-        );
+        await prisma.shippingLabel.update({
+          where: { id: label.id },
+          data: { refunded: true },
+        });
+        console.log(`Label ${label.id} refund processed`);
       }
-
-      await prisma.shippingLabel.update({
-        where: { id: label.id },
-        data: { refunded: true },
-      });
-      console.log("Label refund processed");
     }
   } else if (order.ShippingRateSelection.length > 0) {
     await prisma.shippingRateSelection.deleteMany({
