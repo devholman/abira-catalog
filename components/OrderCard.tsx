@@ -196,7 +196,7 @@ const OrderCard = ({
                   </div>
                 )}
               </div>
-              {order.shippingLabels?.length > 0 && (
+              {order.shippingLabels && order.shippingLabels.length > 0 && (
                 <div className='mb-2'>
                   <div className='font-semibold mb-1'>Shipping Labels:</div>
                   <ul className='pl-4'>
@@ -329,13 +329,17 @@ const OrderCard = ({
                 onClick={handleFinalDelete}
                 className={`p-2 rounded text-white ${
                   loadingAction !== null ||
-                  !order.shippingLabels?.every((label) => label.refunded)
+                  !(order.shippingLabels
+                    ? order.shippingLabels.every((label) => label.refunded)
+                    : true)
                     ? "bg-gray-400 cursor-not-allowed"
                     : "bg-purple-600 hover:bg-purple-700"
                 }`}
                 disabled={
                   loadingAction !== null ||
-                  !order.shippingLabels?.every((label) => label.refunded)
+                  !(order.shippingLabels
+                    ? order.shippingLabels.every((label) => label.refunded)
+                    : true)
                 }
               >
                 {loadingAction === "finalDelete"
@@ -343,7 +347,6 @@ const OrderCard = ({
                   : "Final Delete"}
               </button>
             )}
-            {/* ...existing code... */}
           </div>
         </>
       )}
