@@ -4,8 +4,14 @@ import { useCustomerData } from "../context/CustomerDataContext";
 import { useSearchParams } from "next/navigation";
 
 const Confirmation = () => {
-  const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
-    useCart();
+  const {
+    cart,
+    totalPrice,
+    totalQuantity,
+    currentStoreId,
+    clearCart,
+    shippingRate,
+  } = useCart();
   const { customerData } = useCustomerData();
 
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
@@ -16,7 +22,6 @@ const Confirmation = () => {
   const hasFetchedPaymentLink = useRef(false);
 
   useEffect(() => {
-    console.log("run useeffect confirmation");
     // Fetch payment link from the server
     const fetchPaymentLink = async () => {
       try {
@@ -34,6 +39,7 @@ const Confirmation = () => {
             cart,
             totalPrice,
             totalQuantity,
+            shippingRate,
             storeName,
           }),
         });
