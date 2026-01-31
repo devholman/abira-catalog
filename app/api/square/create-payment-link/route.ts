@@ -25,19 +25,64 @@ const client = new SquareClient({
 const dollarsToCents = (amount: number): bigint =>
   BigInt(Math.round(amount * 100));
 
+function formatPhoneNumber(phone: string): string {
+  if (phone.length !== 10) {
+    throw new Error("Phone number must be 10 digits long");
+  }
+
+  const countryCode = "1"; // Assuming the country code is always "1"
+  const areaCode = phone.slice(0, 3);
+  const centralOfficeCode = phone.slice(3, 6);
+  const lineNumber = phone.slice(6);
+
+  return `${countryCode}-${areaCode}-${centralOfficeCode}-${lineNumber}`;
+}
+
 // POST request handler for creating a payment link
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { amount, confirmationNumber, customer, cart, storeId, storeName } =
-      body;
-    const { notes, firstName, lastName, email, phone } = customer;
+    const {
+      amount,
+      confirmationNumber,
+      customer,
+      cart,
+      storeId,
+      storeName,
+      shippingRate,
+    } = body;
+    const {
+      notes,
+      firstName,
+      lastName,
+      email,
+      phone,
+      street1,
+      street2,
+      city,
+      state,
+      zip,
+      localPickup,
+    } = customer;
 
     // Generate an idempotency key for Square API
     const idempotencyKey = crypto.randomBytes(16).toString("hex");
 
     // Extract the reference_id from the confirmationNumber
     const orderId = confirmationNumber.split("-").pop();
+
+    const formatPhoneNumber = (phone: string): string => {
+      if (phone.length !== 10) {
+        throw new Error("Phone number must be 10 digits long");
+      }
+
+      const countryCode = "1"; // Assuming the country code is always "1"
+      const areaCode = phone.slice(0, 3);
+      const centralOfficeCode = phone.slice(3, 6);
+      const lineNumber = phone.slice(6);
+
+      return `${countryCode}-${areaCode}-${centralOfficeCode}-${lineNumber}`;
+    };
 
     // Utility function for creating an order item
     const createOrderItems = (cart: any) => {
@@ -47,7 +92,7 @@ export async function POST(req: NextRequest) {
           quantity: order.quantity.toString(),
           note: order.notes,
           basePriceMoney: {
-            amount: dollarsToCents(order.orderPrice), // Amount in cents
+            amount: dollarsToCents(order.orderPrice / order.quantity), // Amount in cents per unit
             currency: "USD",
           },
           // size: order.size,
@@ -67,23 +112,63 @@ export async function POST(req: NextRequest) {
     // Create a payment link with retry logic
     const createPaymentLink = async () => {
       try {
-        const response = client.checkout.paymentLinks.create({
+        // Common order details
+        const orderDetails = {
+          locationId: SQUARE_LOCATION_ID,
+          lineItems: createOrderItems(cart),
+          taxes: [
+            {
+              name: "Sales Tax",
+              type: "ADDITIVE",
+              percentage: "8.25",
+              scope: "ORDER",
+            },
+          ],
+          referenceId: orderId,
+          ticketName: `Team Apparel ${confirmationNumber}`,
+        };
+
+        // Common payment link options
+        const paymentLinkOptions: any = {
           idempotencyKey, // Prevent double charging
-          order: {
-            locationId: SQUARE_LOCATION_ID,
-            lineItems: createOrderItems(cart),
-            taxes: [
-              {
-                name: "Sales Tax",
-                type: "ADDITIVE",
-                percentage: "8.25",
-                scope: "ORDER",
+          order: orderDetails,
+        };
+
+        // Add shipping details if not local pickup
+        if (!localPickup) {
+          paymentLinkOptions.checkoutOptions = {
+            askForShippingAddress: true,
+            acceptedPaymentMethods: {
+              applePay: true,
+            },
+            shippingFee: {
+              name: "Shipping",
+              charge: {
+                amount: dollarsToCents(shippingRate),
+                currency: "USD",
               },
-            ],
-            referenceId: orderId,
-            ticketName: confirmationNumber.slice(0, 30),
-          },
-        });
+            },
+          };
+          paymentLinkOptions.prePopulatedData = {
+            buyerEmail: email,
+            buyerPhoneNumber: formatPhoneNumber(phone),
+            buyerAddress: {
+              firstName,
+              lastName,
+              addressLine1: street1,
+              addressLine2: street2,
+              locality: city,
+              administrativeDistrictLevel1: state,
+              postalCode: zip,
+              country: "US",
+            },
+          };
+        }
+
+        // Create the payment link
+        const response = await client.checkout.paymentLinks.create(
+          paymentLinkOptions
+        );
         return response;
       } catch (error) {
         console.log("error creating payment link", error);
@@ -120,7 +205,8 @@ export async function POST(req: NextRequest) {
       amount,
       cart,
       notes,
-      paymentLink
+      paymentLink,
+      localPickup
     );
 
     const bizEmailHtml = generateMerchantEmailBody(
@@ -134,7 +220,8 @@ export async function POST(req: NextRequest) {
       email,
       phone,
       storeId,
-      storeName
+      storeName,
+      localPickup
     );
 
     // Send confirmation emails with retries

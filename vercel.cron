@@ -1,0 +1,2 @@
+# vercel.cron
+0 */2 * * * api/cron/finalize-deletes
