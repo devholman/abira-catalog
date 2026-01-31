@@ -8,6 +8,8 @@ import Button from "../../../components/Button";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { z } from "zod";
+
+export const dynamic = "force-dynamic";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 const schema = z.object({

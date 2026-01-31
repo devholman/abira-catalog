@@ -24,7 +24,6 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@hookform/resolvers": "^3.9.0",
-    "@prisma/adapter-pg": "^7.3.0",
     "@prisma/client": "^6.11.1",
     "autoprefixer": "^10.4.20",
     "aws-sdk": "^2.1691.0",

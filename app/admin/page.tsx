@@ -7,6 +7,8 @@ import OrderCard from "@/components/OrderCard";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const AdminDashboard = () => {
   const [customers, setCustomers] = useState([]);
   const [storeId, setStoreId] = useState("");
@@ -86,12 +88,12 @@ const AdminDashboard = () => {
         `/api/orders/${orderId}?storeId=${storeId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       if (response.ok) {
         // Remove the deleted order from the state
         setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.id !== orderId)
+          prevOrders.filter((order) => order.id !== orderId),
         );
         console.log("Order deleted successfully");
       } else {

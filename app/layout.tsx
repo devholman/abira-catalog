@@ -7,6 +7,8 @@ import "./globals.css"; // Import Tailwind CSS
 //helpers
 import { getS3ImageUrl } from "../utils/images";
 
+export const dynamic = "force-dynamic";
+
 const inter = Inter({ subsets: ["latin"] });
 const faviconUrl = getS3ImageUrl("abiraFavicon.ico");
 
