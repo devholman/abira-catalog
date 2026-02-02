@@ -7,6 +7,8 @@ import OrderCard from "@/components/OrderCard";
 import Accordion from "@/components/Accordion";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const AdminDashboard = () => {
   const [customers, setCustomers] = useState([]);
   const [storeId, setStoreId] = useState("");
@@ -86,12 +88,12 @@ const AdminDashboard = () => {
         `/api/orders/${orderId}?storeId=${storeId}`,
         {
           method: "DELETE",
-        }
+        },
       );
       if (response.ok) {
         // Remove the deleted order from the state
         setOrders((prevOrders) =>
-          prevOrders.filter((order) => order.id !== orderId)
+          prevOrders.filter((order) => order.id !== orderId),
         );
         console.log("Order deleted successfully");
       } else {
@@ -103,19 +105,42 @@ const AdminDashboard = () => {
     }
   };
 
+  const handleBuyLabel = async (orderId: number) => {
+    try {
+      const response = await fetch("/api/shippo/buy-rate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orderId }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Label purchased successfully:", data);
+        // Refresh the orders to show the updated shipping label
+        await handleFilterOrders();
+      } else {
+        const errorData = await response.json();
+        console.error("Failed to buy label:", errorData.message);
+        alert(`Failed to buy label: ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Error buying label:", error);
+      alert("Error buying label");
+    }
+  };
+
   return (
     <div className='p-8'>
       <h1 className='text-2xl font-bold mb-4'>Admin Dashboard</h1>
       <div className='mb-4'>
         <h2 className='text-xl font-semibold'>Filter Orders by Customer</h2>
-        <Input
+        <input
           type='text'
           placeholder='First Name'
           value={filterCriteria.firstName}
           onChange={(e) =>
             setFilterCriteria({ ...filterCriteria, firstName: e.target.value })
           }
-          className='mt-1 block w-full font-large text-black border-gray-300 rounded-md shadow-sm'
+          className='border p-2 mb-2'
         />
 
         <input
@@ -216,7 +241,14 @@ const AdminDashboard = () => {
           Filter by Date
         </button>
       </div>
-      <Link href='/admin/fulfillment'>Fulfillment</Link>
+      <div className='mb-4'>
+        <Link
+          className='bg-blue-500 text-white p-2 rounded'
+          href='/admin/fulfillment'
+        >
+          Fulfillment
+        </Link>
+      </div>
       <h2 className='text-xl font-semibold mb-8'>Stores</h2>
       <div className='container mx-auto p-4 '>
         <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6'>
@@ -236,6 +268,10 @@ const AdminDashboard = () => {
             key={order.id}
             order={order}
             handleDeleteOrder={handleDeleteOrder}
+            handleBuyLabel={handleBuyLabel}
+            handleRemoveOrderFromUI={(id) =>
+              setOrders((prev) => prev.filter((o) => o.id !== id))
+            }
           />
         ))}
       />

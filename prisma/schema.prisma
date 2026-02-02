@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -8,46 +9,75 @@ datasource db {
 }
 
 model Customer {
-  id           Int     @id @default(autoincrement())
-  firstName    String
-  lastName     String
-  email        String
-  phone        String
-  storeId      Int     @default(1)
-  orders       Order[]
+  id        Int     @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  storeId   Int     @default(1)
+  orders    Order[]
 }
 
 model Order {
-  id         Int         @id @default(autoincrement())
-  customerId Int
-  totalPrice Float
-  createdAt  DateTime    @default(now())
-  updatedAt  DateTime?    @updatedAt
-  notes      String?
-  storeId    Int
-  paymentLinkId String?   // Square's unique payment link ID
-  paymentStatus PaymentStatus @default(PENDING)
-  customer   Customer    @relation(fields: [customerId], references: [id])
-  items      OrderItem[]
+  id                    Int                     @id @default(autoincrement())
+  customerId            Int
+  totalPrice            Float
+  createdAt             DateTime                @default(now())
+  notes                 String?
+  storeId               Int
+  paymentStatus         PaymentStatus           @default(PENDING)
+  paymentLinkId         String?
+  updatedAt             DateTime?               @updatedAt
+  canceledAt            DateTime?
+  status                OrderStatus             @default(ACTIVE)
+  labelPurchased        Boolean                 @default(false)
+  isPickup              Boolean                 @default(false)
+  deleteQueuedAt        DateTime?
+  customer              Customer                @relation(fields: [customerId], references: [id])
+  items                 OrderItem[]
+  shippingLabels        ShippingLabel[]
+  ShippingRateSelection ShippingRateSelection[]
 }
 
 model OrderItem {
-  id        Int        @id @default(autoincrement())
-  orderId   Int
-  productId Int
-  quantity  Int
-  size      String
-  isAddBack Boolean?   @default(false)
+  id           Int        @id @default(autoincrement())
+  orderId      Int
+  productId    Int
+  quantity     Int
+  size         String
+  isAddBack    Boolean?   @default(false)
+  category     Categories @default(TSHIRTS)
+  color        String     @default("black")
+  price        Float      @default(20.00)
+  title        String     @default("Retro")
+  notes        String?
   playerName   String?
-  playerNumber String? 
-  category  Categories @default(TSHIRTS)
-  color     String     @default("black")
-  material     String  @default("cotton")
-  price     Float      @default(20.00)
-  title     String     @default("Retro")
-  notes     String?
+  playerNumber String?
   productImage String?
-  order     Order      @relation(fields: [orderId], references: [id])
+  material     String     @default("cotton")
+  order        Order      @relation(fields: [orderId], references: [id])
+}
+
+model ShippingLabel {
+  id                  String       @id @default(uuid())
+  orderId             Int
+  rateId              String
+  labelUrl            String
+  trackingNumber      String
+  createdAt           DateTime     @default(now())
+  refunded            Boolean      @default(false)
+  shippoTransactionId String?
+  refundStatus        RefundStatus @default(PENDING)
+  refundedAt          DateTime?
+  order               Order        @relation(fields: [orderId], references: [id], onDelete: Cascade)
+}
+
+model ShippingRateSelection {
+  id        String   @id
+  orderId   Int
+  rateId    String
+  createdAt DateTime @default(now())
+  Order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 enum Categories {
@@ -61,4 +91,18 @@ enum PaymentStatus {
   PENDING
   COMPLETED
   FAILED
+}
+
+enum OrderStatus {
+  ACTIVE
+  CANCEL_REQUESTED
+  CANCELED
+}
+
+enum RefundStatus {
+  PENDING
+  QUEUED
+  SUCCESS
+  FAILED
+  NOT_REQUESTED
 }

@@ -9,7 +9,8 @@ const generateMerchantEmailBody = (
   email: string,
   phone: string,
   storeId: number,
-  storeName: string
+  storeName: string,
+  isPickup: boolean
 ) => {
   const totalItems = cart.reduce((total, item) => {
     return (
@@ -177,6 +178,7 @@ const generateMerchantEmailBody = (
                 <h2>Order Summary</h2>
                 <p>Total Items: ${totalItems}</p>
                 <p>Total Price: $${totalPrice}</p>
+                <p>Shipping: ${isPickup ? "Local Pickup" : "Ship"}</p>
             </div>
         </div>
 

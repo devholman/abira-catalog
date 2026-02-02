@@ -6,6 +6,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { StoreConfigProvider } from "../context/StoreConfigContext";
 import { CartProvider } from "../context/CartContext";
 import { CustomerDataProvider } from "../context/CustomerDataContext";
+import { ToastProvider } from "../context/ToastContext";
 import { StoreConfig } from "@/_types";
 import Header from "../components/Header";
 
@@ -98,13 +99,13 @@ export default function LayoutWrapper({ children }: { children: ReactNode }) {
   const isAdminRoute = pathname?.startsWith("/admin"); // Check if it's an admin page
 
   return (
-    <>
+    <ToastProvider>
       {!isAdminRoute && <Header />} {/* Show Header only for non-admin pages */}
       {!isAdminRoute ? (
         <ClientLayout>{children}</ClientLayout> // Wrap ClientLayout for non-admin pages
       ) : (
         children // Render only children for admin pages
       )}
-    </>
+    </ToastProvider>
   );
 }
