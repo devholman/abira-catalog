@@ -3,8 +3,11 @@ import prisma from "../../../../lib/prisma";
 import { WebhooksHelper } from "square";
 
 const SQUARE_SIGNATURE_KEY = process.env.SQUARE_SIGNATURE_KEY || "";
-//the notification URL uses ngrok for local development. change the url prefix in .env.local to match ngrok url when testing locally
-const NOTIFICATION_URL_KEY = process.env.NOTIFICATION_URL || "";
+
+const DEV_NOTIFICATION_URL =
+  "https://6829-23-120-10-250.ngrok-free.app/api/webhooks/square";
+const PRODUCTION_NOTIFICATION_URL =
+  "https://teamstore.abirasports.com/api/webhooks/square";
 
 // This helper function will verify the signature using the Square helper
 function isFromSquare(signature: string, body: string): Promise<boolean> {
@@ -12,7 +15,7 @@ function isFromSquare(signature: string, body: string): Promise<boolean> {
     requestBody: body, // The raw body of the request
     signatureHeader: signature, // The signature from the `x-square-hmacsha256-signature` header
     signatureKey: SQUARE_SIGNATURE_KEY, // Your Square signature key
-    notificationUrl: NOTIFICATION_URL_KEY, // The webhook URL Square is posting to
+    notificationUrl: PRODUCTION_NOTIFICATION_URL, // The webhook URL Square is posting to
   });
 }
 
@@ -25,7 +28,7 @@ export async function POST(req: NextRequest) {
     console.log("🚀 ~ POST ~ : Invalid signature");
     return NextResponse.json(
       { success: false, message: "Invalid signature" },
-      { status: 403 },
+      { status: 403 }
     );
   }
 
@@ -36,7 +39,7 @@ export async function POST(req: NextRequest) {
     console.error("Failed to parse webhook body: ", err);
     return NextResponse.json(
       { success: false, message: "Invalid JSON" },
-      { status: 400 },
+      { status: 400 }
     );
   }
 

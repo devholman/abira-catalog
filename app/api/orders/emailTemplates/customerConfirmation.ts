@@ -4,8 +4,7 @@ const generateCustomerEmailBody = (
   totalPrice: string,
   cart: any[],
   notes: string = "",
-  paymentLink: string, // Square Quick Pay link
-  isPickup: boolean
+  paymentLink: string // Square Quick Pay link
 ) => {
   const totalItems = cart.reduce((total, item) => {
     return (
@@ -179,7 +178,6 @@ const generateCustomerEmailBody = (
                 <h2>Order Summary:</h2>
                 <p>Total Items: ${totalItems}</p>
                 <p>Total Price: $${totalPrice}</p>
-                <p>Shipping: ${isPickup ? "Local Pickup" : "Ship"}</p>
             </div>
 
             <div class="payment-instructions">
