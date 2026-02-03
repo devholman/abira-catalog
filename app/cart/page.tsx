@@ -5,8 +5,6 @@ import ShoppingCart from "../../components/ShoppingCart";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCart } from "../../context/CartContext";
 
-export const dynamic = "force-dynamic";
-
 export default function Cart() {
   const { cart, removeOrderItem, totalPrice, totalQuantity } = useCart();
   const router = useRouter();

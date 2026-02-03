@@ -28,15 +28,7 @@ const createOrderItems = (cart: any) => {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const {
-      customer,
-      cart,
-      totalPrice,
-      notes,
-      storeId,
-      storeName,
-      localPickup,
-    } = data;
+    const { customer, cart, totalPrice, notes, storeId, storeName } = data;
     const { firstName, lastName, email, phone } = customer;
 
     // Create a new customer record with retry
@@ -64,7 +56,6 @@ export async function POST(req: Request) {
             create: createOrderItems(cart),
           },
           notes,
-          isPickup: localPickup || false,
         },
         include: {
           items: true,

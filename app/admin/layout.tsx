@@ -7,10 +7,10 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div>
       {/* <header>Admin Dashboard Header</header> */}
       <main>{children}</main>
       {/* <footer>Admin Dashboard Footer</footer> */}
-    </>
+    </div>
   );
 }
