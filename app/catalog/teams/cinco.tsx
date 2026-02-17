@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const cinco = {
   id: 4,
-  version: 4,
+  version: 5,
   name: "CINCO RANCH",
   branding: {
     logo: "",
@@ -41,6 +41,7 @@ export const cinco = {
     { name: "Sovi Hilligiest", number: "16" },
     { name: "Sydni Vandeventer", number: "12" },
     { name: "Yazmin Yon", number: "18" },
+    { name: "Mackenzie McNabb", number: "3" },
     { name: "Coach", number: "n/a" },
   ],
   items: [
