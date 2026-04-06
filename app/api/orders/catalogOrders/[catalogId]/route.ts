@@ -4,9 +4,9 @@ import { Shippo } from "shippo";
 
 const prisma = new PrismaClient();
 
-const SHIPPO_TEST_API_KEY = process.env.SHIPPO_TEST_API_KEY || "";
+const SHIPPO_API_KEY = process.env.SHIPPO_API_KEY || "";
 const shippo = new Shippo({
-  apiKeyHeader: `ShippoToken ${SHIPPO_TEST_API_KEY}`,
+  apiKeyHeader: `ShippoToken ${SHIPPO_API_KEY}`,
   shippoApiVersion: "2018-02-08",
 });
 
