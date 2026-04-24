@@ -8,6 +8,13 @@ interface CustomerData {
   email: string;
   phone: string;
   notes?: string;
+  localPickup: boolean; // For tracking local pickup selection
+  street1?: string;
+  street2?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  country?: string;
 }
 
 interface CustomerDataContextProps {

@@ -19,12 +19,14 @@ interface CartContextType {
   totalQuantity: Number;
   totalPrice: Number;
   currentStoreId: Number;
+  shippingRate: string | null;
   addToCart: (item: StoreItem) => void;
   removeFromCart: (id: number) => void;
   calculateTotalPrice: (cart: StoreItem[]) => void;
   removeOrderItem: (id: number, orderId: string) => void;
   setStoreId: (id: number) => void;
   clearCart: () => void;
+  setShippingRate: (rate: string) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -44,6 +46,7 @@ export const CartProvider = ({
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [currentStoreId, setStoreId] = useState<number>(0);
+  const [shippingRate, setShippingRate] = useState<string | null>(null);
 
   useEffect(() => {
     if (storeId) {
@@ -175,12 +178,14 @@ export const CartProvider = ({
         totalQuantity,
         totalPrice,
         currentStoreId,
+        shippingRate,
         addToCart,
         calculateTotalPrice,
         removeFromCart,
         removeOrderItem,
         clearCart,
         setStoreId,
+        setShippingRate,
       }}
     >
       {children}

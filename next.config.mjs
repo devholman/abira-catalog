@@ -5,6 +5,7 @@
  */
 
 export default {
+  output: "standalone",
   images: {
     remotePatterns: [
       {
@@ -13,8 +14,13 @@ export default {
         port: "", // Leave this empty unless you need a specific port
         pathname: "/**", // This allows all paths under the bucket
       },
+      {
+        protocol: "https",
+        hostname: "shippo-static.s3.amazonaws.com",
+        port: "", // Leave this empty unless you need a specific port
+        pathname: "/**", // This allows all paths
+      },
     ],
-    domains: ["catalog-images1.s3.us-east-2.amazonaws.com"],
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,

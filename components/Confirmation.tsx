@@ -1,39 +1,47 @@
-import { useCart } from "@/context/CartContext";
+"use client";
+
 import { useEffect, useRef, useState } from "react";
-import { useCustomerData } from "../context/CustomerDataContext";
 import { useSearchParams } from "next/navigation";
 
 const Confirmation = () => {
-  const { cart, totalPrice, totalQuantity, currentStoreId, clearCart } =
-    useCart();
-  const { customerData } = useCustomerData();
-
   const [paymentLink, setPaymentLink] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const confirmationNumber = searchParams?.get("confirmationNumber") || "";
+  const storeName = searchParams?.get("team") || "";
+  const shippingRateParam = searchParams?.get("shippingRate");
+  const shippingRateParsed = shippingRateParam ? parseFloat(shippingRateParam) : NaN;
+  const shippingRate = Number.isFinite(shippingRateParsed) ? shippingRateParsed : null;
 
-  const storeName = searchParams?.get("team");
   const hasFetchedPaymentLink = useRef(false);
 
   useEffect(() => {
-    console.log("run useeffect confirmation");
-    // Fetch payment link from the server
+    if (!confirmationNumber) return;
+
     const fetchPaymentLink = async () => {
       try {
-        console.log("fetingch payment link ...");
+        // Extract orderId from confirmationNumber e.g. "CINCO-ORD-213" -> "213"
+        const orderId = confirmationNumber.split("-").pop();
+        if (!orderId) throw new Error("Invalid confirmation number");
+
+        // Fetch order data from DB
+        const orderRes = await fetch(`/api/orders/${orderId}`);
+        if (!orderRes.ok) throw new Error("Failed to fetch order data");
+        const { order, customer, items } = await orderRes.json();
+
         const res = await fetch("/api/square/create-payment-link", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            amount: totalPrice,
-            confirmationNumber, // Unique order identifier
-            storeId: currentStoreId,
-            customer: customerData,
-            cart,
-            totalPrice,
-            totalQuantity,
+            amount: order.totalPrice,
+            confirmationNumber,
+            storeId: order.storeId,
+            customer: {
+              ...customer,
+              notes: order.notes,
+              localPickup: order.isPickup,
+            },
+            items,
+            shippingRate,
             storeName,
           }),
         });
@@ -46,15 +54,15 @@ const Confirmation = () => {
         }
       } catch (error) {
         console.error("Error fetching payment link:", error);
-      } finally {
-        clearCart();
       }
     };
+
     if (!hasFetchedPaymentLink.current) {
       fetchPaymentLink();
       hasFetchedPaymentLink.current = true;
     }
   }, []);
+
   return (
     <div className='min-h-screen bg-gray-100 flex flex-col items-center p-6'>
       {/* Title Section */}
@@ -79,35 +87,9 @@ const Confirmation = () => {
           </h2>
           <ol className='list-decimal list-inside text-gray-700 space-y-2'>
             <li>Click the link below to complete payment.</li>
-            {/* <li>Open the Venmo app on your phone or use the web app.</li> */}
-            {/* <li>
-              Send the total amount of your order to our Venmo account:{" "}
-              <strong>@Ariel-Rodrigues</strong>
-              {price && (
-                <h6 className='text-xl mt-4 font-bold text-center text-gray-800 mb-4'>
-                  Total: ${price}
-                </h6>
-              )}
-            </li> */}
-            {/* <li>
-              In the note section, make sure to include your{" "}
-              <strong>Order Number</strong> and <strong>Your Name</strong>.
-            </li> */}
             <li>Once payment is received, your order will be fullfilled.</li>
           </ol>
         </div>
-
-        {/* Venmo Button */}
-        {/* <div className='mt-6 flex justify-center'>
-          <a
-            href='https://venmo.com/'
-            target='_blank'
-            rel='noopener noreferrer'
-            className='bg-blue-500 hover:bg-blue-600 text-white py-3 px-6 rounded-md shadow-md inline-flex items-center'
-          >
-            Pay with Venmo
-          </a>
-        </div> */}
 
         <div className='mt-6 flex justify-center'>
           {paymentLink ? (
