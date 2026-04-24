@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const cinco = {
   id: 4,
-  version: 4,
+  version: 5,
   name: "CINCO RANCH",
   branding: {
     logo: "",
