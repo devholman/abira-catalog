@@ -52,7 +52,7 @@ Authorization: Bearer $TOKEN
 ## Notes
 
 - Management API responses may include direct connection credentials for databases.
-- Build PostgreSQL `DATABASE_URL` from direct connection values when needed.
+- Build PostgreSQL `POSTGRES_URL` from direct connection values when needed.
 
 ## References
 
