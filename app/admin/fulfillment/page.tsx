@@ -6,6 +6,8 @@ import { stores } from "../../catalog/catalogConfigs";
 import Accordion from "@/components/Accordion";
 import LogoCountTable from "./LogoCountTable";
 
+export const dynamic = "force-dynamic";
+
 type LogoCount = {
   [key: string]: number;
 };
@@ -62,7 +64,7 @@ const FulfillmentDashboard = () => {
           const { quantity, itemNames } = obj;
 
           return { color, material, size, category, quantity, itemNames };
-        }
+        },
       );
       setItems(formattedData);
       setLogoCount(logoCount);
