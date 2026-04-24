@@ -1,6 +1,55 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
 
+const DRIFIT_MATERIAL = "Dri-Fit";
+const DRIFIT_SURCHARGE = 5;
+const OVERSIZE_SURCHARGE = 3;
+const OVERSIZE_SIZES = ["2XL", "3XL", "4XL"];
+const DEFAULT_BACKOPTION_PRICE = 2;
+
+// GET request handler for fetching an order with customer and items
+export async function GET(
+  req: Request,
+  { params }: { params: { orderId: string } }
+) {
+  const { orderId } = params;
+
+  try {
+    const order = await prisma.order.findUnique({
+      where: { id: parseInt(orderId, 10) },
+      include: { customer: true, items: true },
+    });
+
+    if (!order) {
+      return NextResponse.json({ error: "Order not found" }, { status: 404 });
+    }
+
+    const items = order.items.map((item) => ({
+      ...item,
+      unitPrice:
+        item.price +
+        (item.material === DRIFIT_MATERIAL ? DRIFIT_SURCHARGE : 0) +
+        (OVERSIZE_SIZES.includes(item.size) ? OVERSIZE_SURCHARGE : 0) +
+        (item.isAddBack ? DEFAULT_BACKOPTION_PRICE : 0),
+    }));
+
+    return NextResponse.json({
+      order: {
+        id: order.id,
+        totalPrice: order.totalPrice,
+        notes: order.notes,
+        storeId: order.storeId,
+        isPickup: order.isPickup,
+      },
+      customer: order.customer,
+      items,
+    });
+  } catch (error) {
+    console.error("Error fetching order:", error);
+    return NextResponse.json({ error: "Failed to fetch order" }, { status: 500 });
+  }
+}
+
 // DELETE request handler for deleting an order
 export async function DELETE(
   req: Request,

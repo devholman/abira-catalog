@@ -231,7 +231,7 @@ const OrderForm = () => {
     </>
   );
 
-  const handleRateSelect = async (rateId: string) => {
+  const handleRateSelect = async (rateId: string, rateAmount: string) => {
     if (!orderId || !confirmationNumber) {
       console.error("Order ID or confirmation missing");
       return;
@@ -246,21 +246,23 @@ const OrderForm = () => {
           rateId,
         }),
       });
-      // 2. Purchase the shipping label
-      const labelRes = await fetch("/api/shippo/label", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          rateId,
-          orderId,
-        }),
-      });
+      // 2. Purchase the shipping label (non-blocking — can be retried from admin)
+      try {
+        const labelRes = await fetch("/api/shippo/label", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ rateId, orderId }),
+        });
+        if (!labelRes.ok) {
+          console.error("Label generation failed, continuing to confirmation");
+        }
+      } catch (labelErr) {
+        console.error("Label generation error:", labelErr);
+      }
 
-      if (!labelRes.ok) throw new Error("Label generation failed");
-      const labelResult = await labelRes.json();
       // 3. Redirect to confirmation
       router.push(
-        `/confirmation?confirmationNumber=${confirmationNumber}&team=${storeName}`
+        `/confirmation?confirmationNumber=${confirmationNumber}&team=${storeName}&shippingRate=${rateAmount}`
       );
     } catch (err) {
       console.error(err);
@@ -308,9 +310,9 @@ const OrderForm = () => {
           <ShippingRateSelector
             rates={shippingRates}
             isLoading={isLoading}
-            onRateSelect={async (rateId) => {
+            onRateSelect={async (rateId, amount) => {
               setIsLoading(true);
-              await handleRateSelect(rateId);
+              await handleRateSelect(rateId, amount);
               setIsLoading(false);
             }}
           />

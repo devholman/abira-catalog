@@ -21,7 +21,7 @@ interface ShippingRate {
 
 interface ShippingRateSelectorProps {
   rates: ShippingRate[];
-  onRateSelect: (rateId: string) => Promise<void>;
+  onRateSelect: (rateId: string, amount: string) => Promise<void>;
   isLoading: boolean;
 }
 
@@ -37,7 +37,8 @@ const ShippingRateSelector: React.FC<ShippingRateSelectorProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedRateId) {
-      await onRateSelect(selectedRateId);
+      const selectedRate = rates.find((r) => r.id === selectedRateId);
+      await onRateSelect(selectedRateId, selectedRate?.amount ?? "0");
     }
   };
 
