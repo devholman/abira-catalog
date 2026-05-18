@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useCart } from "../context/CartContext";
 import { useCustomerData } from "../context/CustomerDataContext";
+import { useStoreConfig } from "../context/StoreConfigContext";
 
 import FormInput from "./FormInput";
 import Button from "./Button";
@@ -30,7 +31,8 @@ interface OrderFormData {
 }
 
 const OrderForm = () => {
-  const [isLocalPickup, setIsLocalPickup] = useState(false); // State for local pickup checkbox
+  const { storeConfig } = useStoreConfig();
+  const [isLocalPickup, setIsLocalPickup] = useState(storeConfig?.localPickupOnly ?? false);
   const [shippingRates, setShippingRates] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [orderId, setOrderId] = useState<number | null>(null);
@@ -38,7 +40,9 @@ const OrderForm = () => {
     null
   );
 
-  const methods = useForm<OrderFormData>();
+  const methods = useForm<OrderFormData>({
+    defaultValues: { localPickup: storeConfig?.localPickupOnly ?? false },
+  });
   const {
     register,
     handleSubmit,
@@ -283,19 +287,21 @@ const OrderForm = () => {
             <FormInput {...phoneNumber} />
             <Notes {...notes} />
 
-            {/* Local Pickup Checkbox */}
-            <div className='flex items-center'>
-              <input
-                type='checkbox'
-                id='localPickup'
-                {...register("localPickup")}
-                checked={isLocalPickup}
-                onChange={() => setIsLocalPickup(!isLocalPickup)}
-              />
-              <label htmlFor='localPickup' className='ml-2'>
-                Local Pickup
-              </label>
-            </div>
+            {/* Local Pickup */}
+            {!storeConfig?.localPickupOnly && (
+              <div className='flex items-center'>
+                <input
+                  type='checkbox'
+                  id='localPickup'
+                  {...register("localPickup")}
+                  checked={isLocalPickup}
+                  onChange={() => setIsLocalPickup(!isLocalPickup)}
+                />
+                <label htmlFor='localPickup' className='ml-2'>
+                  Local Pickup
+                </label>
+              </div>
+            )}
 
             {/* Conditionally rendered shipping fields */}
             {shippingFields}

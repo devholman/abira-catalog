@@ -10,6 +10,7 @@ export interface StoreConfig {
   players: { name: string; number: string }[];
   passcode: string;
   items: StoreItem[];
+  localPickupOnly?: boolean;
 }
 
 export interface Item {
