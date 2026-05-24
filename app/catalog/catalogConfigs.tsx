@@ -11,6 +11,7 @@ import { renegades } from "./teams/renegades";
 import { cinco } from "./teams/cinco";
 import { hustlelctx } from "./teams/hustlelctx";
 import { hustleguzman } from "./teams/hustleguzman";
+import { diamondWarriors } from "./teams/diamondwarriors";
 
 export const stores: Record<string, StoreConfig> = {
   store1: {
@@ -62,4 +63,5 @@ export const stores: Record<string, StoreConfig> = {
   cinco,
   hustlelctx,
   hustleguzman,
+  diamondwarriors: diamondWarriors,
 };

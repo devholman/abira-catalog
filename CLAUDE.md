@@ -109,6 +109,13 @@ Payment completion triggers the Square webhook which updates `PaymentStatus` on 
 - Square supports sandbox/production via env var toggle
 - `export const dynamic = "force-dynamic"` is used on pages that must not be cached (cart, auth-gated pages)
 
+## Client Data
+
+Per-team client files live at:
+`/Users/devynholman/Desktop/Dev's Second Brain/02 Projects/Abira/Clients/`
+
+One file per team. Each file contains: contact info, order history, roster (name + number + size), chosen mockup, and open questions. Read the relevant client file before configuring a new store or updating an existing one.
+
 ## graphify
 
 This project has a graphify knowledge graph at graphify-out/.
