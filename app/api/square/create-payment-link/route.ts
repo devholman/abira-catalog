@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
         orderPrice: item.unitPrice * item.quantity,
         color: item.color,
         size: item.size,
-        material: item.material === "Dri-Fit" ? "Dri-Fit (+ $5)" : item.material,
+        material: item.material,
         isAddBack: item.isAddBack,
         notes: item.notes,
         playerName: item.playerName,

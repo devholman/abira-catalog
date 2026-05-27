@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
 
-const DRIFIT_MATERIAL = "Dri-Fit";
+const DRIFIT_MATERIAL = "Dri-Fit (+ $5)";
 const DRIFIT_SURCHARGE = 5;
 const OVERSIZE_SURCHARGE = 3;
 const OVERSIZE_SIZES = ["2XL", "3XL", "4XL"];
@@ -10,9 +10,9 @@ const DEFAULT_BACKOPTION_PRICE = 2;
 // GET request handler for fetching an order with customer and items
 export async function GET(
   req: Request,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
-  const { orderId } = params;
+  const { orderId } = await params;
 
   try {
     const order = await prisma.order.findUnique({
@@ -53,9 +53,9 @@ export async function GET(
 // DELETE request handler for deleting an order
 export async function DELETE(
   req: Request,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
-  const { orderId } = params;
+  const { orderId } = await params;
   const url = new URL(req.url);
   const storeId = url.searchParams.get("storeId");
 
