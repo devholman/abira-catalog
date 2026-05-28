@@ -74,9 +74,17 @@ const AdminDashboard = () => {
   };
   const fetchOrders = async (catalogId: number) => {
     try {
-      const response = await fetch(`/api/orders/catalogOrders/${catalogId}`); // API to fetch orders for the catalog
+      const response = await fetch(`/api/orders/catalogOrders/${catalogId}`);
+      if (!response.ok) {
+        console.error("Failed to fetch orders:", response.status);
+        return;
+      }
       const data = await response.json();
-      setOrders(data);
+      if (Array.isArray(data)) {
+        setOrders(data);
+      } else {
+        console.error("Unexpected orders response:", data);
+      }
     } catch (error) {
       console.error("Error fetching orders:", error);
     }
