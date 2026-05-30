@@ -3,6 +3,7 @@
 
 import { ReactNode, useEffect, useState } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
 import { StoreConfigProvider } from "../context/StoreConfigContext";
 import { CartProvider } from "../context/CartContext";
 import { CustomerDataProvider } from "../context/CustomerDataContext";
@@ -58,6 +59,9 @@ export function ClientLayout({ children }: { children: ReactNode }) {
           (latestConfig && latestConfig.version !== parsedConfig.version) ||
           (latestConfig && latestConfig.id !== parsedConfig.id)
         ) {
+          if (latestConfig.passcode !== parsedConfig.passcode) {
+            Cookies.remove("isAuthenticated");
+          }
           setStoreConfig(latestConfig);
           localStorage.setItem("storeConfig", JSON.stringify(latestConfig)); // Update localStorage with the new config
         } else {
