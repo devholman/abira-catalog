@@ -10,7 +10,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const hustle = {
   id: 3,
-  version: 11,
+  version: 12,
   name: "HUSTLE NATIONAL 2033",
   localPickupOnly: true,
   branding: {
@@ -31,7 +31,7 @@ export const hustle = {
     { name: "Scarlett Torres", number: "77" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "national",
+  passcode: "national-closed",
   items: [
     {
       id: 1,

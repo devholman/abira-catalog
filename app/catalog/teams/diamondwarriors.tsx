@@ -7,7 +7,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 
 export const diamondWarriors = {
   id: 8,
-  version: 1,
+  version: 2,
   name: "DIAMOND WARRIORS",
   localPickupOnly: true,
   branding: {
@@ -31,7 +31,7 @@ export const diamondWarriors = {
     { name: "Coach Rob", number: "n/a" },
     { name: "Coach Mike", number: "n/a" },
   ],
-  passcode: "diamond",
+  passcode: "diamond-closed",
   items: [
     {
       id: 1,
