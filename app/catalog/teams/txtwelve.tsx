@@ -7,14 +7,14 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 
 export const txTwelve = {
   id: 9,
-  version: 1,
+  version: 2,
   name: "Texas Twelve 10U Maroon Katy",
   branding: {
     logo: "",
     primaryColor: "#ffffff",
     secondaryColor: "#7B1728",
   },
-  passcode: "txtwelve",
+  passcode: "txtwelve-closed",
   localPickupOnly: true,
   players: [
     { name: "Kathryn Schmidt-Pena", number: "1" },
