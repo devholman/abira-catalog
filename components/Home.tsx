@@ -44,8 +44,12 @@ export default function Home() {
     router.push(`/cart?team=${storeName}`);
   };
 
-  //TODO:: not currently used
-  const sortedItems = filteredItems.sort((a, b) => a.price - b.price);
+  const sortedItems = filteredItems.sort((a, b) => {
+    const aOrder = a.sortOrder ?? Infinity;
+    const bOrder = b.sortOrder ?? Infinity;
+    if (aOrder !== bOrder) return aOrder - bOrder;
+    return a.price - b.price;
+  });
 
   return (
     <div className='p-5' style={{ backgroundColor: branding.primaryColor }}>
