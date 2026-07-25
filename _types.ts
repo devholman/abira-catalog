@@ -43,6 +43,7 @@ export interface StoreItem {
   title: string;
   isCustomizable: boolean;
   price: number;
+  sortOrder?: number;
   image: string;
   showBackSelection?: boolean;
   isBackRequired?: boolean;
