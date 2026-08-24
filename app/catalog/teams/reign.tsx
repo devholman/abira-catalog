@@ -9,7 +9,7 @@ export const DEFAULT_PLAYER_NUMBER = "n/a";
 export const coach = { name: "Coach", number: DEFAULT_PLAYER_NUMBER };
 export const reign = {
   id: 5,
-  version: 27,
+  version: 28,
   name: "REIGN",
   branding: {
     logo: "",
@@ -31,7 +31,7 @@ export const reign = {
     { name: "SavannahBesselman", number: "15" },
     { name: "Coach", number: "n/a" },
   ],
-  passcode: "reign",
+  passcode: "reign-closed",
   items: [
     {
       id: 76,
