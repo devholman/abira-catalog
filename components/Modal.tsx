@@ -12,8 +12,7 @@ import { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
 import { getS3ImageUrl } from "../utils/images";
 import PlayerSelectDropdown from "./PlayerSelectDropdown";
 import { useStoreConfig } from "@/context/StoreConfigContext";
-import { DRIFIT } from "@/app/catalog/catalogConfigs";
-import { DEFAULT_BACKOPTION_PRICE } from "@/app/cart/cartConfig";
+import { computeUnitPrice, DEFAULT_BACKOPTION_PRICE } from "@/utils/pricing";
 
 interface ItemModalProps {
   item: StoreItem;
@@ -110,26 +109,15 @@ export default function ItemModal({
   }, []);
 
   const calculateTotalPrice = () => {
-    let price = item.price;
+    const unit = computeUnitPrice({
+      basePrice: item.price,
+      material: selectedMaterial,
+      size: selectedSize,
+      isAddBack: isAddNumberToBack,
+      backOptionPrice: item.backOptionPrice,
+    });
 
-    // Add $3 for sizes 2XL-4XL
-    if (
-      selectedSize === "2XL" ||
-      selectedSize === "3XL" ||
-      selectedSize === "4XL"
-    ) {
-      price += 3;
-    }
-    if (selectedMaterial === DRIFIT) {
-      price += 5;
-    }
-
-    // Add $2 if the number is added to the back
-    if (isAddNumberToBack) {
-      price += backOptionPrice;
-    }
-
-    setTotalPrice(price * selectedQuantity);
+    setTotalPrice(unit * selectedQuantity);
   };
   return (
     <div>

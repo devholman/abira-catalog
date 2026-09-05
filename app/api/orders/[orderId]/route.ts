@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
-
-const DRIFIT_MATERIAL = "Dri-Fit (+ $5)";
-const DRIFIT_SURCHARGE = 5;
-const OVERSIZE_SURCHARGE = 3;
-const OVERSIZE_SIZES = ["2XL", "3XL", "4XL"];
-const DEFAULT_BACKOPTION_PRICE = 2;
+import { computeLegacyUnitPrice } from "@/utils/pricing";
 
 // GET request handler for fetching an order with customer and items
 export async function GET(
@@ -26,11 +21,17 @@ export async function GET(
 
     const items = order.items.map((item) => ({
       ...item,
+      // Prefer the price persisted at order creation. Fall back to recomputing
+      // for orders that predate the unitPrice column.
       unitPrice:
-        item.price +
-        (item.material === DRIFIT_MATERIAL ? DRIFIT_SURCHARGE : 0) +
-        (OVERSIZE_SIZES.includes(item.size) ? OVERSIZE_SURCHARGE : 0) +
-        (item.isAddBack ? DEFAULT_BACKOPTION_PRICE : 0),
+        item.unitPrice ??
+        computeLegacyUnitPrice({
+          basePrice: item.price,
+          material: item.material,
+          size: item.size,
+          isAddBack: item.isAddBack,
+          backOptionPrice: null,
+        }),
     }));
 
     return NextResponse.json({

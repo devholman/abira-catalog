@@ -11,8 +11,7 @@ import React, {
 import { StoreItem } from "../_types";
 
 import { toFixedNumber } from "../utils/numUtils";
-import { DRIFIT } from "@/app/catalog/catalogConfigs";
-import { DEFAULT_BACKOPTION_PRICE } from "@/app/cart/cartConfig";
+import { computeUnitPrice } from "../utils/pricing";
 
 interface CartContextType {
   cart: StoreItem[];
@@ -89,23 +88,14 @@ export const CartProvider = ({
     let totalPrice = 0;
     cart?.map((item: StoreItem) => {
       const price = item.orders.reduce((sum, order) => {
-        let base = item.price;
-        const backOptionPrice =
-          item.backOptionPrice ?? DEFAULT_BACKOPTION_PRICE;
-        if (order.isAddBack) {
-          base += backOptionPrice;
-        }
-        if (order.material === DRIFIT) {
-          base += 5;
-        }
-        if (
-          order.size === "2XL" ||
-          order.size === "3XL" ||
-          order.size === "4XL"
-        ) {
-          base += 3;
-        }
-        return sum + base * order.quantity;
+        const unit = computeUnitPrice({
+          basePrice: item.price,
+          material: order.material,
+          size: order.size,
+          isAddBack: order.isAddBack,
+          backOptionPrice: item.backOptionPrice,
+        });
+        return sum + unit * order.quantity;
       }, 0);
       totalPrice += price;
     });
