@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma";
 import { withRetry } from "@/utils/server";
+import { computeUnitPrice, normalizeMaterial } from "@/utils/pricing";
 
 // Utility function for creating an order item
 const createOrderItems = (cart: any) => {
@@ -15,8 +16,17 @@ const createOrderItems = (cart: any) => {
       title: item.title,
       playerName: order.playerName,
       playerNumber: order.playerNumber,
-      material:
-        order.material === "Dri-Fit (+ $5)" ? "Dri-Fit" : order.material,
+      // Compute the surcharge-inclusive unit price from the RAW cart material
+      // BEFORE normalizing it for storage — once persisted, "Dri-Fit" is
+      // ambiguous between upcharge and plain configs.
+      unitPrice: computeUnitPrice({
+        basePrice: item.price,
+        material: order.material,
+        size: order.size,
+        isAddBack: order.isAddBack,
+        backOptionPrice: item.backOptionPrice,
+      }),
+      material: normalizeMaterial(order.material),
       isAddBack: order.isAddBack,
       productImage: order.productImage,
       notes: order.notes,

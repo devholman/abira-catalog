@@ -1,1 +1,1 @@
-export const DEFAULT_BACKOPTION_PRICE = 2;
+export { DEFAULT_BACKOPTION_PRICE } from "@/utils/pricing";

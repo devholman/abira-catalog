@@ -1,6 +1,7 @@
 // stores/storeConfigs.ts
 import { Categories, StoreConfig } from "../../_types";
-export const DRIFIT = "Dri-Fit (+ $5)";
+import { DRIFIT_MATERIAL_LABEL } from "@/utils/pricing";
+export const DRIFIT = DRIFIT_MATERIAL_LABEL;
 const colors = ["Black", "Silver", "White"];
 const materials = ["Cotton", DRIFIT];
 export const DEFAULT_PLAYER_NUMBER = "n/a";

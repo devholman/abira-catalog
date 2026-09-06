@@ -55,6 +55,7 @@ model OrderItem {
   playerNumber String?
   productImage String?
   material     String     @default("cotton")
+  unitPrice    Float?     // surcharge-inclusive price for ONE unit; null for pre-migration rows
   order        Order      @relation(fields: [orderId], references: [id])
 }
 
